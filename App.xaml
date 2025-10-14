@@ -3,7 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:RANGER"
              StartupUri="MainWindow.xaml">
+    
     <Application.Resources>
-         
+        
+        <!--Все стили, кисти и т.д. находятся здесь.
+        Как напоминание: перенести их в отдельный словарь ресурсов-->
+        
+        <SolidColorBrush x:Key="MainColor" Color="#FF7700"/>
+
+        <Style x:Key="MainTitleStyle" TargetType="Label">
+            <Setter Property="Foreground" Value="{StaticResource MainColor}"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Label.Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" Opacity="0.6" Direction="250"/>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
     </Application.Resources>
+    
 </Application>
