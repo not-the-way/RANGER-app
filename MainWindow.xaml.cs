@@ -23,6 +23,9 @@ namespace RANGER
         public MainWindow()
         {
             InitializeComponent();
+            LoginWindow login = new LoginWindow();
+
+            login.Show();
         }
     }
 }

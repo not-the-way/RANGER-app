@@ -17,6 +17,8 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -29,9 +31,27 @@
                Grid.Row="0"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
+               FontSize="24"
                Style="{StaticResource MainTitleStyle}"/>
 
         <!--Ввод логина и пароля-->
+
+        <TextBox Text="Введите ваш логин..."
+                 Grid.Row="2"
+                 Grid.Column="1"
+                 Margin="20"
+                 Style="{StaticResource ModernTextBoxStyle}"/>
+
+        <Button Style="{StaticResource MainButtonStyle}"
+                Grid.Row="4"
+                Grid.ColumnSpan="2"
+                Content="Войти"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Width="200"
+                Height="50"/>
+        
+        
 
     </Grid>
 </Window>

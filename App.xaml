@@ -6,22 +6,94 @@
     
     <Application.Resources>
         
-        <!--Все стили, кисти и т.д. находятся здесь.
-        Как напоминание: перенести их в отдельный словарь ресурсов-->
+        <!--
+        Все стили, кисти и т.д. находятся здесь.
+        Как напоминание: перенести их в отдельный словарь ресурсов
+        -->
         
         <SolidColorBrush x:Key="MainColor" Color="#FF7700"/>
+        <SolidColorBrush x:Key="MainOffsetColor" Color="#F5A35B"/>
 
         <Style x:Key="MainTitleStyle" TargetType="Label">
+            
             <Setter Property="Foreground" Value="{StaticResource MainColor}"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Rockwell"/>
+            
+            <!--
+            Этот Setter должен делать ТЕКСТ обрамлённым, не сам label,
+            Желательно исправить
+            -->
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Label">
+                        <Border Background="{TemplateBinding Background}"
+                        BorderBrush="Black"
+                        BorderThickness="2"
+                        CornerRadius="4"
+                        Padding="8,4">
+                            <TextBlock Text="{TemplateBinding Content}"
+                               FontFamily="{TemplateBinding FontFamily}"
+                               FontSize="{TemplateBinding FontSize}"
+                               FontWeight="{TemplateBinding FontWeight}"
+                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                               Foreground="{TemplateBinding Foreground}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
             <Setter Property="Label.Effect">
                 <Setter.Value>
-                    <DropShadowEffect Color="Black" Opacity="0.6" Direction="250"/>
+                    <DropShadowEffect Color="Black" Opacity="0.6" Direction="250" BlurRadius="8"/>
+                </Setter.Value>
+            </Setter>
+            
+            
+
+        </Style>
+
+        <!--
+        На заметку: текст внутри кнопки не отображается
+        Надо бы поправить это дело...
+        -->
+        
+        <Style x:Key="MainButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Content" Value="{Binding Content}"/> <!-- ЭТО СИТУАЦИЮ НЕ ИСПРАВЛЯЕТ! -->
+            <Setter Property="Background" Value="{StaticResource MainOffsetColor}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+
+                        <Border CornerRadius="4" BorderThickness="1"
+                                BorderBrush="#B95600"
+                                Background="{TemplateBinding Background}"/>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFBF6C"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
                 </Setter.Value>
             </Setter>
 
         </Style>
+
+        <!-- На заметку: этот стиль должен быть и для PasswordBox -->
+        
+        <Style x:Key="ModernTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0 0 0 2"/>
+            <Setter Property="BorderBrush" Value="#B95600"/>
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+        
     </Application.Resources>
     
 </Application>
