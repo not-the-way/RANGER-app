@@ -8,8 +8,8 @@
         Title="LoginWindow" Height="550" Width="600"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
-    
-    <Grid>
+
+    <Grid Background="#F8F1CE">
         
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
@@ -23,7 +23,7 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2.6*"/>
         </Grid.ColumnDefinitions>
 
         <Label Content="Вход"
@@ -34,13 +34,34 @@
                FontSize="24"
                Style="{StaticResource MainTitleStyle}"/>
 
+        <Label Content="Логин"
+               Grid.Row="2"
+               Grid.Column="0"
+               HorizontalAlignment="Right"
+               VerticalAlignment="Center"
+               FontSize="24"
+               Style="{StaticResource MainTitleStyle}"/>
+
+        <Label Content="Пароль"
+       Grid.Row="3"
+       Grid.Column="0"
+       HorizontalAlignment="Right"
+       VerticalAlignment="Center"
+       FontSize="24"
+       Style="{StaticResource MainTitleStyle}"/>
+
         <!--Ввод логина и пароля-->
 
-        <TextBox Text="Введите ваш логин..."
-                 Grid.Row="2"
+        <TextBox Grid.Row="2"
                  Grid.Column="1"
                  Margin="20"
                  Style="{StaticResource ModernTextBoxStyle}"/>
+
+        <PasswordBox x:Name="LoginPasswordBox"
+                     Grid.Row="3"
+                     Grid.Column="1"
+                     Margin="20"
+                     Style="{StaticResource ModernPasswordBoxStyle}"/>
 
         <Button Style="{StaticResource MainButtonStyle}"
                 Grid.Row="4"
