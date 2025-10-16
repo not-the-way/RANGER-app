@@ -6,33 +6,36 @@
         xmlns:local="clr-namespace:RANGER"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-        WindowStyle="None"
         Background="Transparent"
-        AllowsTransparency="True"
         WindowStartupLocation="CenterScreen">
+    <Grid Background="#3c3c3c">
 
-    <Border CornerRadius="4" Background="#F8F1CE">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="RANGER"
+               Style="{StaticResource MainTitleStyle}"/>
+
+        <Line X1="0" Y1="70"
+              X2="800" Y2="70"
+              Stroke="{StaticResource MainOffsetColor}"
+              StrokeThickness="2"
+              Fill="{StaticResource MainOffsetColor}"
+              Grid.ColumnSpan="5"
+              Grid.RowSpan="5"/>
         
-        <Grid>
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0.5*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="2*"/>
-            </Grid.RowDefinitions>
-
-        </Grid>
-        
-    </Border>
-
+    </Grid>
 </Window>
