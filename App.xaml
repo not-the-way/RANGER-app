@@ -4,6 +4,12 @@
              xmlns:local="clr-namespace:RANGER"
              StartupUri="MainWindow.xaml">
     
+    <!--
+    Главный стиль окон: #3c3c3c
+    Основной акцент делается на оранжевом цвете, все элементы, кнопки и т.п. должны иметь
+    или его оттенки, или заданный SolidColorBrush
+    -->
+    
     <Application.Resources>
         
         <!--
@@ -20,13 +26,15 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="FontFamily" Value="Rockwell"/>
+            <Setter Property="FontSize" Value="24"/>
 
             <!--
             Этот Setter должен делать ТЕКСТ обрамлённым, не сам label,
             Желательно исправить
+            UPD1: Решил поместить его в комментарии т.к. почему бы не использовать тёмную тему :)
             -->
 
-            <Setter Property="Template">
+            <!--<Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Label">
                         <Border Background="{TemplateBinding Background}"
@@ -44,7 +52,7 @@
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
-            </Setter>
+            </Setter>-->
 
             <Setter Property="Label.Effect">
                 <Setter.Value>
@@ -59,13 +67,13 @@
         <Style x:Key="MainButtonStyle" TargetType="Button">
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="FontFamily" Value="Corbel"/>
-            <Setter Property="Background" Value="{StaticResource MainOffsetColor}"/>
+            <Setter Property="Background" Value="{StaticResource MainColor}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
 
-                        <Border CornerRadius="4" BorderThickness="1"
-                                BorderBrush="#B95600"
+                        <Border CornerRadius="4" BorderThickness="2"
+                                BorderBrush="#B85600"
                                 Background="{TemplateBinding Background}">
 
                             <ContentPresenter Content="{TemplateBinding Content}"
@@ -105,12 +113,20 @@
                 </Setter.Value>
             </Setter>
 
+            <Setter Property="Button.Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" Opacity="0.6"
+                                      Direction="250" BlurRadius="8"/>
+                </Setter.Value>
+            </Setter>
+
         </Style>
 
         <!--
         Сие чудо стоило мне ПОЛЧАСА РАБОТЫ НАД НИМ!
         А ведь оно просто должно делать так, что при вводе текста, "Введите ваш логин" исчезает...
         На заметку: Сделать также для PasswordBox
+        На заметку 2: Поменять цвет границы бокса когда он активен
         -->
         
         <Style x:Key="ModernTextBoxStyle" TargetType="TextBox">
@@ -128,7 +144,7 @@
                                      BorderBrush="{TemplateBinding BorderBrush}"
                                      Background="{TemplateBinding Background}"
                                      VerticalContentAlignment="Center"
-                                     Foreground="Black"
+                                     Foreground="{StaticResource MainColor}"
                                      x:Name="LogBox"
                                      FontSize="20"/>
 
@@ -136,7 +152,8 @@
                                        Text="Введите ваш логин..."
                                        Margin="5"
                                        VerticalAlignment="Center"
-                                       TextAlignment="Center">
+                                       TextAlignment="Center"
+                                       Foreground="{StaticResource MainColor}">
 
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
@@ -148,9 +165,16 @@
                                         <Setter Property="Visibility" Value="Hidden"/>
                                     </Style>
                                 </TextBlock.Style>
-                                
+
                             </TextBlock>
                         </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#CA7600"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                        
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -166,7 +190,12 @@
             <Setter Property="BorderThickness" Value="0 0 0 2"/>
             <Setter Property="BorderBrush" Value="#B95600"/>
             <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Template">
+            
+            <!--
+            На заметку: научиться делать такое же исчезновение текста как и у TextBox'a
+            -->
+            
+            <!--<Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="PasswordBox">
                         
@@ -205,10 +234,28 @@
                         
                     </ControlTemplate>
                 </Setter.Value>
-            </Setter>
+            </Setter>-->
 
         </Style>
-        
+
+        <Style x:Key="InfoTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="{StaticResource MainColor}"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="IsEnabled" Value="False"/>
+
+            <Setter Property="TextBox.Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" Opacity="0.6"
+                                      Direction="250" BlurRadius="8"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Application.Resources>
     
 </Application>
