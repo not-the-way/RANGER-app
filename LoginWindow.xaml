@@ -9,7 +9,7 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
 
-    <Grid Background="#F8F1CE">
+    <Grid Background="#3c3c3c">
         
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
@@ -71,8 +71,19 @@
                 VerticalContentAlignment="Center"
                 Width="200"
                 Height="50"/>
-        
-        
 
+        <!-- Информационные TextBox -->
+        
+        <TextBox Text="ДОСТУП ТОЛЬКО ДЛЯ СОТРУДНИКОВ ИЛИ УПОЛНОМОЧЕННЫХ ЛИЦ"
+                 Style="{StaticResource InfoTextBoxStyle}"
+                 Grid.Row="5" Grid.ColumnSpan="2"
+                 Width="200" Height="50"/>
+
+        <TextBox Text="*Если вы забыли логин и пароль, обратитесь к системному администратору"
+                 Style="{StaticResource InfoTextBoxStyle}"
+                 Grid.Row="6" Grid.ColumnSpan="2"
+                 Width="200" Height="50"
+                 VerticalAlignment="Top"/>
+        
     </Grid>
 </Window>
