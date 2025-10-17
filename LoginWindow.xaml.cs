@@ -23,35 +23,5 @@ namespace RANGER
         {
             InitializeComponent();
         }
-
-        private void LoginPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            UpdateVisibility();
-        }
-
-        private void UpdateVisibility()
-        {
-            // Ищем TextBlock с watermark в визуальном дереве
-            var passwordBox = LoginPasswordBox;
-            var grid = VisualTreeHelper.GetChild(passwordBox, 0) as Grid;
-
-            if (grid != null)
-            {
-                var watermarkText = grid.FindName("watermarkText") as TextBlock;
-
-                if (watermarkText != null)
-                {
-                    // Показывает плашку "введите ваш пароль..." только если пароль пустой
-                    if (string.IsNullOrEmpty(passwordBox.Password))
-                    {
-                        watermarkText.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        watermarkText.Visibility = Visibility.Collapsed;
-                    }
-                }
-            }
-        }
     }
 }

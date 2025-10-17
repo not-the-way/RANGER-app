@@ -61,8 +61,7 @@
                      Grid.Row="3"
                      Grid.Column="1"
                      Margin="20"
-                     Style="{StaticResource ModernPasswordBoxStyle}"
-                     PasswordChanged="LoginPasswordBox_PasswordChanged"/>
+                     Style="{StaticResource ModernPasswordBoxStyle}"/>
 
         <Button Style="{StaticResource MainButtonStyle}"
                 Grid.Row="4"
