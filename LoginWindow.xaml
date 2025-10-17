@@ -54,13 +54,13 @@
 
         <TextBox Grid.Row="2"
                  Grid.Column="1"
-                 Margin="20"
+                 Margin="20 20 30 20"
                  Style="{StaticResource ModernTextBoxStyle}"/>
 
         <PasswordBox x:Name="LoginPasswordBox"
                      Grid.Row="3"
                      Grid.Column="1"
-                     Margin="20"
+                     Margin="20 20 30 20"
                      Style="{StaticResource ModernPasswordBoxStyle}"/>
 
         <Button Style="{StaticResource MainButtonStyle}"
