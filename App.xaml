@@ -67,6 +67,7 @@
         <Style x:Key="MainButtonStyle" TargetType="Button">
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="FontFamily" Value="Corbel"/>
+            <Setter Property="FontSize" Value="20"/>
             <Setter Property="Background" Value="{StaticResource MainColor}"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -87,11 +88,15 @@
                                 <Setter Property="Background" Value="#FFBF6C"/>
                             </Trigger>
 
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#B85600"/>
+                            </Trigger>
+
                             <!-- Триггер должен делать анимацию потемнения кнопки, уменьшения,
                             паузы и возвращение в исходный вид.
                             На заметку: НЕ УСЛОЖНЯТЬ СЕБЕ БОЛЕЕ РАБОТУ -->
                             
-                            <EventTrigger RoutedEvent="Click">
+                            <!--<EventTrigger RoutedEvent="Click">
                                 <EventTrigger.Actions>
                                     <BeginStoryboard>
                                         <Storyboard>
@@ -105,7 +110,7 @@
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </EventTrigger.Actions>
-                            </EventTrigger>
+                            </EventTrigger>-->
                             
                         </ControlTemplate.Triggers>
 
@@ -138,7 +143,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
                         <Grid>
-                            <TextBox Margin="0 0 15 0"
+                            <TextBox Margin="0 0 0 0"
                                      Text="{TemplateBinding Text}"
                                      BorderThickness="{TemplateBinding BorderThickness}"
                                      BorderBrush="{TemplateBinding BorderBrush}"
