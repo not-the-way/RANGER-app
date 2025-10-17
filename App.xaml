@@ -20,6 +20,50 @@
         <SolidColorBrush x:Key="MainColor" Color="#FF7700"/>
         <SolidColorBrush x:Key="MainOffsetColor" Color="#F5A35B"/>
 
+        <Style x:Key="WatermarkPasswordBoxStyle" TargetType="PasswordBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Grid>
+                            <!-- Border и основной PasswordBox -->
+                            <Border x:Name="border" 
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="3"/>
+
+                            <ScrollViewer x:Name="PART_ContentHost" 
+                                         Margin="4,2"/>
+
+                            <!-- Watermark текст -->
+                            <TextBlock x:Name="watermarkText"
+                                      Text="Введите ваш пароль..."
+                                      Foreground="Gray"
+                                      FontStyle="Italic"
+                                      Margin="8,2,0,0"
+                                      VerticalAlignment="Center"
+                                      Visibility="Visible"/>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF7EB4EA"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF569DE5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FFABADB3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="4,2"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
         <Style x:Key="MainTitleStyle" TargetType="Label">
 
             <Setter Property="Foreground" Value="{StaticResource MainColor}"/>
@@ -32,6 +76,7 @@
             Этот Setter должен делать ТЕКСТ обрамлённым, не сам label,
             Желательно исправить
             UPD1: Решил поместить его в комментарии т.к. почему бы не использовать тёмную тему :)
+            UPD2: Препод заставил делать светлую тему.
             -->
 
             <!--<Setter Property="Template">
@@ -195,52 +240,49 @@
             <Setter Property="BorderThickness" Value="0 0 0 2"/>
             <Setter Property="BorderBrush" Value="#B95600"/>
             <Setter Property="FontSize" Value="20"/>
-            
-            <!--
-            На заметку: научиться делать такое же исчезновение текста как и у TextBox'a
-            -->
-            
-            <!--<Setter Property="Template">
+            <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="PasswordBox">
-                        
                         <Grid>
-                            <Border BorderThickness="{TemplateBinding BorderThickness}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            Background="{TemplateBinding Background}">
-                                
-                                <ScrollViewer x:Name="PART_ContentHost"
-                                      Margin="0 0 15 0"
-                                      VerticalAlignment="Center"/>
-                                
-                            </Border>
 
-                            <TextBlock IsHitTestVisible="False"
-                               Text="Введите ваш пароль..."
-                               Margin="5"
-                               VerticalAlignment="Center"
-                               TextAlignment="Center"
-                               Foreground="Gray">
+                            <Border x:Name="border" 
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="3"/>
 
-                                <TextBlock.Style>
-                                    <Style TargetType="TextBlock">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Password, RelativeSource={RelativeSource TemplatedParent}}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                        <Setter Property="Visibility" Value="Hidden"/>
-                                    </Style>
-                                </TextBlock.Style>
+                            <ScrollViewer x:Name="PART_ContentHost" 
+                                          Margin="4,2"/>
 
-                            </TextBlock>
-                            
+                            <TextBlock x:Name="watermarkText"
+                                       Text="Введите ваш пароль..."
+                                       Background="{TemplateBinding Background}"
+                                       Margin="5"
+                                       TextAlignment="Center"
+                                       Foreground="{StaticResource MainColor}"
+                                       VerticalAlignment="Center"
+                                       Visibility="Visible"/>
                         </Grid>
+
+                        <ControlTemplate.Triggers>
+                            
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border"
+                                        Property="BorderBrush"
+                                        Value="#FF7EB4EA"/>
+                            </Trigger>
+                            
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border"
+                                        Property="BorderBrush"
+                                        Value="#FF569DE5"/>
+                            </Trigger>
+                            
+                        </ControlTemplate.Triggers>
                         
                     </ControlTemplate>
                 </Setter.Value>
-            </Setter>-->
-
+            </Setter>
         </Style>
 
         <Style x:Key="InfoTextBoxStyle" TargetType="TextBox">
