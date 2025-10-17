@@ -198,6 +198,7 @@
                                      x:Name="LogBox"
                                      FontSize="20"/>
 
+
                             <TextBlock IsHitTestVisible="False"
                                        Text="Введите ваш логин..."
                                        Margin="5"
@@ -207,11 +208,13 @@
 
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
+                                        
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Text, ElementName=LogBox}" Value="">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
                                         </Style.Triggers>
+                                        
                                         <Setter Property="Visibility" Value="Hidden"/>
                                     </Style>
                                 </TextBlock.Style>
@@ -219,6 +222,8 @@
                             </TextBlock>
                         </Grid>
 
+                        <!-- На заметку: Сделать также как и у PasswordBox -->
+                        
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsFocused" Value="True">
                                 <Setter Property="BorderBrush" Value="#CA7600"/>
@@ -232,7 +237,6 @@
 
         <!--
         Простите меня, грешного, о великие боги машины, за такой костыль и такие танцы с бубном...
-        P.S. ОН НЕ РАБОТАЕТ ТАК ЖЕ КАК И С ТЕКСТ БОКСОМ!!!
         -->
         
         <Style x:Key="ModernPasswordBoxStyle" TargetType="PasswordBox">
@@ -240,6 +244,7 @@
             <Setter Property="BorderThickness" Value="0 0 0 2"/>
             <Setter Property="BorderBrush" Value="#B95600"/>
             <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Foreground" Value="{StaticResource MainColor}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="PasswordBox">
@@ -248,16 +253,14 @@
                             <Border x:Name="border" 
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="3"/>
+                                    BorderThickness="{TemplateBinding BorderThickness}"/>
 
-                            <ScrollViewer x:Name="PART_ContentHost" 
-                                          Margin="4,2"/>
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Foreground="{TemplateBinding Foreground}"/>
 
                             <TextBlock x:Name="watermarkText"
                                        Text="Введите ваш пароль..."
                                        Background="{TemplateBinding Background}"
-                                       Margin="5"
                                        TextAlignment="Center"
                                        Foreground="{StaticResource MainColor}"
                                        VerticalAlignment="Center"
@@ -265,17 +268,11 @@
                         </Grid>
 
                         <ControlTemplate.Triggers>
-                            
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border"
-                                        Property="BorderBrush"
-                                        Value="#FF7EB4EA"/>
-                            </Trigger>
-                            
+
                             <Trigger Property="IsFocused" Value="True">
                                 <Setter TargetName="border"
                                         Property="BorderBrush"
-                                        Value="#FF569DE5"/>
+                                        Value="{StaticResource MainOffsetColor}"/>
                             </Trigger>
                             
                         </ControlTemplate.Triggers>
