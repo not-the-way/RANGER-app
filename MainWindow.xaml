@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RANGER"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="RANGER" Height="450" Width="800"
         Background="Transparent"
         WindowStartupLocation="CenterScreen">
     <Grid Background="#3c3c3c">
@@ -44,6 +44,14 @@
               Grid.ColumnSpan="5"
               Grid.RowSpan="5"/>
 
+        <Line X1="0" Y1="100"
+              X2="800" Y2="100"
+              Stroke="{StaticResource MainOffsetColor}"
+              StrokeThickness="2"
+              Fill="{StaticResource MainOffsetColor}"
+              Grid.ColumnSpan="5"
+              Grid.RowSpan="5"/>
+        
         <Button Grid.Row="0"
                 Grid.Column="1"
                 Style="{StaticResource MainButtonStyle}"
