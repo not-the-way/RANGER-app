@@ -7,7 +7,35 @@
         mc:Ignorable="d"
         Title="Настройки" Height="540" Width="500"
         WindowStartupLocation="CenterScreen">
-    <Grid>
+
+    <Grid Background="#3c3c3c">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.3*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Настройки"
+               Grid.Row="0"
+               Grid.ColumnSpan="2"
+               Style="{StaticResource MainTitleStyle}"/>
+
+        <Label Content="Тема"
+               Style="{StaticResource MainTitleStyle}"
+               Grid.Column="0"
+               Grid.Row="1"/>
+
+        
         
     </Grid>
+    
 </Window>
