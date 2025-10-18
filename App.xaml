@@ -5,7 +5,7 @@
              StartupUri="MainWindow.xaml">
     
     <!--
-    Главный стиль окон: #3c3c3c
+    Главный стиль окон: #3c3c3c, #ABABAB
     Основной акцент делается на оранжевом цвете, все элементы, кнопки и т.п. должны иметь
     или его оттенки, или заданный SolidColorBrush
     -->
@@ -14,55 +14,16 @@
         
         <!--
         Все стили, кисти и т.д. находятся здесь.
-        Как напоминание: перенести их в отдельный словарь ресурсов
+        Как напоминание: ЖЕЛАТЕЛЬНО перенести их в отдельный словарь ресурсов
         -->
         
+        <SolidColorBrush x:Key="DarkBackgroundTheme" Color="#3c3c3c"/>
+        <SolidColorBrush x:Key="LightBackGroundTheme" Color="#ABABAB"/>
+
         <SolidColorBrush x:Key="MainColor" Color="#FF7700"/>
         <SolidColorBrush x:Key="MainOffsetColor" Color="#F5A35B"/>
-
-        <Style x:Key="WatermarkPasswordBoxStyle" TargetType="PasswordBox">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="PasswordBox">
-                        <Grid>
-                            <!-- Border и основной PasswordBox -->
-                            <Border x:Name="border" 
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="3"/>
-
-                            <ScrollViewer x:Name="PART_ContentHost" 
-                                         Margin="4,2"/>
-
-                            <!-- Watermark текст -->
-                            <TextBlock x:Name="watermarkText"
-                                      Text="Введите ваш пароль..."
-                                      Foreground="Gray"
-                                      FontStyle="Italic"
-                                      Margin="8,2,0,0"
-                                      VerticalAlignment="Center"
-                                      Visibility="Visible"/>
-                        </Grid>
-
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="BorderBrush" Value="#FF7EB4EA"/>
-                            </Trigger>
-                            <Trigger Property="IsFocused" Value="True">
-                                <Setter TargetName="border" Property="BorderBrush" Value="#FF569DE5"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderBrush" Value="#FFABADB3"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Padding" Value="4,2"/>
-            <Setter Property="FontSize" Value="14"/>
-        </Style>
+        <SolidColorBrush x:Key="OffsetShadeColor1" Color="#B85600"/>
+        <SolidColorBrush x:Key="OffsetShadeColor2" Color="#FFBF6C"/>
 
         <Style x:Key="MainTitleStyle" TargetType="Label">
 
@@ -119,7 +80,7 @@
                     <ControlTemplate TargetType="Button">
 
                         <Border CornerRadius="4" BorderThickness="2"
-                                BorderBrush="#B85600"
+                                BorderBrush="{StaticResource OffsetShadeColor1}"
                                 Background="{TemplateBinding Background}">
 
                             <ContentPresenter Content="{TemplateBinding Content}"
@@ -130,33 +91,13 @@
 
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#FFBF6C"/>
+                                <Setter Property="Background" Value="{StaticResource OffsetShadeColor2}"/>
                             </Trigger>
 
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="#B85600"/>
+                                <Setter Property="Background" Value="{StaticResource OffsetShadeColor1}"/>
                             </Trigger>
 
-                            <!-- Триггер должен делать анимацию потемнения кнопки, уменьшения,
-                            паузы и возвращение в исходный вид.
-                            На заметку: НЕ УСЛОЖНЯТЬ СЕБЕ БОЛЕЕ РАБОТУ -->
-                            
-                            <!--<EventTrigger RoutedEvent="Click">
-                                <EventTrigger.Actions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetProperty="Width"
-                                                             Duration="0:0:0.1" To="180"
-                                                             AutoReverse="True"/>
-
-                                            <DoubleAnimation Storyboard.TargetProperty="Height"
-                                                             Duration="0:0:0.1" To="45"
-                                                             AutoReverse="True"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger.Actions>
-                            </EventTrigger>-->
-                            
                         </ControlTemplate.Triggers>
 
                     </ControlTemplate>
@@ -175,7 +116,6 @@
         <!--
         Сие чудо стоило мне ПОЛЧАСА РАБОТЫ НАД НИМ!
         А ведь оно просто должно делать так, что при вводе текста, "Введите ваш логин" исчезает...
-        На заметку: Сделать также для PasswordBox
         На заметку 2: Поменять цвет границы бокса когда он активен
         -->
         
@@ -188,6 +128,12 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
                         <Grid>
+
+                            <Border x:Name="border" 
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"/>
+
                             <TextBox Margin="0 0 0 0"
                                      Text="{TemplateBinding Text}"
                                      BorderThickness="{TemplateBinding BorderThickness}"
@@ -226,7 +172,7 @@
                         
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsFocused" Value="True">
-                                <Setter Property="BorderBrush" Value="#CA7600"/>
+                                <Setter Property="BorderBrush" Value="#CA7600" TargetName="LogBox"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                         
