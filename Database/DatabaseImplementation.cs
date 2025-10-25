@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RANGER.Database
 {
-    internal class DatabaseImplementation
+    class DatabaseImplementation
     {
         private static readonly string connectionString = @"Data Source= RANGER-database.db";
 
