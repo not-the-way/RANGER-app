@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RANGER.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace RANGER
 {
@@ -52,6 +52,18 @@ namespace RANGER
                     }
                 }
             }
+        }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            DatabaseImplementation dbLogin = new DatabaseImplementation();
+            string login = LoginTextBox.Text;
+            string password = LoginPasswordBox.Password;
+
+
+            dbLogin.Query($@"SELECT Login, Password
+                             FROM Employee
+                             WHERE Employee.Login = {login} AND Employee.Password = {password}");
         }
     }
 }

@@ -55,7 +55,8 @@
         <TextBox Grid.Row="2"
                  Grid.Column="1"
                  Margin="20 20 30 20"
-                 Style="{StaticResource ModernTextBoxStyle}"/>
+                 Style="{StaticResource ModernTextBoxStyle}"
+                 x:Name="LoginTextBox"/>
 
         <PasswordBox x:Name="LoginPasswordBox"
                      Grid.Row="3"
@@ -71,7 +72,7 @@
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
                 Width="200"
-                Height="50"/>
+                Height="50" Click="LoginButton_Click"/>
 
         <!-- Информационные TextBox -->
         
