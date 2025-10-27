@@ -1,16 +1,14 @@
 ﻿using RANGER.Database;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Data.SQLite;
+using static RANGER.Database.DatabaseImplementation;
 
 namespace RANGER
 {
@@ -52,18 +50,23 @@ namespace RANGER
                     }
                 }
             }
-        }
+        } 
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            DatabaseImplementation dbLogin = new DatabaseImplementation();
-            string login = LoginTextBox.Text;
-            string password = LoginPasswordBox.Password;
+            var DBLoginSession = new DatabaseImplementation().ExecuteQuery<Employee>("SELECT Login, Password FROM Employee;");
 
-
-            dbLogin.Query($@"SELECT Login, Password
-                             FROM Employee
-                             WHERE Employee.Login = {login} AND Employee.Password = {password}");
+            foreach (var Employee in DBLoginSession)
+            {
+                if (Employee.Employee_ID == 1)
+                {
+                    MessageBox.Show("Admin conn successful");
+                }
+                else
+                {
+                    MessageBox.Show("Kys");
+                }
+            }
         }
     }
 }
