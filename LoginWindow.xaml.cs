@@ -24,10 +24,10 @@ namespace RANGER
 
         private void LoginPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            UpdateVisibility();
+            UpdateVisibilityForPasswordBox();
         }
 
-        private void UpdateVisibility()
+        private void UpdateVisibilityForPasswordBox()
         {
             // Ищем TextBlock с watermark в визуальном дереве
             var passwordBox = LoginPasswordBox;
@@ -52,21 +52,40 @@ namespace RANGER
             }
         } 
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private void LoginTextBox_LoginChanged(object sender, RoutedEventArgs e)
         {
-            var DBLoginSession = new DatabaseImplementation().ExecuteQuery<Employee>("SELECT Login, Password FROM Employee;");
+            // То же самое что и у PasswordBox, но для TextBlock для этого элемента
+            var loginTextBox = LoginTextBox;
+            var grid = VisualTreeHelper.GetChild(loginTextBox, 0) as Grid;
 
-            foreach (var Employee in DBLoginSession)
+            var watermarkText = grid.FindName("watermarkText") as TextBlock;
+
+            if(watermarkText != null)
             {
-                if (Employee.Employee_ID == 1)
+                if (string.IsNullOrEmpty(loginTextBox.Text))
                 {
-                    MessageBox.Show("Admin conn successful");
+                    watermarkText.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    MessageBox.Show("Kys");
+                    watermarkText.Visibility = Visibility.Collapsed;
                 }
             }
+        }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            var DBLoginSession = new DatabaseImplementation().ExecuteQuery<Employee>("SELECT * FROM Employee;");
+
+            //if (DBLoginSession != null) { MessageBox.Show("Test");}
+
+            if (DBLoginSession.Where(n => n.Password == LoginPasswordBox.Password && n.Login == LoginTextBox.Text).FirstOrDefault() != null)
+            {
+                MainWindow main = new MainWindow();
+                main.Show();
+                Hide();
+            }
+            else { MessageBox.Show("Test"); }
         }
     }
 }
