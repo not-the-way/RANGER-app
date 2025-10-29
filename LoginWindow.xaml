@@ -56,7 +56,8 @@
                  Grid.Column="1"
                  Margin="20 20 30 20"
                  Style="{StaticResource ModernTextBoxStyle}"
-                 x:Name="LoginTextBox"/>
+                 x:Name="LoginTextBox"
+                 TextChanged="LoginTextBox_LoginChanged"/>
 
         <PasswordBox x:Name="LoginPasswordBox"
                      Grid.Row="3"

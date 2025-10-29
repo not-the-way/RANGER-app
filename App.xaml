@@ -2,7 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:RANGER"
-             StartupUri="MainWindow.xaml">
+             StartupUri="LoginWindow.xaml">
     
     <!--
     Главный стиль окон: #3c3c3c, #ABABAB
@@ -116,10 +116,9 @@
         <!--
         Сие чудо стоило мне ПОЛЧАСА РАБОТЫ НАД НИМ!
         А ведь оно просто должно делать так, что при вводе текста, "Введите ваш логин" исчезает...
-        На заметку 2: Поменять цвет границы бокса когда он активен
         -->
         
-        <Style x:Key="ModernTextBoxStyle" TargetType="TextBox">
+        <!--<Style x:Key="ModernTextBoxStyle" TargetType="TextBox">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0 0 0 2"/>
             <Setter Property="BorderBrush" Value="#B95600"/>
@@ -154,13 +153,13 @@
 
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
-                                        
+
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Text, ElementName=LogBox}" Value="">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
                                         </Style.Triggers>
-                                        
+
                                         <Setter Property="Visibility" Value="Hidden"/>
                                     </Style>
                                 </TextBlock.Style>
@@ -168,8 +167,6 @@
                             </TextBlock>
                         </Grid>
 
-                        <!-- На заметку: Сделать также как и у PasswordBox -->
-                        
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsFocused" Value="True">
                                 <Setter Property="BorderBrush" Value="#CA7600" TargetName="LogBox"/>
@@ -177,6 +174,54 @@
                         </ControlTemplate.Triggers>
                         
                     </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>-->
+
+        <Style x:Key="ModernTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0 0 0 2"/>
+            <Setter Property="BorderBrush" Value="{StaticResource OffsetShadeColor1}"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Foreground" Value="{StaticResource MainColor}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            
+                            <Border x:Name="border" 
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"/>
+
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Foreground="{TemplateBinding Foreground}"/>
+
+                            <TextBlock x:Name="watermarkText"
+                                       Text="Введите ваш логин..."
+                                       Background="{TemplateBinding Background}"
+                                       TextAlignment="Center"
+                                       Foreground="{StaticResource MainColor}"
+                                       VerticalAlignment="Center"
+                                       Visibility="Visible"/>
+                            
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            
+                            <Trigger Property="IsFocused" Value="True">
+                                
+                                <Setter TargetName="border"
+                                        Property="BorderBrush"
+                                        Value="{StaticResource MainOffsetColor}"/>
+                                
+                            </Trigger>
+                            
+                        </ControlTemplate.Triggers>
+                        
+                    </ControlTemplate>
+                    
                 </Setter.Value>
             </Setter>
         </Style>
@@ -251,5 +296,11 @@
 </Application>
 
 <!--
-Сделано самым гениальным программистом Дамиром Файзуллиным
+При поддержке Алмаза Артуровича,
+Старосты какой-то там,
+Её подруги Насии Сумсунг,
+Зама старосты Эльмира Фембоева,
+Дамира Файзуллина которого вечно нет,
+Но самое главное при поддержке
+Самого главного мотиватора, и вообще просто скромного парня, Имамова Марата
 -->
