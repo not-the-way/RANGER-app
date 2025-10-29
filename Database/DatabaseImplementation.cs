@@ -10,7 +10,7 @@ namespace RANGER.Database
 {
     class DatabaseImplementation
     {
-        private static readonly string connectionString = @"Data Source= RANGER-database.db";
+        private static readonly string connectionString = @"Data Source=Database\RANGER-database.db;Version=3";
 
         public DatabaseImplementation() { }
 
