@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="RANGER" Height="450" Width="800"
         Background="Transparent"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" Closing="Window_Closing" Closed="Window_Closed">
     <Grid Background="#3c3c3c">
 
         <Grid.ColumnDefinitions>
@@ -37,12 +37,10 @@
               Grid.ColumnSpan="5"
               Grid.RowSpan="5"/>
 
-        <Line X1="160" Y1="0"
-              X2="160" Y2="70"
-              Stroke="{StaticResource MainOffsetColor}"
-              StrokeThickness="2"
-              Grid.ColumnSpan="5"
-              Grid.RowSpan="5"/>
+        <TextBox x:Name="LoggedUserTextBox"
+                 Grid.Row="1"
+                 Grid.ColumnSpan="3"
+                 Style="{StaticResource InfoTextBoxStyle}"/>
 
         <Line X1="0" Y1="100"
               X2="800" Y2="100"
@@ -51,7 +49,14 @@
               Fill="{StaticResource MainOffsetColor}"
               Grid.ColumnSpan="5"
               Grid.RowSpan="5"/>
-        
+
+        <Line X1="160" Y1="0"
+              X2="160" Y2="70"
+              Stroke="{StaticResource MainOffsetColor}"
+              StrokeThickness="2"
+              Grid.ColumnSpan="5"
+              Grid.RowSpan="5"/>
+
         <Button Grid.Row="0"
                 Grid.Column="1"
                 Style="{StaticResource MainButtonStyle}"
