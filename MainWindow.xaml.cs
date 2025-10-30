@@ -22,21 +22,11 @@ namespace RANGER
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(Employee employee)
         {
             InitializeComponent();
-            UpdateWhoIsLoggedStatus();
-        }
 
-
-        // Метод должен изменять текст в LoggedUserTextBox на имя пользователя
-        public void UpdateWhoIsLoggedStatus()
-        {
-            var whoIsLogged = LoggedUserTextBox;
-            var dbNameReader = new DatabaseImplementation().ExecuteQuery<Employee>(@"SELECT * FROM Employee;");
-
-            // string userFullName = dbNameReader.Where(n => n.FullName.Equals("");
-            // whoIsLogged.Text = $"Пользователь: {userFullName}";
+            LoggedUserTextBox.Text = $"Пользователь: {employee.FullName}";
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -54,15 +44,14 @@ namespace RANGER
                                        MessageBoxImage.Question,
                                        MessageBoxResult.No);
 
-            // Здесь нужно реализовать выход приложения при нажатии "Да"
-            // И продолжение работы приложения при "Нет"
+            // Здесь реализуется условие, приложение останавливается при нажатии "Да" и работа продолжается при "Нет"
             if (mBox == MessageBoxResult.Yes)
             {
                 Application.Current.Shutdown();
             }
             else
             {
-
+                e.Cancel = true;
             }
         }
     }

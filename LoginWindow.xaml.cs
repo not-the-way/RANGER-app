@@ -77,11 +77,12 @@ namespace RANGER
         {
             var DBLoginSession = new DatabaseImplementation().ExecuteQuery<Employee>("SELECT * FROM Employee;");
 
+            var user = DBLoginSession.Where(n => n.Password == LoginPasswordBox.Password && n.Login == LoginTextBox.Text).FirstOrDefault();
             //if (DBLoginSession != null) { MessageBox.Show("Test");}
 
-            if (DBLoginSession.Where(n => n.Password == LoginPasswordBox.Password && n.Login == LoginTextBox.Text).FirstOrDefault() != null)
+            if (user != null)
             {
-                MainWindow main = new MainWindow();
+                MainWindow main = new MainWindow(user);
                 main.Show();
                 Hide();
             }
