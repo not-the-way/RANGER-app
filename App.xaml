@@ -117,68 +117,8 @@
         Сие чудо стоило мне ПОЛЧАСА РАБОТЫ НАД НИМ!
         А ведь оно просто должно делать так, что при вводе текста, "Введите ваш логин" исчезает...
         -->
-        
-        <!--<Style x:Key="ModernTextBoxStyle" TargetType="TextBox">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0 0 0 2"/>
-            <Setter Property="BorderBrush" Value="#B95600"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TextBox">
-                        <Grid>
 
-                            <Border x:Name="border" 
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"/>
-
-                            <TextBox Margin="0 0 0 0"
-                                     Text="{TemplateBinding Text}"
-                                     BorderThickness="{TemplateBinding BorderThickness}"
-                                     BorderBrush="{TemplateBinding BorderBrush}"
-                                     Background="{TemplateBinding Background}"
-                                     VerticalContentAlignment="Center"
-                                     Foreground="{StaticResource MainColor}"
-                                     x:Name="LogBox"
-                                     FontSize="20"/>
-
-
-                            <TextBlock IsHitTestVisible="False"
-                                       Text="Введите ваш логин..."
-                                       Margin="5"
-                                       VerticalAlignment="Center"
-                                       TextAlignment="Center"
-                                       Foreground="{StaticResource MainColor}">
-
-                                <TextBlock.Style>
-                                    <Style TargetType="TextBlock">
-
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=LogBox}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-
-                                        <Setter Property="Visibility" Value="Hidden"/>
-                                    </Style>
-                                </TextBlock.Style>
-
-                            </TextBlock>
-                        </Grid>
-
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsFocused" Value="True">
-                                <Setter Property="BorderBrush" Value="#CA7600" TargetName="LogBox"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                        
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>-->
-
-        <Style x:Key="ModernTextBoxStyle" TargetType="TextBox">
+        <Style x:Key="LoginTextBoxStyle" TargetType="TextBox">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0 0 0 2"/>
             <Setter Property="BorderBrush" Value="{StaticResource OffsetShadeColor1}"/>
@@ -226,11 +166,7 @@
             </Setter>
         </Style>
 
-        <!--
-        Простите меня, грешного, о великие боги машины, за такой костыль и такие танцы с бубном...
-        -->
-        
-        <Style x:Key="ModernPasswordBoxStyle" TargetType="PasswordBox">
+        <Style x:Key="LoginPasswordBoxStyle" TargetType="PasswordBox">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0 0 0 2"/>
             <Setter Property="BorderBrush" Value="#B95600"/>
