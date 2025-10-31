@@ -27,8 +27,10 @@ namespace RANGER
             InitializeComponent();
 
             LoggedUserTextBox.Text = $"Пользователь: {employee.FullName}";
+            AccessLevelTextBox.Text = $"Вход как: {employee.AccessLevel}";
         }
 
+        // Просто на всякий случай
         private void Window_Closed(object sender, EventArgs e)
         {
             Application.Current.Shutdown();
