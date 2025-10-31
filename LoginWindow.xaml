@@ -55,7 +55,7 @@
         <TextBox Grid.Row="2"
                  Grid.Column="1"
                  Margin="20 20 30 20"
-                 Style="{StaticResource ModernTextBoxStyle}"
+                 Style="{StaticResource LoginTextBoxStyle}"
                  x:Name="LoginTextBox"
                  TextChanged="LoginTextBox_LoginChanged"/>
 
@@ -63,7 +63,7 @@
                      Grid.Row="3"
                      Grid.Column="1"
                      Margin="20 20 30 20"
-                     Style="{StaticResource ModernPasswordBoxStyle}"
+                     Style="{StaticResource LoginPasswordBoxStyle}"
                      PasswordChanged="LoginPasswordBox_PasswordChanged"/>
 
         <Button Style="{StaticResource MainButtonStyle}"
