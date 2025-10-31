@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RANGER"
         mc:Ignorable="d"
-        Title="RANGER" Height="450" Width="800"
+        Title="RANGER" Height="650" Width="800"
         Background="Transparent"
         WindowStartupLocation="CenterScreen" Closing="Window_Closing" Closed="Window_Closed">
     <Grid Background="#3c3c3c">
@@ -24,63 +24,33 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
+            <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
 
         <Label Content="RANGER"
                Style="{StaticResource MainTitleStyle}"/>
 
-        <Line X1="0" Y1="70"
-              X2="800" Y2="70"
-              Stroke="{StaticResource MainOffsetColor}"
-              StrokeThickness="2"
-              Fill="{StaticResource MainOffsetColor}"
-              Grid.ColumnSpan="5"
-              Grid.RowSpan="5"/>
+        <Border Grid.RowSpan="3" Grid.ColumnSpan="5" Grid.Row="2"
+                CornerRadius="4" BorderThickness="2"
+                BorderBrush="{StaticResource MainOffsetColor}">
 
+            <DataGrid Background="Transparent">
+                
+            </DataGrid>
+            
+        </Border>
+        
         <TextBox x:Name="LoggedUserTextBox"
-                 Grid.Row="1"
-                 Grid.ColumnSpan="3"
-                 Style="{StaticResource InfoTextBoxStyle}"/>
+                 Grid.Row="5"
+                 Grid.ColumnSpan="2"
+                 Style="{StaticResource InfoTextBoxStyle}"
+                 HorizontalContentAlignment="Left"/>
 
-        <Line X1="0" Y1="100"
-              X2="800" Y2="100"
-              Stroke="{StaticResource MainOffsetColor}"
-              StrokeThickness="2"
-              Fill="{StaticResource MainOffsetColor}"
-              Grid.ColumnSpan="5"
-              Grid.RowSpan="5"/>
-
-        <Line X1="160" Y1="0"
-              X2="160" Y2="70"
-              Stroke="{StaticResource MainOffsetColor}"
-              StrokeThickness="2"
-              Grid.ColumnSpan="5"
-              Grid.RowSpan="5"/>
-
-        <Button Grid.Row="0"
-                Grid.Column="1"
-                Style="{StaticResource MainButtonStyle}"
-                Width="140"
-                Height="50"/>
-
-        <Button Grid.Row="0"
-                Grid.Column="2"
-                Style="{StaticResource MainButtonStyle}"
-                Width="140"
-                Height="50"/>
-
-        <Button Grid.Row="0"
-                Grid.Column="3"
-                Style="{StaticResource MainButtonStyle}"
-                Width="140"
-                Height="50"/>
-
-        <StackPanel Grid.Row="2" Grid.RowSpan="3" Grid.ColumnSpan="5"
-                    Margin="15">
-            
-            
-            
-        </StackPanel>
+        <TextBox x:Name="AccessLevelTextBox"
+                 Grid.Row="5" Grid.Column="3"
+                 Grid.ColumnSpan="2"
+                 Style="{StaticResource InfoTextBoxStyle}"
+                 HorizontalContentAlignment="Right"/>
         
     </Grid>
 </Window>
