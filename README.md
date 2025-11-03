@@ -6,7 +6,7 @@ Like, seriously, i dunno if i even need this shit. But i am REQUIRED to do it, b
 # Alright, alright, i will at least provide TO-DO list for myself:
 ## 1. Add more data into .db file
 ## 2. Come up with Access level shit (like admin can observe and modify any data, issue level can only see issue)
-## 3. Implement data modification through the app itself (like adding, updating, modifying)
-## 4. Add a way to let user print the data from app (like creating a .docx file or directly printing shit)
-## 5. BE LESS LAZY
+## 3. Data manipulation thingie (INSERT, UPDATE, DELETE, and so on) **(Important as hell, must be done first!!)**
+## 4. Add analytics (like printing out the docs idk)
+## 5. Redesign the app (colors are... yeah the app looks like that famous website)
 ## 6. Delete unnecessary comments
