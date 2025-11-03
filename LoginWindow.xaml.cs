@@ -8,7 +8,8 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Data.SQLite;
-using static RANGER.Database.DatabaseImplementation;
+using static RANGER.Database.DataBaseConnection;
+using static RANGER.Database.DataBaseModel;
 
 namespace RANGER
 {
@@ -75,18 +76,22 @@ namespace RANGER
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            var DBLoginSession = new DatabaseImplementation().ExecuteQuery<Employee>("SELECT * FROM Employee;");
+            var DBLoginSession = new DataBaseConnection().ExecuteQuery<Employee>("SELECT * FROM Employee;");
 
             var user = DBLoginSession.Where(n => n.Password == LoginPasswordBox.Password && n.Login == LoginTextBox.Text).FirstOrDefault();
-            //if (DBLoginSession != null) { MessageBox.Show("Test");}
 
             if (user != null)
             {
-                MainWindow main = new MainWindow(user);
-                main.Show();
+                MainWindow mainWindow = new MainWindow(user);
+                mainWindow.Show();
                 Hide();
             }
-            else { MessageBox.Show("Test"); }
+            else
+            {
+                MessageBox.Show("Неверный логин или пароль!",
+                                "Ошибка" , MessageBoxButton.OK,
+                                MessageBoxImage.Error);
+            }
         }
     }
 }

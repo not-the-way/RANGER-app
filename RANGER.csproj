@@ -62,7 +62,8 @@
     </ApplicationDefinition>
     <Compile Include="CORE\ObservableObject.cs" />
     <Compile Include="CORE\RelayCommand.cs" />
-    <Compile Include="Database\DatabaseImplementation.cs" />
+    <Compile Include="Database\DataBaseConnection.cs" />
+    <Compile Include="Database\DataBaseModel.cs" />
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
