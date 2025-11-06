@@ -32,16 +32,18 @@
 
         <!-- DataGrid для отображения данных -->
 
-        <Border Grid.RowSpan="3" Grid.ColumnSpan="5" Grid.Row="2"
-                CornerRadius="4" BorderThickness="2"
+        <Border Grid.RowSpan="2" Grid.ColumnSpan="5" Grid.Row="2"
+                CornerRadius="4" BorderThickness="2" Margin="15"
                 BorderBrush="{StaticResource MainOffsetColor}">
 
-            <DataGrid x:Name="DataGrid" Grid.Row="1" AutoGenerateColumns="True" 
-                      CanUserAddRows="False" CanUserDeleteRows="False"
-                      IsReadOnly="True" SelectionMode="Single"
+            <DataGrid x:Name="DataGrid" AutoGenerateColumns="True" 
+                      CanUserAddRows="True" CanUserDeleteRows="False"
+                      IsReadOnly="False" SelectionMode="Single"
                       AlternatingRowBackground="LightBlue"
-                      GridLinesVisibility="All"/>
-
+                      GridLinesVisibility="All"
+                      CellEditEnding="DataGrid_CellEditEnding"
+                      AddingNewItem="DataGrid_AddingNewItem"
+                      BeginningEdit="DataGrid_BeginningEdit"/>
         </Border>
 
         <TextBox x:Name="LoggedUserTextBox"
@@ -59,11 +61,18 @@
         <StackPanel Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0,0,0,10">
             <TextBlock Text="Выберите таблицу:" VerticalAlignment="Center" Margin="0,0,10,0"/>
             <ComboBox x:Name="TableComboBox" Width="150" SelectionChanged="TableComboBox_SelectionChanged"/>
-            <Button x:Name="RefreshButton" Content="Обновить" Margin="10,0,0,0" Click="RefreshButton_Click"/>
         </StackPanel>
 
-        <!-- Статус бар -->
-        <StatusBar Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="2" Margin="0,10,0,0">
+        <!-- Панель кнопок -->
+        <StackPanel Grid.Row="4" Grid.ColumnSpan="5" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
+            <Button x:Name="AddButton" Content="Добавить" Margin="5" Padding="10,5" Click="AddButton_Click" Style="{StaticResource MainButtonStyle}"/>
+            <Button x:Name="DeleteButton" Content="Удалить" Margin="5" Padding="10,5" Click="DeleteButton_Click" Style="{StaticResource MainButtonStyle}"/>
+            <Button x:Name="SaveButton" Content="Сохранить изменения" Margin="5" Padding="10,5" Click="SaveButton_Click" Style="{StaticResource MainButtonStyle}"/>
+            <Button x:Name="RefreshButton" Content="Обновить" Margin="5" Padding="10,5" Click="RefreshButton_Click" Style="{StaticResource MainButtonStyle}"/>
+            <Button x:Name="CancelButton" Content="Отменить" Margin="5" Padding="10,5" Click="CancelButton_Click" Style="{StaticResource MainButtonStyle}"/>
+        </StackPanel>
+
+        <StatusBar Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,10,0,0">
             <StatusBarItem>
                 <TextBlock x:Name="StatusText" Text="Готов к работе"/>
             </StatusBarItem>
