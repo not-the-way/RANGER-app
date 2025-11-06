@@ -66,7 +66,6 @@ namespace RANGER
         }
 
         // РАБОТА С БД:
-
         private void InitializeTableComboBox()
         {
             // Добавляем таблицы в ComboBox
@@ -109,18 +108,15 @@ namespace RANGER
                         DataGrid.ItemsSource = clients;
                         break;
                     case "Firearms":
-                        var firearms = _database.ExecuteQuery<Firearm>(
-                            @"SELECT * FROM Firearm");
+                        var firearms = _database.ExecuteQuery<Firearm>(@"SELECT * FROM Firearm");
                         DataGrid.ItemsSource = firearms;
                         break;
                     case "Issues":
-                        var issues = _database.ExecuteQuery<Issue>(
-                            @"SELECT * FROM Issue");
+                        var issues = _database.ExecuteQuery<Issue>(@"SELECT * FROM Issue");
                         DataGrid.ItemsSource = issues;
                         break;
                     case "Warehouse":
-                        var warehouse = _database.ExecuteQuery<Warehouse>(
-                            @"SELECT * FROM Warehouse");
+                        var warehouse = _database.ExecuteQuery<Warehouse>(@"SELECT * FROM Warehouse");
                         DataGrid.ItemsSource = warehouse;
                         break;
                 }
@@ -130,7 +126,7 @@ namespace RANGER
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при загрузке данных: {ex.Message}", "Ошибка",
-                              MessageBoxButton.OK, MessageBoxImage.Error);
+                                MessageBoxButton.OK, MessageBoxImage.Error);
                 StatusText.Text = "Ошибка при загрузке данных";
             }
         }

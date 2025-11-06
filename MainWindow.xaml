@@ -30,15 +30,17 @@
         <Label Content="RANGER"
                Style="{StaticResource MainTitleStyle}"/>
 
+        <!-- DataGrid для отображения данных -->
+
         <Border Grid.RowSpan="3" Grid.ColumnSpan="5" Grid.Row="2"
                 CornerRadius="4" BorderThickness="2"
                 BorderBrush="{StaticResource MainOffsetColor}">
 
             <DataGrid x:Name="DataGrid" Grid.Row="1" AutoGenerateColumns="True" 
-          CanUserAddRows="False" CanUserDeleteRows="False"
-          IsReadOnly="True" SelectionMode="Single"
-          AlternatingRowBackground="LightBlue"
-          GridLinesVisibility="All"/>
+                      CanUserAddRows="False" CanUserDeleteRows="False"
+                      IsReadOnly="True" SelectionMode="Single"
+                      AlternatingRowBackground="LightBlue"
+                      GridLinesVisibility="All"/>
 
         </Border>
 
@@ -54,14 +56,11 @@
                  Style="{StaticResource InfoTextBoxStyle}"
                  HorizontalContentAlignment="Right"/>
 
-        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Margin="0,0,0,10">
+        <StackPanel Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0,0,0,10">
             <TextBlock Text="Выберите таблицу:" VerticalAlignment="Center" Margin="0,0,10,0"/>
             <ComboBox x:Name="TableComboBox" Width="150" SelectionChanged="TableComboBox_SelectionChanged"/>
             <Button x:Name="RefreshButton" Content="Обновить" Margin="10,0,0,0" Click="RefreshButton_Click"/>
         </StackPanel>
-
-        <!-- DataGrid для отображения данных -->
-        
 
         <!-- Статус бар -->
         <StatusBar Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="2" Margin="0,10,0,0">
