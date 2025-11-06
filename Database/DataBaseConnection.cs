@@ -110,5 +110,58 @@ namespace RANGER.Database
             }
             return result;
         }
+
+        public List<object> ExecuteQuery(string sql, SQLiteParameter[] parameters = null, Type resultType = null)
+        {
+            var result = new List<object>();
+
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+
+                using (var command = new SQLiteCommand(sql, connection))
+                {
+                    if (parameters != null)
+                    {
+                        foreach (var item in parameters)
+                        {
+                            command.Parameters.Add(item);
+                        }
+                    }
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var obj = Activator.CreateInstance(resultType);
+
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                string columnName = reader.GetName(i);
+                                object value = reader.GetValue(i);
+
+                                var property = resultType.GetProperty(columnName,
+                                    BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+
+                                if (property != null && value != DBNull.Value && property.CanWrite)
+                                {
+                                    try
+                                    {
+                                        var convertedValue = Convert.ChangeType(value, property.PropertyType);
+                                        property.SetValue(obj, convertedValue);
+                                    }
+                                    catch
+                                    {
+                                        // Игнорируем ошибки преобразования типов
+                                    }
+                                }
+                            }
+                            result.Add(obj);
+                        }
+                    }
+                }
+            }
+            return result;
+        }
     }
 }
