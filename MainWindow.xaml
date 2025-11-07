@@ -6,8 +6,10 @@
         xmlns:local="clr-namespace:RANGER"
         mc:Ignorable="d"
         Title="RANGER" Height="650" Width="800"
+        MinHeight="650" MinWidth="600"
         Background="Transparent"
         WindowStartupLocation="CenterScreen" Closing="Window_Closing" Closed="Window_Closed">
+    
     <Grid Background="#3c3c3c">
 
         <Grid.ColumnDefinitions>
@@ -19,7 +21,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="1.3*"/>
+            <RowDefinition Height="1*"/>
             <RowDefinition Height="0.5*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
@@ -30,17 +32,47 @@
         <Label Content="RANGER"
                Style="{StaticResource MainTitleStyle}"/>
 
-        <!-- DataGrid для отображения данных -->
+        <!-- Выбор таблиц, хз -->
+        
+        <StackPanel Grid.Column="1" Grid.ColumnSpan="4"
+                    Orientation="Horizontal" Margin="15 0 15 0"
+                    VerticalAlignment="Center" HorizontalAlignment="Stretch">
+            
+            <RadioButton Style="{StaticResource MenuToggleRadioButton}"
+                         Content="Test"/>
 
-        <Border Grid.RowSpan="3" Grid.ColumnSpan="5" Grid.Row="2"
-                CornerRadius="4" BorderThickness="2"
+            <RadioButton Style="{StaticResource MenuToggleRadioButton}"
+                         Content="Test"/>
+            
+            <RadioButton Style="{StaticResource MenuToggleRadioButton}"
+                         Content="Test"/>
+            
+            <RadioButton Style="{StaticResource MenuToggleRadioButton}"
+                         Content="Test"/>
+
+            <RadioButton Style="{StaticResource MenuToggleRadioButton}"
+                         Content="Test"/>
+
+        </StackPanel>
+
+        <!-- StackPanel для кнопок изменения данных -->
+        
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="5">
+            
+        </StackPanel>
+
+        <!-- ListView для отображения данных (Вместо DataGrid) -->
+        <Border Grid.RowSpan="2" Grid.ColumnSpan="5" Grid.Row="2"
+                CornerRadius="4" BorderThickness="2" Margin="10 5 10 5"
                 BorderBrush="{StaticResource MainOffsetColor}">
 
-            <DataGrid x:Name="DataGrid" Grid.Row="1" AutoGenerateColumns="True" 
-                      CanUserAddRows="False" CanUserDeleteRows="False"
-                      IsReadOnly="True" SelectionMode="Single"
-                      AlternatingRowBackground="LightBlue"
-                      GridLinesVisibility="All"/>
+            <ListView Background="Transparent" x:Name="dataListView" Foreground="{StaticResource MainColor}">
+                <ListView.View>
+                    <GridView>
+                        <!-- Колонки будут динамически добавляться в Code-behind -->
+                    </GridView>
+                </ListView.View>
+            </ListView>
 
         </Border>
 
@@ -56,17 +88,5 @@
                  Style="{StaticResource InfoTextBoxStyle}"
                  HorizontalContentAlignment="Right"/>
 
-        <StackPanel Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0,0,0,10">
-            <TextBlock Text="Выберите таблицу:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-            <ComboBox x:Name="TableComboBox" Width="150" SelectionChanged="TableComboBox_SelectionChanged"/>
-            <Button x:Name="RefreshButton" Content="Обновить" Margin="10,0,0,0" Click="RefreshButton_Click"/>
-        </StackPanel>
-
-        <!-- Статус бар -->
-        <StatusBar Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="2" Margin="0,10,0,0">
-            <StatusBarItem>
-                <TextBlock x:Name="StatusText" Text="Готов к работе"/>
-            </StatusBarItem>
-        </StatusBar>
     </Grid>
 </Window>
