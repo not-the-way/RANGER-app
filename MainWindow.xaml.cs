@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,8 +35,7 @@ namespace RANGER
             AccessLevelTextBox.Text = $"Вход как: {employee.AccessLevel}";
 
             _database = new DataBaseConnection();
-
-            InitializeTableComboBox();
+            LoadData();
         }
 
         // Просто на всякий случай
@@ -66,68 +66,52 @@ namespace RANGER
         }
 
         // РАБОТА С БД:
-        private void InitializeTableComboBox()
-        {
-            // Добавляем таблицы в ComboBox
-            TableComboBox.Items.Add("Employees");
-            TableComboBox.Items.Add("Clients");
-            TableComboBox.Items.Add("Firearms");
-            TableComboBox.Items.Add("Issues");
-            TableComboBox.Items.Add("Warehouse");
-            TableComboBox.SelectedIndex = 0;
-        }
 
-        private void TableComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (TableComboBox.SelectedItem != null)
-            {
-                LoadData(TableComboBox.SelectedItem.ToString());
-            }
-        }
-
-        private void RefreshButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (TableComboBox.SelectedItem != null)
-            {
-                LoadData(TableComboBox.SelectedItem.ToString());
-            }
-        }
-
-        private void LoadData(string tableName)
+        private void LoadData()
         {
             try
             {
-                switch (tableName)
-                {
-                    case "Employees":
-                        var employees = _database.ExecuteQuery<Employee>("SELECT * FROM Employee");
-                        DataGrid.ItemsSource = employees;
-                        break;
-                    case "Clients":
-                        var clients = _database.ExecuteQuery<Client>("SELECT * FROM Client");
-                        DataGrid.ItemsSource = clients;
-                        break;
-                    case "Firearms":
-                        var firearms = _database.ExecuteQuery<Firearm>(@"SELECT * FROM Firearm");
-                        DataGrid.ItemsSource = firearms;
-                        break;
-                    case "Issues":
-                        var issues = _database.ExecuteQuery<Issue>(@"SELECT * FROM Issue");
-                        DataGrid.ItemsSource = issues;
-                        break;
-                    case "Warehouse":
-                        var warehouse = _database.ExecuteQuery<Warehouse>(@"SELECT * FROM Warehouse");
-                        DataGrid.ItemsSource = warehouse;
-                        break;
-                }
+                var employee = _database.ExecuteQuery<Employee>("SELECT * FROM Employee");
+                var gridView = (GridView)dataListView.View;
 
-                StatusText.Text = $"Данные загружены из таблицы: {tableName}";
+                gridView.Columns.Add(new GridViewColumn
+                {
+                    Header = "Номер сотрудника",
+                    DisplayMemberBinding = new Binding("Employee_ID")
+                });
+
+                gridView.Columns.Add(new GridViewColumn
+                {
+                    Header = "ФИО",
+                    DisplayMemberBinding = new Binding("FullName")
+                });
+
+                gridView.Columns.Add(new GridViewColumn
+                {
+                    Header = "Дата найма",
+                    DisplayMemberBinding = new Binding("EmploymentDate")
+                });
+
+                gridView.Columns.Add(new GridViewColumn
+                {
+                    Header = "Логин",
+                    DisplayMemberBinding = new System.Windows.Data.Binding("Login"),
+                    Width = 100
+                });
+
+                gridView.Columns.Add(new GridViewColumn
+                {
+                    Header = "Уровень доступа",
+                    DisplayMemberBinding = new System.Windows.Data.Binding("AccessLevel"),
+                    Width = 100
+                });
+
+                dataListView.ItemsSource = employee;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при загрузке данных: {ex.Message}", "Ошибка",
-                                MessageBoxButton.OK, MessageBoxImage.Error);
-                StatusText.Text = "Ошибка при загрузке данных";
+                MessageBox.Show($"Ошибка загрузки данных: {ex.Message}", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
