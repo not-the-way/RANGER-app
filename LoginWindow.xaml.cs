@@ -25,12 +25,6 @@ namespace RANGER
 
         private void LoginPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            UpdateVisibilityForPasswordBox();
-        }
-
-        private void UpdateVisibilityForPasswordBox()
-        {
-            // Ищем TextBlock с watermark в визуальном дереве
             var passwordBox = LoginPasswordBox;
             var grid = VisualTreeHelper.GetChild(passwordBox, 0) as Grid;
 
@@ -51,7 +45,7 @@ namespace RANGER
                     }
                 }
             }
-        } 
+        }
 
         private void LoginTextBox_LoginChanged(object sender, RoutedEventArgs e)
         {
