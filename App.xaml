@@ -18,7 +18,7 @@
         -->
         
         <SolidColorBrush x:Key="DarkBackgroundTheme" Color="#3c3c3c"/>
-        <SolidColorBrush x:Key="LightBackGroundTheme" Color="#ABABAB"/>
+        <SolidColorBrush x:Key="LightBackgroundTheme" Color="#ABABAB"/>
 
         <SolidColorBrush x:Key="MainColor" Color="#FF7700"/>
         <SolidColorBrush x:Key="MainOffsetColor" Color="#F5A35B"/>
@@ -33,43 +33,53 @@
             <Setter Property="FontFamily" Value="Rockwell"/>
             <Setter Property="FontSize" Value="24"/>
 
-            <!--
-            Этот Setter должен делать ТЕКСТ обрамлённым, не сам label,
-            Желательно исправить
-            UPD1: Решил поместить его в комментарии т.к. почему бы не использовать тёмную тему :)
-            UPD2: Препод заставил делать светлую тему.
-            -->
-
-            <!--<Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Label">
-                        <Border Background="{TemplateBinding Background}"
-                        BorderBrush="Black"
-                        BorderThickness="2"
-                        CornerRadius="4"
-                        Padding="8,4">
-                            <TextBlock Text="{TemplateBinding Content}"
-                               FontFamily="{TemplateBinding FontFamily}"
-                               FontSize="{TemplateBinding FontSize}"
-                               FontWeight="{TemplateBinding FontWeight}"
-                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                               Foreground="{TemplateBinding Foreground}"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>-->
-
             <Setter Property="Label.Effect">
                 <Setter.Value>
                     <DropShadowEffect Color="Black" Opacity="0.6" Direction="250" BlurRadius="8"/>
                 </Setter.Value>
             </Setter>
-
-
-
         </Style>
 
+        <Style x:Key="MenuToggleRadioButton"
+               BasedOn="{StaticResource {x:Type ToggleButton}}"
+               TargetType="RadioButton">
+
+            <Style.Setters>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Foreground" Value="{StaticResource MainColor}"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="FontFamily" Value="Rockwell"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="Margin" Value="15 0 15 0"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="RadioButton">
+                            <Grid VerticalAlignment="Stretch"
+                                  HorizontalAlignment="Stretch"
+                                  Background="{TemplateBinding Background}">
+
+                                <TextBlock Text="{TemplateBinding Content}"
+                                           Margin="15"
+                                           Foreground="{TemplateBinding Foreground}"
+                                           FontSize="{TemplateBinding FontSize}"
+                                           FontFamily="{TemplateBinding FontFamily}"/>
+
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="#4D4D4D"/>
+                </Trigger>
+            </Style.Triggers>
+            
+        </Style>
+        
         <Style x:Key="MainButtonStyle" TargetType="Button">
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="FontFamily" Value="Corbel"/>
@@ -112,11 +122,6 @@
             </Setter>
 
         </Style>
-
-        <!--
-        Сие чудо стоило мне ПОЛЧАСА РАБОТЫ НАД НИМ!
-        А ведь оно просто должно делать так, что при вводе текста, "Введите ваш логин" исчезает...
-        -->
 
         <Style x:Key="LoginTextBoxStyle" TargetType="TextBox">
             <Setter Property="Background" Value="Transparent"/>
