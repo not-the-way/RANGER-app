@@ -74,8 +74,6 @@ namespace RANGER
             }
         }
 
-        // Вход в систему
-
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             var DBLoginSession = new DataBaseConnection().ExecuteQuery<Employee>("SELECT * FROM Employee;");

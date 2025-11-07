@@ -41,6 +41,7 @@ namespace RANGER
 
             _database = new DataBaseConnection();
 
+            InitializeTableComboBox();
         }
 
         // Просто на всякий случай
@@ -71,6 +72,40 @@ namespace RANGER
         }
 
         // РАБОТА С БД:
+        private void InitializeTableComboBox()
+        {
+            // Автоматически определяем доступные таблицы на основе моделей
+            var tableTypes = new Dictionary<string, Type>
+            {
+                { "Employee", typeof(Employee) },
+                { "Client", typeof(Client) },
+                { "Firearm", typeof(Firearm) },
+                { "Issue", typeof(Issue) },
+                { "Warehouse", typeof(Warehouse) }
+            };
+
+            foreach (var table in tableTypes)
+            {
+                TableComboBox.Items.Add(table.Key);
+            }
+            TableComboBox.SelectedIndex = 0;
+        }
+
+        private void TableComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (TableComboBox.SelectedItem != null)
+            {
+                LoadData(TableComboBox.SelectedItem.ToString());
+            }
+        }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (TableComboBox.SelectedItem != null)
+            {
+                LoadData(TableComboBox.SelectedItem.ToString());
+            }
+        }
 
         private void LoadData(string tableName)
         {
@@ -284,6 +319,14 @@ namespace RANGER
             }
 
             return parameters.ToArray();
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (TableComboBox.SelectedItem != null)
+            {
+                LoadData(TableComboBox.SelectedItem.ToString());
+            }
         }
 
         private void DataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
