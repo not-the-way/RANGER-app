@@ -14,7 +14,7 @@ namespace RANGER.Database
 
             public int Employee_ID { get; set; }
             public string FullName { get; set; }
-            public DateTime Date { get; set; }
+            public DateTime EmploymentDate { get; set; }
             public string Login { get; set; }
             public string Password { get; set; }
             public string AccessLevel { get; set; }
