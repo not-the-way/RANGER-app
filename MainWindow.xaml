@@ -36,6 +36,8 @@
                 CornerRadius="4" BorderThickness="2" Margin="15"
                 BorderBrush="{StaticResource MainOffsetColor}">
 
+            <!--Изменить DataGrid так, чтобы он показывал только что-то конкретное, целую таблицу-->
+
             <DataGrid x:Name="DataGrid" AutoGenerateColumns="True" 
                       CanUserAddRows="True" CanUserDeleteRows="False"
                       IsReadOnly="False" SelectionMode="Single"
@@ -43,7 +45,8 @@
                       GridLinesVisibility="All"
                       CellEditEnding="DataGrid_CellEditEnding"
                       AddingNewItem="DataGrid_AddingNewItem"
-                      BeginningEdit="DataGrid_BeginningEdit"/>
+                      BeginningEdit="DataGrid_BeginningEdit">
+            </DataGrid>
         </Border>
 
         <TextBox x:Name="LoggedUserTextBox"
@@ -58,18 +61,11 @@
                  Style="{StaticResource InfoTextBoxStyle}"
                  HorizontalContentAlignment="Right"/>
 
-        <StackPanel Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0,0,0,10">
-            <TextBlock Text="Выберите таблицу:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-            <ComboBox x:Name="TableComboBox" Width="150" SelectionChanged="TableComboBox_SelectionChanged"/>
-        </StackPanel>
-
         <!-- Панель кнопок -->
         <StackPanel Grid.Row="4" Grid.ColumnSpan="5" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
             <Button x:Name="AddButton" Content="Добавить" Margin="5" Padding="10,5" Click="AddButton_Click" Style="{StaticResource MainButtonStyle}"/>
             <Button x:Name="DeleteButton" Content="Удалить" Margin="5" Padding="10,5" Click="DeleteButton_Click" Style="{StaticResource MainButtonStyle}"/>
             <Button x:Name="SaveButton" Content="Сохранить изменения" Margin="5" Padding="10,5" Click="SaveButton_Click" Style="{StaticResource MainButtonStyle}"/>
-            <Button x:Name="RefreshButton" Content="Обновить" Margin="5" Padding="10,5" Click="RefreshButton_Click" Style="{StaticResource MainButtonStyle}"/>
-            <Button x:Name="CancelButton" Content="Отменить" Margin="5" Padding="10,5" Click="CancelButton_Click" Style="{StaticResource MainButtonStyle}"/>
         </StackPanel>
 
         <StatusBar Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,10,0,0">
