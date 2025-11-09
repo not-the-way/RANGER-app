@@ -6,18 +6,18 @@
         xmlns:local="clr-namespace:RANGER"
         mc:Ignorable="d"
         Title="RANGER" Height="650" Width="800"
-        MinHeight="650" MinWidth="600"
+        MinHeight="650" MinWidth="650"
         Background="Transparent"
-        WindowStartupLocation="CenterScreen" Closing="Window_Closing" Closed="Window_Closed">
+        WindowStartupLocation="CenterScreen" Closing="Window_Closing">
     
     <Grid Background="#3c3c3c">
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="0.7*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -39,19 +39,19 @@
                     VerticalAlignment="Center" HorizontalAlignment="Stretch">
             
             <RadioButton Style="{StaticResource MenuToggleRadioButton}"
-                         Content="Test"/>
+                         Content="Выдача" x:Name="IssueRBtn" IsChecked="True"/>
 
             <RadioButton Style="{StaticResource MenuToggleRadioButton}"
-                         Content="Test"/>
+                         Content="Инвентарь" x:Name="WarehouseRBtn"/>
             
             <RadioButton Style="{StaticResource MenuToggleRadioButton}"
-                         Content="Test"/>
+                         Content="Оружие" x:Name="FirearmsRBtn" Checked="FirearmsRBtn_Checked"/>
             
             <RadioButton Style="{StaticResource MenuToggleRadioButton}"
-                         Content="Test"/>
+                         Content="Сотр." x:Name="EmployeesRBtn" Checked="EmployeesRBtn_Checked"/>
 
             <RadioButton Style="{StaticResource MenuToggleRadioButton}"
-                         Content="Test"/>
+                         Content="Клиенты" x:Name="ClientsRBtn" Checked="ClientsRBtn_Checked"/>
 
         </StackPanel>
 
@@ -88,5 +88,9 @@
                  Style="{StaticResource InfoTextBoxStyle}"
                  HorizontalContentAlignment="Right"/>
 
+
+        <Button x:Name="ExitButton" Click="ExitButton_Click"
+                Style="{StaticResource MainButtonStyle}"
+                Grid.Row="4" Grid.Column="4" Content="Выход" Margin="20"/>
     </Grid>
 </Window>

@@ -1,6 +1,7 @@
 ﻿using RANGER.Database;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
@@ -26,6 +27,7 @@ namespace RANGER
     public partial class MainWindow : Window
     {
         private DataBaseConnection _database;
+        private string currentTable;
 
         public MainWindow(Employee employee)
         {
@@ -34,18 +36,52 @@ namespace RANGER
             LoggedUserTextBox.Text = $"Пользователь: {employee.FullName}";
             AccessLevelTextBox.Text = $"Вход как: {employee.AccessLevel}";
 
-            _database = new DataBaseConnection();
-            LoadData();
-        }
+            currentTable = "Employee";
 
-        // Просто на всякий случай
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            Application.Current.Shutdown();
+            _database = new DataBaseConnection();
+
+            ClientsRBtn.Visibility = Visibility.Collapsed;
+            FirearmsRBtn.Visibility = Visibility.Collapsed;
+            IssueRBtn.Visibility = Visibility.Collapsed;
+            WarehouseRBtn.Visibility = Visibility.Collapsed;
+            EmployeesRBtn.Visibility = Visibility.Collapsed;
+
+            // Работа с уровнями доступа (WIP)
+            switch (employee.AccessLevel)
+            {
+                case "Admin":
+                    
+                    ClientsRBtn.Visibility = Visibility.Visible;
+                    FirearmsRBtn.Visibility = Visibility.Visible;
+                    IssueRBtn.Visibility = Visibility.Visible;
+                    WarehouseRBtn.Visibility = Visibility.Visible;
+                    EmployeesRBtn.Visibility = Visibility.Visible;
+                    break;
+                    
+
+                case "Manager":
+                    
+                    ClientsRBtn.Visibility = Visibility.Visible;
+                    FirearmsRBtn.Visibility = Visibility.Visible;
+                    IssueRBtn.Visibility = Visibility.Visible;
+                    WarehouseRBtn.Visibility = Visibility.Visible;
+                    EmployeesRBtn.Visibility = Visibility.Visible;
+                    break;
+
+                case "Warehouse":
+                    FirearmsRBtn.Visibility = Visibility.Visible;
+                    WarehouseRBtn.Visibility = Visibility.Visible;
+                    break;
+
+                case "Issue":
+                    IssueRBtn.Visibility = Visibility.Visible;
+                    ClientsRBtn.Visibility = Visibility.Visible;
+                    break;
+            }
         }
 
         // Код ниже отвечает за выход из приложения
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, CancelEventArgs e)
         {
             // При закрытии окна показывается MessageBox с кнопками да и нет
             var mBox = MessageBox.Show("Вы точно хотите выйти?",
@@ -65,9 +101,114 @@ namespace RANGER
             }
         }
 
+        // Кнопка выхода (WIP)
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            LoginWindow loginWindow = new LoginWindow();
+            this.Close();
+            loginWindow.Show();
+        }
+
         // РАБОТА С БД:
 
+        private void EmployeesRBtn_Checked(object sender, RoutedEventArgs e)
+        {
+            currentTable = "Employee";
+            LoadData();
+        }
+        private void ClientsRBtn_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void FirearmsRBtn_Checked(object sender, RoutedEventArgs e)
+        {
+            currentTable = "Firearm";
+            LoadData();
+        }
+
         private void LoadData()
+        {
+            try
+            {
+                dataListView.ItemsSource = null;
+                dataListView.View = new GridView();
+                var gridView = (GridView)dataListView.View;
+                gridView.Columns.Clear();
+
+                switch (currentTable)
+                {
+                    case "Employee":
+                        LoadDataForEmployees();
+                        break;
+                    //case "Client":
+                    //    LoadDataForClients();
+                    //    break;
+                    case "Firearm":
+                        LoadDataForFirearms();
+                        break;
+                        //case "Issue":
+                        //    LoadDataForIssues();
+                        //    break;
+                        //case "Warehouse":
+                        //    LoadDataForWarehouse();
+                        //    break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка загрузки данных: {ex.Message}", "Ошибка",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void LoadDataForFirearms()
+        {
+            try
+            {
+                var firearm = _database.ExecuteQuery<Firearm>("SELECT * FROM Firearm");
+                var gridView = (GridView)dataListView.View;
+
+                gridView.Columns.Add(new GridViewColumn
+                {
+                    Header = "Серийный номер",
+                    DisplayMemberBinding = new Binding("FirearmSerialNumber")
+                });
+
+                gridView.Columns.Add(new GridViewColumn
+                {
+                    Header = "Название",
+                    DisplayMemberBinding = new Binding("Name")
+                });
+
+                gridView.Columns.Add(new GridViewColumn
+                {
+                    Header = "Категория",
+                    DisplayMemberBinding = new Binding("Category")
+                });
+
+                gridView.Columns.Add(new GridViewColumn
+                {
+                    Header = "Состояние",
+                    DisplayMemberBinding = new Binding("Condition")
+                });
+
+                gridView.Columns.Add(new GridViewColumn
+                {
+                    Header = "Дата последнего обслуживания",
+                    DisplayMemberBinding = new Binding("LastMaitenanceDate")
+                });
+
+                dataListView.ItemsSource = firearm;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка загрузки данных: {ex.Message}", "Ошибка",
+                                MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void LoadDataForEmployees()
         {
             try
             {
@@ -114,5 +255,7 @@ namespace RANGER
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+
     }
 }
