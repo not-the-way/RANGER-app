@@ -39,7 +39,7 @@
                     VerticalAlignment="Center" HorizontalAlignment="Stretch">
             
             <RadioButton Style="{StaticResource MenuToggleRadioButton}"
-                         Content="Выдача" x:Name="IssueRBtn" IsChecked="True"/>
+                         Content="Выдача" x:Name="IssueRBtn"/>
 
             <RadioButton Style="{StaticResource MenuToggleRadioButton}"
                          Content="Инвентарь" x:Name="WarehouseRBtn"/>

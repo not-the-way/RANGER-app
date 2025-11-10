@@ -147,12 +147,12 @@ namespace RANGER
                     case "Firearm":
                         LoadDataForFirearms();
                         break;
-                        //case "Issue":
-                        //    LoadDataForIssues();
-                        //    break;
-                        //case "Warehouse":
-                        //    LoadDataForWarehouse();
-                        //    break;
+                    case "Issue":
+                        LoadDataForIssues();
+                        break;
+                    //case "Warehouse":
+                    //    LoadDataForWarehouse();
+                    //    break;
                 }
             }
             catch (Exception ex)
@@ -236,14 +236,14 @@ namespace RANGER
                 gridView.Columns.Add(new GridViewColumn
                 {
                     Header = "Логин",
-                    DisplayMemberBinding = new System.Windows.Data.Binding("Login"),
+                    DisplayMemberBinding = new Binding("Login"),
                     Width = 100
                 });
 
                 gridView.Columns.Add(new GridViewColumn
                 {
                     Header = "Уровень доступа",
-                    DisplayMemberBinding = new System.Windows.Data.Binding("AccessLevel"),
+                    DisplayMemberBinding = new Binding("AccessLevel"),
                     Width = 100
                 });
 
@@ -256,6 +256,66 @@ namespace RANGER
             }
         }
 
+        private void LoadDataForIssues()
+        {
+            try
+            {
+                var issues = _database.ExecuteQuery<Issue>(@"SELECT I.Issue_ID, E.FullName, C.FullName, F.Name, W.ItemName, I.DateTimeOfIssue, I.DateTimeOfReturn
+                                                           FROM (((Issue I INNER JOIN Employee E ON I.Employee_ID = E.Employee_ID)
+                                                           INNER JOIN Client C ON I.Client_ID = C.Client_ID)
+                                                           INNER JOIN Firearm F ON I.Firearm_SerialNumber = F.FirearmSerialNumber)
+                                                           INNER JOIN Warehouse W ON I.Item_ID = W.Item_ID");
+
+                var gridView = (GridView)dataListView.View;
+
+                gridView.Columns.Add(new GridViewColumn
+                {
+                    Header = "Номер выдачи",
+                    DisplayMemberBinding = new Binding("Issue_ID")
+                });
+
+                gridView.Columns.Add(new GridViewColumn
+                {
+                    Header = "ФИО сотрудника",
+                    DisplayMemberBinding = new Binding("FullName")
+                });
+
+                gridView.Columns.Add(new GridViewColumn
+                {
+                    Header = "ФИО клиента",
+                    DisplayMemberBinding = new Binding("C.FullName")
+                });
+
+                gridView.Columns.Add(new GridViewColumn
+                {
+                    Header = "Название оружия",
+                    DisplayMemberBinding = new Binding("F.Name")
+                });
+
+                gridView.Columns.Add(new GridViewColumn
+                {
+                    Header = "Название предмета",
+                    DisplayMemberBinding = new Binding("W.ItemName")
+                });
+
+                gridView.Columns.Add(new GridViewColumn
+                {
+                    Header = "Дата выдачи",
+                    DisplayMemberBinding = new Binding("I.DateTimeOfIssue")
+                });
+
+                gridView.Columns.Add(new GridViewColumn
+                {
+                    Header = "Дата возврата",
+                    DisplayMemberBinding = new Binding("I.DateTimeOfReturn")
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка загрузки данных: {ex.Message}", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
     }
 }
