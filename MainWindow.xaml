@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RANGER"
         mc:Ignorable="d"
-        Title="RANGER" Height="650" Width="800"
-        MinHeight="650" MinWidth="650"
+        Title="RANGER" Height="650" Width="900"
+        MinHeight="650" MinWidth="850"
         Background="Transparent"
         WindowStartupLocation="CenterScreen" Closing="Window_Closing">
     
@@ -39,10 +39,10 @@
                     VerticalAlignment="Center" HorizontalAlignment="Stretch">
             
             <RadioButton Style="{StaticResource MenuToggleRadioButton}"
-                         Content="Выдача" x:Name="IssueRBtn"/>
+                         Content="Выдача" x:Name="IssueRBtn" Checked="IssueRBtn_Checked"/>
 
             <RadioButton Style="{StaticResource MenuToggleRadioButton}"
-                         Content="Инвентарь" x:Name="WarehouseRBtn"/>
+                         Content="Инвентарь" x:Name="WarehouseRBtn" Checked="WarehouseRBtn_Checked"/>
             
             <RadioButton Style="{StaticResource MenuToggleRadioButton}"
                          Content="Оружие" x:Name="FirearmsRBtn" Checked="FirearmsRBtn_Checked"/>
@@ -66,12 +66,27 @@
                 CornerRadius="4" BorderThickness="2" Margin="10 5 10 5"
                 BorderBrush="{StaticResource MainOffsetColor}">
 
-            <ListView Background="Transparent" x:Name="dataListView" Foreground="{StaticResource MainColor}">
+            <ListView Background="Transparent" x:Name="dataListView"
+                      Foreground="{StaticResource MainColor}">
+
                 <ListView.View>
                     <GridView>
-                        <!-- Колонки будут динамически добавляться в Code-behind -->
+                        <!-- Колонки будут динамически добавляться логикой программы -->
                     </GridView>
                 </ListView.View>
+
+                <ListView.Resources>
+                    <Style TargetType="GridViewColumnHeader">
+                        <Setter Property="Background" Value="#4D4D4D"/>
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="{StaticResource MainOffsetColor}"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#6F6F6F"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.Resources>
             </ListView>
 
         </Border>
