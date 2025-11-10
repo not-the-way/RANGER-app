@@ -30,7 +30,7 @@ namespace RANGER.Database
             }
 
             public int Client_ID { get; set; }
-            public string Fullname { get; set; }
+            public string FullName { get; set; }
             public string Passport { get; set; }
             public bool IsMature { get; set; }
             public bool ReleaseOfLiability { get; set; }
