@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.SQLite;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -82,6 +84,7 @@ namespace RANGER
 
                     IssueRBtn.Visibility = Visibility.Visible;
                     ClientsRBtn.Visibility = Visibility.Visible;
+                    FirearmsRBtn.Visibility = Visibility.Visible;
                     break;
             }
 
@@ -148,6 +151,138 @@ namespace RANGER
             LoadData();
         }
 
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                switch (currentTable)
+                {
+                    case "Employee":
+                        var employeeWindow = new EmployeeEditingWindow(null, _database);
+                        if (employeeWindow.ShowDialog() == true)
+                        {
+                            LoadData();
+                        }
+                        break;
+
+                    //case "Client":
+                    //    var clientWindow = new EmployeeEditingWindow(null, _database);
+                    //    if (clientWindow.ShowDialog() == true)
+                    //    {
+                    //        LoadData();
+                    //    }
+                    //    break;
+                    
+                    // На заметку: Добавить остальные case для других таблиц
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при добавлении: {ex.Message}", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            if (dataListView.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите запись для редактирования", "Информация",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            try
+            {
+                switch (currentTable)
+                {
+                    case "Employee":
+                        var employee = (Employee)dataListView.SelectedItem;
+                        var employeeWindow = new EmployeeEditingWindow(employee, _database);
+                        if (employeeWindow.ShowDialog() == true)
+                        {
+                            LoadData();
+                        }
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при редактировании: {ex.Message}", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (dataListView.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите запись для удаления", "Информация",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            var result = MessageBox.Show("Вы уверены, что хотите удалить выбранную запись?",
+                "Подтверждение удаления", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    switch (currentTable)
+                    {
+                        case "Employee":
+                            var employee = (Employee)dataListView.SelectedItem;
+                            _database.Query("DELETE FROM Employee WHERE Employee_ID = @id",
+                                new SQLiteParameter[] { new SQLiteParameter("@id", employee.Employee_ID) });
+                            break;
+
+                        case "Client":
+                            var client = (Client)dataListView.SelectedItem;
+                            _database.Query("DELETE FROM Client WHERE Client_ID = @id",
+                                new SQLiteParameter[] { new SQLiteParameter("@id", client.Client_ID) });
+                            break;
+
+                        case "Firearm":
+                            var firearm = (Firearm)dataListView.SelectedItem;
+                            _database.Query("DELETE FROM Firearm WHERE FirearmSerialNumber = @sn",
+                                new SQLiteParameter[] { new SQLiteParameter("@sn", firearm.FirearmSerialNumber) });
+                            break;
+
+                        case "Warehouse":
+                            var warehouse = (Warehouse)dataListView.SelectedItem;
+                            _database.Query("DELETE FROM Warehouse WHERE Item_ID = @id",
+                                new SQLiteParameter[] { new SQLiteParameter("@id", warehouse.Item_ID) });
+                            break;
+
+                        case "Issue":
+                            var issue = (Issue)dataListView.SelectedItem;
+                            _database.Query("DELETE FROM Issue WHERE Issue_ID = @id",
+                                new SQLiteParameter[] { new SQLiteParameter("@id", issue.Issue_ID) });
+                            break;
+                    }
+
+                    LoadData();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при удалении: {ex.Message}", "Ошибка",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            LoadData();
+        }
+
+        private void dataListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            btnEdit.IsEnabled = dataListView.SelectedItem != null;
+            btnDelete.IsEnabled = dataListView.SelectedItem != null;
+        }
+
         private void LoadData()
         {
             try
@@ -187,38 +322,21 @@ namespace RANGER
         {
             try
             {
-                var firearm = _database.ExecuteQuery<Firearm>("SELECT * FROM Firearm");
+                var firearm = _database.ExecuteQuery<Firearm>
+                    ("SELECT f.*, fc.Category, fcond.Condition " +
+                     "FROM Firearm f " +
+                     "LEFT JOIN FirearmCategory fc ON f.Category = fc.Category " +
+                     "LEFT JOIN FirearmCondition fcond ON f.Condition = fcond.Condition " +
+                     "ORDER BY f.FirearmSerialNumber"
+                    );
                 var gridView = (GridView)dataListView.View;
+                gridView.Columns.Clear();
 
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "Серийный номер",
-                    DisplayMemberBinding = new Binding("FirearmSerialNumber")
-                });
-
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "Название",
-                    DisplayMemberBinding = new Binding("Name")
-                });
-
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "Категория",
-                    DisplayMemberBinding = new Binding("Category")
-                });
-
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "Состояние",
-                    DisplayMemberBinding = new Binding("Condition")
-                });
-
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "Дата последнего обслуживания",
-                    DisplayMemberBinding = new Binding("LastMaitenanceDate")
-                });
+                gridView.Columns.Add(CreateTextColumn("Серийный номер", "FirearmSerialNumber", 140));
+                gridView.Columns.Add(CreateTextColumn("Название", "Name", 150));
+                gridView.Columns.Add(CreateTextColumn("Категория", "Category", 175));
+                gridView.Columns.Add(CreateTextColumn("Состояние", "Condition", 180));
+                gridView.Columns.Add(CreateDateColumn("Посл. техобслуживание", "LastMaitenanceDate", 165));
 
                 dataListView.ItemsSource = firearm;
             }
@@ -235,38 +353,19 @@ namespace RANGER
             {
                 var employee = _database.ExecuteQuery<Employee>("SELECT * FROM Employee");
                 var gridView = (GridView)dataListView.View;
+                gridView.Columns.Clear();
 
-                gridView.Columns.Add(new GridViewColumn
+                gridView.Columns.Add(CreateTextColumn("ID", "Employee_ID", 50));
+                gridView.Columns.Add(CreateTextColumn("ФИО", "FullName", 200));
+                gridView.Columns.Add(CreateDateColumn("Дата найма", "EmploymentDate", 100));
+                
+                if (currentAccessLevel == "Сис. Админ")
                 {
-                    Header = "Номер сотрудника",
-                    DisplayMemberBinding = new Binding("Employee_ID")
-                });
+                    gridView.Columns.Add(CreateTextColumn("Логин", "Login", 100));
+                    gridView.Columns.Add(CreateTextColumn("Пароль", "Password", 100));
+                }
 
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "ФИО",
-                    DisplayMemberBinding = new Binding("FullName")
-                });
-
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "Дата найма",
-                    DisplayMemberBinding = new Binding("EmploymentDate")
-                });
-
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "Логин",
-                    DisplayMemberBinding = new Binding("Login"),
-                    Width = 100
-                });
-
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "Уровень доступа",
-                    DisplayMemberBinding = new Binding("AccessLevel"),
-                    Width = 100
-                });
+                gridView.Columns.Add(CreateTextColumn("Уровень доступа", "AccessLevel", 100));
 
                 dataListView.ItemsSource = employee;
             }
@@ -283,36 +382,13 @@ namespace RANGER
             {
                 var clients = _database.ExecuteQuery<Client>("SELECT * FROM Client");
                 var gridView = (GridView)dataListView.View;
+                gridView.Columns.Clear();
 
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "Номер клиента",
-                    DisplayMemberBinding = new Binding("Client_ID")
-                });
-
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "ФИО клиента",
-                    DisplayMemberBinding = new Binding("FullName")
-                });
-
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "Серия и номер паспорта",
-                    DisplayMemberBinding = new Binding("Passport")
-                });
-
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "Совершеннолетний",
-                    DisplayMemberBinding = new Binding("IsMature")
-                });
-
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "Подписан отказ от ответственности",
-                    DisplayMemberBinding = new Binding("ReleaseOfLiability")
-                });
+                gridView.Columns.Add(CreateTextColumn("ID", "Client_ID", 50));
+                gridView.Columns.Add(CreateTextColumn("ФИО клиента", "FullName", 200));
+                gridView.Columns.Add(CreateTextColumn("Серия и номер паспорта", "Passport", 70));
+                gridView.Columns.Add(CreateTextColumn("Совершеннолетний", "IsMature", 70));
+                gridView.Columns.Add(CreateTextColumn("Отказ от ответственности", "ReleaseOfLiability"));
 
                 dataListView.ItemsSource = clients;
             }
@@ -329,56 +405,23 @@ namespace RANGER
             {
                 var issues = _database.ExecuteQuery<Issue>
                 ("SELECT i.Issue_ID, e.FullName as Employee_FullName, c.Fullname as Client_Fullname, " +
-                "f.Name as Firearm_Name, w.ItemName, i.DateTimeOfIssue, i.DateTimeOfReturn " +
-                "FROM Issue i " +
-                "LEFT JOIN Client c ON i.Client_ID = c.Client_ID " +
-                "LEFT JOIN Employee e ON i.Employee_ID = e.Employee_ID " +
-                "LEFT JOIN Firearm f ON i.Firearm_SerialNumber = f.FirearmSerialNumber " +
-                "LEFT JOIN Warehouse w ON i.Item_ID = w.Item_ID ");
+                 "f.Name as Firearm_Name, w.ItemName, i.DateTimeOfIssue, i.DateTimeOfReturn " +
+                 "FROM Issue i " +
+                 "LEFT JOIN Client c ON i.Client_ID = c.Client_ID " +
+                 "LEFT JOIN Employee e ON i.Employee_ID = e.Employee_ID " +
+                 "LEFT JOIN Firearm f ON i.Firearm_SerialNumber = f.FirearmSerialNumber " +
+                 "LEFT JOIN Warehouse w ON i.Item_ID = w.Item_ID "
+                );
                 
                 var gridView = (GridView)dataListView.View;
 
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "Номер выдачи",
-                    DisplayMemberBinding = new Binding("Issue_ID")
-                });
-
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "ФИО сотрудника",
-                    DisplayMemberBinding = new Binding("Employee.FullName")
-                });
-
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "ФИО клиента",
-                    DisplayMemberBinding = new Binding("Client.FullName")
-                });
-
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "Название оружия",
-                    DisplayMemberBinding = new Binding("Firearm.Name")
-                });
-
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "Название предмета",
-                    DisplayMemberBinding = new Binding("Warehouse.ItemName")
-                });
-
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "Дата выдачи",
-                    DisplayMemberBinding = new Binding("DateTimeOfIssue")
-                });
-
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "Дата возврата",
-                    DisplayMemberBinding = new Binding("DateTimeOfReturn")
-                });
+                gridView.Columns.Add(CreateTextColumn("ID", "Issue_ID", 50));
+                gridView.Columns.Add(CreateTextColumn("ФИО сотрудника","Employee.FullName", 150));
+                gridView.Columns.Add(CreateTextColumn("ФИО клиента", "Client.FullName", 150));
+                gridView.Columns.Add(CreateTextColumn("Название оружия", "Firearm.Name", 150));
+                gridView.Columns.Add(CreateTextColumn("Название предмета","Warehouse.ItemName", 150));
+                gridView.Columns.Add(CreateDateTimeColumn("Дата выдачи","DateTimeOfIssue"));
+                gridView.Columns.Add(CreateDateTimeColumn("Дата возврата", "DateTimeOfReturn"));
 
                 dataListView.ItemsSource = issues;
             }
@@ -401,35 +444,11 @@ namespace RANGER
 
                 var gridView = (GridView)dataListView.View;
 
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "Номер предмета",
-                    DisplayMemberBinding = new Binding("Item_ID")
-                });
-
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "Наименование",
-                    DisplayMemberBinding = new Binding("ItemName")
-                });
-
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "Дата поставки",
-                    DisplayMemberBinding = new Binding("DeliveryDate")
-                });
-
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "Тип предмета",
-                    DisplayMemberBinding = new Binding("WarehouseType.Type")
-                });
-
-                gridView.Columns.Add(new GridViewColumn
-                {
-                    Header = "Количество",
-                    DisplayMemberBinding = new Binding("Quantity")
-                });
+                gridView.Columns.Add(CreateTextColumn("Номер предмета", "Item_ID"));
+                gridView.Columns.Add(CreateTextColumn("Наименование", "ItemName"));
+                gridView.Columns.Add(CreateDateTimeColumn("Дата поставки", "DeliveryDate"));
+                gridView.Columns.Add(CreateTextColumn("Тип предмета", "WarehouseType.Type"));
+                gridView.Columns.Add(CreateTextColumn("Количество", "Quantity"));
 
                 dataListView.ItemsSource = warehouse;
             }
@@ -438,6 +457,43 @@ namespace RANGER
                 MessageBox.Show($"Ошибка загрузки данных: {ex.Message}", "Ошибка",
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        // Форматы колонок
+        private GridViewColumn CreateDateColumn(string header, string bindingPath, int width = 100)
+        {
+            return new GridViewColumn
+            {
+                Header = header,
+                Width = width,
+                DisplayMemberBinding = new Binding(bindingPath)
+                {
+                    StringFormat = "dd.MM.yyyy"
+                }
+            };
+        }
+
+        private GridViewColumn CreateDateTimeColumn(string header, string bindingPath, int width = 100)
+        {
+            return new GridViewColumn
+            {
+                Header = header,
+                Width = width,
+                DisplayMemberBinding = new System.Windows.Data.Binding(bindingPath)
+                {
+                    StringFormat = "dd.MM.yyyy HH:mm"
+                }
+            };
+        }
+
+        private GridViewColumn CreateTextColumn(string header, string bindingPath, int width = 100)
+        {
+            return new GridViewColumn
+            {
+                Header = header,
+                DisplayMemberBinding = new Binding(bindingPath),
+                Width = width
+            };
         }
     }
 }
