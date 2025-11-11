@@ -64,9 +64,23 @@
     <Compile Include="CORE\RelayCommand.cs" />
     <Compile Include="Database\DataBaseConnection.cs" />
     <Compile Include="Database\DataBaseModel.cs" />
+    <Compile Include="EmployeeEditingWindow.xaml.cs">
+      <DependentUpon>EmployeeEditingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FirearmEditingWindow.xaml.cs">
+      <DependentUpon>FirearmEditingWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="EmployeeEditingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FirearmEditingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
