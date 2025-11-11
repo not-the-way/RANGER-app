@@ -9,7 +9,13 @@
         MinHeight="650" MinWidth="850"
         Background="Transparent"
         WindowStartupLocation="CenterScreen" Closing="Window_Closing">
-    
+
+    <Window.Resources>
+        <DataTemplate x:Key="DateTemplate">
+            <TextBlock Text="{Binding Path=., StringFormat=dd.MM.yyyy}"/>
+        </DataTemplate>
+    </Window.Resources>
+
     <Grid Background="#3c3c3c">
 
         <Grid.ColumnDefinitions>
@@ -67,7 +73,8 @@
                 BorderBrush="{StaticResource MainOffsetColor}">
 
             <ListView Background="Transparent" x:Name="dataListView"
-                      Foreground="{StaticResource MainColor}">
+                      Foreground="{StaticResource MainColor}"
+                      SelectionChanged="dataListView_SelectionChanged">
 
                 <ListView.View>
                     <GridView>
@@ -107,5 +114,21 @@
         <Button x:Name="ExitButton" Click="ExitButton_Click"
                 Style="{StaticResource MainButtonStyle}"
                 Grid.Row="4" Grid.Column="4" Content="Выход" Margin="20"/>
+
+        <Button x:Name="btnAdd" Content="Добавить" 
+                Click="btnAdd_Click" Margin="15"
+                Grid.Row="4"
+                Style="{StaticResource MainButtonStyle}"/>
+        
+        <Button x:Name="btnEdit" Content="Редактировать" 
+                Click="btnEdit_Click" Margin="15"
+                Grid.Row="4" Grid.Column="1"
+                Style="{StaticResource MainButtonStyle}"/>
+        
+        <Button x:Name="btnDelete" Content="Удалить"
+                Click="btnDelete_Click" Margin="15"
+                Grid.Row="4" Grid.Column="2"
+                Style="{StaticResource MainButtonStyle}"/> 
+        
     </Grid>
 </Window>
