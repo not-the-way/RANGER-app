@@ -26,17 +26,20 @@
         <TextBlock Grid.Row="0" Grid.Column="0" Text="ФИО:" Margin="5"/>
         <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtFullName" Margin="5"/>
 
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="Дата найма:" Margin="5"/>
-        <DatePicker Grid.Row="1" Grid.Column="1" x:Name="dpEmploymentDate" Margin="5"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Номер телефона:" Margin="5"/>
+        <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtPhoneNumber" Margin="5"/>
 
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="Логин:" Margin="5"/>
-        <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtLogin" Margin="5"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Дата найма:" Margin="5"/>
+        <DatePicker Grid.Row="2" Grid.Column="1" x:Name="dpEmploymentDate" Margin="5"/>
 
-        <TextBlock Grid.Row="3" Grid.Column="0" Text="Пароль:" Margin="5"/>
-        <PasswordBox Grid.Row="3" Grid.Column="1" x:Name="txtPassword" Margin="5"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Логин:" Margin="5"/>
+        <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtLogin" Margin="5"/>
 
-        <TextBlock Grid.Row="4" Grid.Column="0" Text="Уровень доступа:" Margin="5"/>
-        <ComboBox Grid.Row="4" Grid.Column="1" x:Name="cmbAccessLevel" Margin="5">
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Пароль:" Margin="5"/>
+        <PasswordBox Grid.Row="4" Grid.Column="1" x:Name="txtPassword" Margin="5"/>
+
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Уровень доступа:" Margin="5"/>
+        <ComboBox Grid.Row="5" Grid.Column="1" x:Name="cmbAccessLevel" Margin="5">
             <ComboBoxItem Content="Admin"/>
             <ComboBoxItem Content="Manager"/>
             <ComboBoxItem Content="Warehouse"/>

@@ -7,7 +7,6 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using static RANGER.Database.DataBaseModel;
 
 namespace RANGER
@@ -44,6 +43,7 @@ namespace RANGER
         private void LoadEmployeeData()
         {
             txtFullName.Text = employee.FullName;
+            txtPhoneNumber.Text = employee.PhoneNumber;
             dpEmploymentDate.SelectedDate = employee.EmploymentDate;
             txtLogin.Text = employee.Login;
             txtPassword.Password = employee.Password;
@@ -54,6 +54,8 @@ namespace RANGER
         {
             if (string.IsNullOrWhiteSpace(txtFullName.Text) ||
                 string.IsNullOrWhiteSpace(txtLogin.Text) ||
+                string.IsNullOrWhiteSpace(txtPhoneNumber.Text) ||
+                string.IsNullOrWhiteSpace(txtPassword.Password) ||
                 dpEmploymentDate.SelectedDate == null)
             {
                 MessageBox.Show("Заполните все обязательные поля", "Ошибка",
@@ -64,23 +66,21 @@ namespace RANGER
             try
             {
                 employee.FullName = txtFullName.Text;
+                employee.PhoneNumber = txtPhoneNumber.Text;
                 employee.EmploymentDate = dpEmploymentDate.SelectedDate.Value;
                 employee.Login = txtLogin.Text;
                 employee.AccessLevel = cmbAccessLevel.Text;
-
-                if (!string.IsNullOrEmpty(txtPassword.Password))
-                {
-                    employee.Password = txtPassword.Password;
-                }
+                employee.Password = txtPassword.Password;
 
                 if (isNew)
                 {
                     // Вставка новой записи
                     db.Query(
-                        "INSERT INTO Employee (FullName, EmploymentDate, Login, Password, AccessLevel) " +
-                        "VALUES (@fullName, @empDate, @login, @password, @accessLevel)",
+                        "INSERT INTO Employee (FullName, PhoneNumber, EmploymentDate, Login, Password, AccessLevel) " +
+                        "VALUES (@fullName, @phoneNum, @empDate, @login, @password, @accessLevel)",
                         new SQLiteParameter[] {
                             new SQLiteParameter("@fullName", employee.FullName),
+                            new SQLiteParameter("@phoneNum", employee.PhoneNumber),
                             new SQLiteParameter("@empDate", employee.EmploymentDate),
                             new SQLiteParameter("@login", employee.Login),
                             new SQLiteParameter("@password", employee.Password),
@@ -90,33 +90,18 @@ namespace RANGER
                 else
                 {
                     // Обновление существующей записи
-                    if (string.IsNullOrEmpty(txtPassword.Password))
-                    {
-                        db.Query(
-                            "UPDATE Employee SET FullName = @fullName, EmploymentDate = @empDate, " +
-                            "Login = @login, AccessLevel = @accessLevel WHERE Employee_ID = @id",
-                            new SQLiteParameter[] {
-                                new SQLiteParameter("@fullName", employee.FullName),
-                                new SQLiteParameter("@empDate", employee.EmploymentDate),
-                                new SQLiteParameter("@login", employee.Login),
-                                new SQLiteParameter("@accessLevel", employee.AccessLevel),
-                                new SQLiteParameter("@id", employee.Employee_ID)
-                            });
-                    }
-                    else
-                    {
-                        db.Query(
-                            "UPDATE Employee SET FullName = @fullName, EmploymentDate = @empDate, " +
-                            "Login = @login, Password = @password, AccessLevel = @accessLevel WHERE Employee_ID = @id",
-                            new SQLiteParameter[] {
-                                new SQLiteParameter("@fullName", employee.FullName),
-                                new SQLiteParameter("@empDate", employee.EmploymentDate),
-                                new SQLiteParameter("@login", employee.Login),
-                                new SQLiteParameter("@password", employee.Password),
-                                new SQLiteParameter("@accessLevel", employee.AccessLevel),
-                                new SQLiteParameter("@id", employee.Employee_ID)
-                            });
-                    }
+                    db.Query(
+                        "UPDATE Employee SET FullName = @fullName, PhoneNumber = @phoneNum, EmploymentDate = @empDate, " +
+                        "Login = @login, Password = @password, AccessLevel = @accessLevel WHERE Employee_ID = @id",
+                        new SQLiteParameter[] {
+                            new SQLiteParameter("@fullName", employee.FullName),
+                            new SQLiteParameter("@phoneNum", employee.PhoneNumber),
+                            new SQLiteParameter("@empDate", employee.EmploymentDate),
+                            new SQLiteParameter("@login", employee.Login),
+                            new SQLiteParameter("@password", employee.Password),
+                            new SQLiteParameter("@accessLevel", employee.AccessLevel),
+                            new SQLiteParameter("@id", employee.Employee_ID)
+                        });
                 }
 
                 DialogResult = true;
