@@ -128,7 +128,12 @@
         <Button x:Name="btnDelete" Content="Удалить"
                 Click="btnDelete_Click" Margin="15"
                 Grid.Row="4" Grid.Column="2"
-                Style="{StaticResource MainButtonStyle}"/> 
-        
+                Style="{StaticResource MainButtonStyle}"/>
+
+        <Button x:Name="btnRefresh" Content="Обновить"
+        Click="btnRefresh_Click" Margin="15"
+        Grid.Row="4" Grid.Column="3"
+        Style="{StaticResource MainButtonStyle}"/>
+
     </Grid>
 </Window>

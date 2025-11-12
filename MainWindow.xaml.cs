@@ -38,7 +38,7 @@ namespace RANGER
 
             LoggedUserTextBox.Text = $"Пользователь: {employee.FullName}";
 
-            currentTable = "Employee";
+            currentTable = null;
 
             _database = new DataBaseConnection();
 
@@ -47,6 +47,9 @@ namespace RANGER
             IssueRBtn.Visibility = Visibility.Collapsed;
             WarehouseRBtn.Visibility = Visibility.Collapsed;
             EmployeesRBtn.Visibility = Visibility.Collapsed;
+            btnAdd.Visibility = Visibility.Collapsed;
+            btnEdit.Visibility = Visibility.Collapsed;
+            btnDelete.Visibility = Visibility.Collapsed;
 
             // Работа с уровнями доступа (WIP)
             switch (employee.AccessLevel)
@@ -126,29 +129,85 @@ namespace RANGER
         {
             currentTable = "Employee";
             LoadData();
+
+
+            switch (currentAccessLevel)
+            {
+                case "Сис. Админ":
+                    btnAdd.Visibility = Visibility.Visible;
+                    btnEdit.Visibility = Visibility.Visible;
+                    btnDelete.Visibility = Visibility.Visible;
+                    break;
+            }
         }
         private void ClientsRBtn_Checked(object sender, RoutedEventArgs e)
         {
             currentTable = "Client";
             LoadData();
+
+            switch (currentAccessLevel)
+            {
+                case "Сис. Админ":
+                    btnAdd.Visibility = Visibility.Visible;
+                    btnEdit.Visibility = Visibility.Visible;
+                    btnDelete.Visibility = Visibility.Visible;
+                    break;
+
+                case "Сотрудник выдачи":
+                    btnAdd.Visibility = Visibility.Visible;
+                    btnEdit.Visibility = Visibility.Visible;
+                    break;
+            }
         }
 
         private void FirearmsRBtn_Checked(object sender, RoutedEventArgs e)
         {
             currentTable = "Firearm";
             LoadData();
+
+            switch (currentAccessLevel)
+            {
+                case "Сис. Админ":
+                    btnAdd.Visibility = Visibility.Visible;
+                    btnEdit.Visibility = Visibility.Visible;
+                    btnDelete.Visibility = Visibility.Visible;
+                    break;
+            }
         }
 
         private void IssueRBtn_Checked(object sender, RoutedEventArgs e)
         {
             currentTable = "Issue";
             LoadData();
+
+            switch (currentAccessLevel)
+            {
+                case "Сис. Админ":
+                    btnAdd.Visibility = Visibility.Visible;
+                    btnEdit.Visibility = Visibility.Visible;
+                    btnDelete.Visibility = Visibility.Visible;
+                    break;
+
+                case "Сотрудник выдачи":
+                    btnAdd.Visibility = Visibility.Visible;
+                    btnEdit.Visibility = Visibility.Visible;
+                    break;
+            }
         }
 
         private void WarehouseRBtn_Checked(object sender, RoutedEventArgs e)
         {
             currentTable = "Warehouse";
             LoadData();
+
+            switch (currentAccessLevel)
+            {
+                case "Сис. Админ":
+                    btnAdd.Visibility = Visibility.Visible;
+                    btnEdit.Visibility = Visibility.Visible;
+                    btnDelete.Visibility = Visibility.Visible;
+                    break;
+            }
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
@@ -274,6 +333,12 @@ namespace RANGER
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
+            if (currentTable == null)
+            {
+                MessageBox.Show("Выберите таблицу!", "Обновление",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
             LoadData();
         }
 
@@ -363,9 +428,8 @@ namespace RANGER
                 {
                     gridView.Columns.Add(CreateTextColumn("Логин", "Login", 100));
                     gridView.Columns.Add(CreateTextColumn("Пароль", "Password", 100));
+                    gridView.Columns.Add(CreateTextColumn("Уровень доступа", "AccessLevel", 100));
                 }
-
-                gridView.Columns.Add(CreateTextColumn("Уровень доступа", "AccessLevel", 100));
 
                 dataListView.ItemsSource = employee;
             }
@@ -479,7 +543,7 @@ namespace RANGER
             {
                 Header = header,
                 Width = width,
-                DisplayMemberBinding = new System.Windows.Data.Binding(bindingPath)
+                DisplayMemberBinding = new Binding(bindingPath)
                 {
                     StringFormat = "dd.MM.yyyy HH:mm"
                 }
