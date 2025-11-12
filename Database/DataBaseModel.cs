@@ -14,6 +14,7 @@ namespace RANGER.Database
 
             public int Employee_ID { get; set; }
             public string FullName { get; set; }
+            public string PhoneNumber { get; set; }
             public DateTime EmploymentDate { get; set; }
             public string Login { get; set; }
             public string Password { get; set; }
@@ -32,6 +33,7 @@ namespace RANGER.Database
             public int Client_ID { get; set; }
             public string FullName { get; set; }
             public string Passport { get; set; }
+            public string PhoneNumber { get; set; }
             public bool IsMature { get; set; }
             public bool ReleaseOfLiability { get; set; }
 
