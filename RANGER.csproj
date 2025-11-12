@@ -60,6 +60,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ClientEditingWindow.xaml.cs">
+      <DependentUpon>ClientEditingWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CORE\ObservableObject.cs" />
     <Compile Include="CORE\RelayCommand.cs" />
     <Compile Include="Database\DataBaseConnection.cs" />
@@ -70,14 +73,28 @@
     <Compile Include="FirearmEditingWindow.xaml.cs">
       <DependentUpon>FirearmEditingWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IssueEditingWindow.xaml.cs">
+      <DependentUpon>IssueEditingWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WarehouseEditingWindow.xaml.cs">
+      <DependentUpon>WarehouseEditingWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="ClientEditingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EmployeeEditingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FirearmEditingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="IssueEditingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -101,6 +118,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="SettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WarehouseEditingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
