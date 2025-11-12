@@ -224,15 +224,15 @@ namespace RANGER
                         }
                         break;
 
-                    //case "Client":
-                    //    var clientWindow = new EmployeeEditingWindow(null, _database);
-                    //    if (clientWindow.ShowDialog() == true)
-                    //    {
-                    //        LoadData();
-                    //    }
-                    //    break;
-                    
-                    // На заметку: Добавить остальные case для других таблиц
+                    case "Client":
+                        var clientWindow = new ClientEditingWindow(null, _database);
+                        if (clientWindow.ShowDialog() == true)
+                        {
+                            LoadData();
+                        }
+                        break;
+
+                        // На заметку: Добавить остальные case для других таблиц
                 }
             }
             catch (Exception ex)
@@ -262,6 +262,15 @@ namespace RANGER
                         {
                             LoadData();
                         }
+                        break;
+
+                    case "Client":
+                        var client = (Client)dataListView.SelectedItem;
+                        var clientWindw = new ClientEditingWindow(client, _database);
+                        if(clientWindw.ShowDialog() == true) 
+                        {
+                            LoadData();
+                        } 
                         break;
                 }
             }
@@ -420,10 +429,10 @@ namespace RANGER
                 var gridView = (GridView)dataListView.View;
                 gridView.Columns.Clear();
 
-                gridView.Columns.Add(CreateTextColumn("ID", "Employee_ID", 50));
                 gridView.Columns.Add(CreateTextColumn("ФИО", "FullName", 200));
-                gridView.Columns.Add(CreateDateColumn("Дата найма", "EmploymentDate", 100));
-                
+                gridView.Columns.Add(CreateTextColumn("Номер телефона", "PhoneNumber"));
+                gridView.Columns.Add(CreateDateColumn("Дата найма", "EmploymentDate"));
+
                 if (currentAccessLevel == "Сис. Админ")
                 {
                     gridView.Columns.Add(CreateTextColumn("Логин", "Login", 100));
@@ -448,9 +457,14 @@ namespace RANGER
                 var gridView = (GridView)dataListView.View;
                 gridView.Columns.Clear();
 
-                gridView.Columns.Add(CreateTextColumn("ID", "Client_ID", 50));
                 gridView.Columns.Add(CreateTextColumn("ФИО клиента", "FullName", 200));
-                gridView.Columns.Add(CreateTextColumn("Серия и номер паспорта", "Passport", 70));
+                gridView.Columns.Add(CreateTextColumn("Номер телефона", "PhoneNumber", 200));
+                
+                if (currentAccessLevel == "Сис. Админ" || currentAccessLevel == "Менеджер")
+                {
+                    gridView.Columns.Add(CreateTextColumn("Серия и номер паспорта", "Passport", 70));
+                }
+
                 gridView.Columns.Add(CreateTextColumn("Совершеннолетний", "IsMature", 70));
                 gridView.Columns.Add(CreateTextColumn("Отказ от ответственности", "ReleaseOfLiability"));
 
@@ -479,7 +493,6 @@ namespace RANGER
                 
                 var gridView = (GridView)dataListView.View;
 
-                gridView.Columns.Add(CreateTextColumn("ID", "Issue_ID", 50));
                 gridView.Columns.Add(CreateTextColumn("ФИО сотрудника","Employee.FullName", 150));
                 gridView.Columns.Add(CreateTextColumn("ФИО клиента", "Client.FullName", 150));
                 gridView.Columns.Add(CreateTextColumn("Название оружия", "Firearm.Name", 150));
