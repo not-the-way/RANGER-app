@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static RANGER.Database.DataBaseModel;
 
 namespace RANGER
 {
@@ -22,6 +23,16 @@ namespace RANGER
         public FirearmEditingWindow()
         {
             InitializeComponent();
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         // Давайте все вместе на секунду представим, что здесь идёт реализация окна

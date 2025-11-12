@@ -40,7 +40,7 @@
 
         </ComboBox>
 
-        <TextBlock Grid.Row="3" Grid.Column="0" Text="Уровень доступа:" Margin="5"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Состояние:" Margin="5"/>
         <ComboBox Grid.Row="3" Grid.Column="1" x:Name="cmbCondition" Margin="5">
 
             <ComboBoxItem Content="Требуется техобслуживание"/>
