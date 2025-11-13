@@ -172,6 +172,11 @@ namespace RANGER
                     btnEdit.Visibility = Visibility.Visible;
                     btnDelete.Visibility = Visibility.Visible;
                     break;
+
+                case "Сотрудник склада":
+                    btnAdd.Visibility = Visibility.Visible;
+                    btnEdit.Visibility = Visibility.Visible;
+                    break;
             }
         }
 
@@ -286,13 +291,32 @@ namespace RANGER
                         break;
 
                     case "Firearm":
-                        var firearmWindow = new FirearmEditingWindow(null, _database);
+                        var firearm = (Firearm)dataListView.SelectedItem;
+                        var firearmWindow = new FirearmEditingWindow(firearm, _database);
                         if (firearmWindow.ShowDialog() == true)
                         {
                             LoadData();
                         }
                         break;
-                    // Здесь также для остальных таблиц надо
+
+                    //case "Issue":
+                    //    var issue = (Issue)dataListView.SelectedItem;
+                    //    var issueWindow = new IssueEditingWindow(issue, _database);
+                    //    if (issueWindow.ShowDialog() == true)
+                    //    {
+                    //        LoadData();
+                    //    }
+                    //    break;
+
+                    //case "Warehouse":
+                    //    var warehouse = (Warehouse)dataListView.SelectedItem;
+                    //    var warehouseWindow = new WarehouseEditingWindow(warehouse, _database);
+                    //    if (warehouseWindow.ShowDialog() == true)
+                    //    {
+                    //        LoadData();
+                    //    }
+                    //    break;
+                        // Здесь также для остальных таблиц надо
                 }
             }
             catch (Exception ex)

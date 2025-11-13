@@ -28,6 +28,8 @@ namespace RANGER
 
         public FirearmEditingWindow(Firearm firearm, DataBaseConnection db)
         {
+            InitializeComponent();
+
             this.firearm = firearm;
             this.db = db;
             this.isNew = firearm == null;
@@ -43,16 +45,15 @@ namespace RANGER
                 txtName.IsEnabled = false;
                 txtSerialNumber.IsEnabled = false;
                 cmbCategory.IsEnabled = false;
-                LoadEmployeeData();
-            }
 
-            InitializeComponent();
+                LoadFirearmData();
+            }
         }
 
-        private void LoadEmployeeData()
+        private void LoadFirearmData()
         {
-            txtName.Text = firearm.Name;
             txtSerialNumber.Text = firearm.FirearmSerialNumber;
+            txtName.Text = firearm.Name;
             cmbCategory.Text = firearm.Category;
             cmbCondition.Text = firearm.Condition;
             dpMaitenanceDate.SelectedDate = firearm.LastMaitenanceDate;
@@ -60,7 +61,7 @@ namespace RANGER
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if(string.IsNullOrWhiteSpace(txtName.Text) ||
+            if (string.IsNullOrWhiteSpace(txtName.Text) ||
                 string.IsNullOrWhiteSpace(txtSerialNumber.Text) ||
                 string.IsNullOrWhiteSpace(cmbCategory.Text) ||
                 string.IsNullOrWhiteSpace(cmbCondition.Text) ||
@@ -78,9 +79,6 @@ namespace RANGER
                 firearm.Category = cmbCategory.Text;
                 firearm.Condition = cmbCondition.Text;
                 firearm.LastMaitenanceDate = dpMaitenanceDate.SelectedDate.Value;
-
-                DialogResult = true;
-                Close();
 
                 if (isNew)
                 {
