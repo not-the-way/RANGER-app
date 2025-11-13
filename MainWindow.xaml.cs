@@ -207,6 +207,11 @@ namespace RANGER
                     btnEdit.Visibility = Visibility.Visible;
                     btnDelete.Visibility = Visibility.Visible;
                     break;
+
+                case "Сотрудник склада":
+                    btnAdd.Visibility = Visibility.Visible;
+                    btnEdit.Visibility = Visibility.Visible;
+                    break;
             }
         }
 
@@ -232,6 +237,13 @@ namespace RANGER
                         }
                         break;
 
+                    case "Firearm":
+                        var firearmWindow = new FirearmEditingWindow(null, _database);
+                        if(firearmWindow.ShowDialog() == true)
+                        {
+                            LoadData();
+                        }
+                        break;
                         // На заметку: Добавить остальные case для других таблиц
                 }
             }
@@ -272,6 +284,15 @@ namespace RANGER
                             LoadData();
                         } 
                         break;
+
+                    case "Firearm":
+                        var firearmWindow = new FirearmEditingWindow(null, _database);
+                        if (firearmWindow.ShowDialog() == true)
+                        {
+                            LoadData();
+                        }
+                        break;
+                    // Здесь также для остальных таблиц надо
                 }
             }
             catch (Exception ex)

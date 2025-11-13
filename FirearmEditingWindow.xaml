@@ -48,6 +48,9 @@
             
         </ComboBox>
 
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Последнее техобслуживание:" Margin="5"/>
+        <DatePicker Grid.Row="4" Grid.Column="1" x:Name="dpMaitenanceDate" Margin="5"/>
+
         <StackPanel Grid.Row="7" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="btnSave" Content="Сохранить" Click="btnSave_Click" Margin="5" Width="80"/>
             <Button Content="Отмена" Click="btnCancel_Click" Margin="5" Width="80"/>
