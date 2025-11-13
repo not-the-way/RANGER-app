@@ -249,6 +249,14 @@ namespace RANGER
                             LoadData();
                         }
                         break;
+
+                    case "Issue":
+                        var issueWindow = new IssueEditingWindow(null, _database);
+                        if(issueWindow.ShowDialog() == true)
+                        {
+                            LoadData();
+                        }
+                        break;
                         // На заметку: Добавить остальные case для других таблиц
                 }
             }
@@ -299,14 +307,14 @@ namespace RANGER
                         }
                         break;
 
-                    //case "Issue":
-                    //    var issue = (Issue)dataListView.SelectedItem;
-                    //    var issueWindow = new IssueEditingWindow(issue, _database);
-                    //    if (issueWindow.ShowDialog() == true)
-                    //    {
-                    //        LoadData();
-                    //    }
-                    //    break;
+                    case "Issue":
+                        var issue = (Issue)dataListView.SelectedItem;
+                        var issueWindow = new IssueEditingWindow(issue, _database);
+                        if (issueWindow.ShowDialog() == true)
+                        {
+                            LoadData();
+                        }
+                        break;
 
                     //case "Warehouse":
                     //    var warehouse = (Warehouse)dataListView.SelectedItem;
@@ -316,7 +324,8 @@ namespace RANGER
                     //        LoadData();
                     //    }
                     //    break;
-                        // Здесь также для остальных таблиц надо
+
+                    // Здесь также для остальных таблиц надо
                 }
             }
             catch (Exception ex)
