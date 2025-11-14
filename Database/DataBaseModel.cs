@@ -88,7 +88,7 @@ namespace RANGER.Database
             public int Issue_ID { get; set; }
             public int Client_ID { get; set; }
             public int Employee_ID { get; set; }
-            public string FirearmSerialNumber { get; set; }
+            public string Firearm_SerialNumber { get; set; }
             public int Item_ID { get; set; }
             public DateTime DateTimeOfIssue { get; set; }
             public DateTime DateTimeOfReturn { get; set; }
@@ -117,12 +117,12 @@ namespace RANGER.Database
 
             public virtual ICollection<Issue> Items_ID { get; set; }
 
-            public virtual WarehouseType WarehouseType_ID { get; set; }
+            public virtual TypesForWarehouse WarehouseType_ID { get; set; }
         }
 
-        public class WarehouseType
+        public class TypesForWarehouse
         {
-            public WarehouseType()
+            public TypesForWarehouse()
             {
                 this.Type_ID = new HashSet<Warehouse>();
             }
