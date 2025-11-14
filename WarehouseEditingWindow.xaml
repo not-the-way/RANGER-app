@@ -6,7 +6,51 @@
         xmlns:local="clr-namespace:RANGER"
         mc:Ignorable="d"
         Title="WarehouseEditingWindow" Height="450" Width="800">
-    <Grid>
-        
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Название предмета -->
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Название:" Margin="5" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtItemName" Margin="5" VerticalAlignment="Center"/>
+
+        <!-- Дата поставки -->
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Дата поставки:" Margin="5" VerticalAlignment="Center"/>
+        <DatePicker Grid.Row="1" Grid.Column="1" x:Name="dpDeliveryDate" 
+                   Margin="5" VerticalAlignment="Center"/>
+
+        <!-- Тип склада -->
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Тип предмета:" Margin="5" VerticalAlignment="Center"/>
+        <ComboBox Grid.Row="2" Grid.Column="1" x:Name="cmbWarehouseType" 
+                 Margin="5" VerticalAlignment="Center"/>
+        <!--<Button Grid.Row="2" Grid.Column="2" Content="..." x:Name="btnNewType" 
+               Click="btnNewType_Click" Margin="5" Width="30"/>-->
+
+        <!-- Количество -->
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Количество:" Margin="5" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtQuantity" Margin="5" VerticalAlignment="Center"
+                PreviewTextInput="txtQuantity_PreviewTextInput"/>
+
+        <!-- Кнопки -->
+        <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" 
+                   Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="btnSave" Content="Сохранить" Click="btnSave_Click" 
+                   Margin="5" Width="80" IsDefault="True"/>
+            <Button Content="Отмена" Click="btnCancel_Click" 
+                   Margin="5" Width="80" IsCancel="True"/>
+        </StackPanel>
     </Grid>
 </Window>
