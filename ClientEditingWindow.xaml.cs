@@ -96,6 +96,9 @@ namespace RANGER
                             new SQLiteParameter("@id", client.Client_ID)
                         });
                 }
+
+                DialogResult = true;
+                Close();
             }
             catch (Exception ex)
             {
