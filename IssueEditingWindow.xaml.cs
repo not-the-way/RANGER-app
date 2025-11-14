@@ -90,7 +90,7 @@ namespace RANGER
                 warehouseItems = db.ExecuteQuery<Warehouse>(
                     "SELECT w.*, wt.Type as WarehouseType " +
                     "FROM Warehouse w " +
-                    "LEFT JOIN WarehouseType wt ON w.WarehouseType = wt.Type " +
+                    "LEFT JOIN TypesForWarehouse wt ON w.Warehouse_Type = wt.Type " +
                     "WHERE w.Quantity > 0 " + // Только предметы в наличии
                     "ORDER BY w.ItemName");
                 cmbWarehouse.ItemsSource = warehouseItems;
@@ -119,9 +119,9 @@ namespace RANGER
                     cmbEmployee.SelectedItem = employee;
                 }
 
-                if (!string.IsNullOrEmpty(issue.FirearmSerialNumber))
+                if (!string.IsNullOrEmpty(issue.Firearm_SerialNumber))
                 {
-                    var firearm = firearms.FirstOrDefault(f => f.FirearmSerialNumber == issue.FirearmSerialNumber);
+                    var firearm = firearms.FirstOrDefault(f => f.FirearmSerialNumber == issue.Firearm_SerialNumber);
                     cmbFirearm.SelectedItem = firearm;
                 }
 
@@ -198,7 +198,7 @@ namespace RANGER
                 // Обновляем данные выдачи
                 issue.Client_ID = selectedClient.Client_ID;
                 issue.Employee_ID = selectedEmployee.Employee_ID;
-                issue.FirearmSerialNumber = selectedFirearm.FirearmSerialNumber;
+                issue.Firearm_SerialNumber = selectedFirearm.FirearmSerialNumber;
                 issue.Item_ID = selectedWarehouse.Item_ID;
                 issue.DateTimeOfIssue = dpDateTimeOfIssue.SelectedDate.Value;
                 issue.DateTimeOfReturn = dpDateTimeOfReturn.SelectedDate.Value;
@@ -207,12 +207,12 @@ namespace RANGER
                 {
                     // Вставка новой записи
                     db.Query(
-                        "INSERT INTO Issue (Client_ID, Employee_ID, FirearmSerialNumber, Item_ID, DateTimeOfIssue, DateTimeOfReturn) " +
+                        "INSERT INTO Issue (Client_ID, Employee_ID, Firearm_SerialNumber, Item_ID, DateTimeOfIssue, DateTimeOfReturn) " +
                         "VALUES (@clientId, @employeeId, @firearmSn, @itemId, @issueDate, @returnDate)",
                         new SQLiteParameter[] {
                             new SQLiteParameter("@clientId", issue.Client_ID),
                             new SQLiteParameter("@employeeId", issue.Employee_ID),
-                            new SQLiteParameter("@firearmSn", issue.FirearmSerialNumber),
+                            new SQLiteParameter("@firearmSn", issue.Firearm_SerialNumber),
                             new SQLiteParameter("@itemId", issue.Item_ID),
                             new SQLiteParameter("@issueDate", issue.DateTimeOfIssue),
                             new SQLiteParameter("@returnDate", issue.DateTimeOfReturn)
@@ -223,13 +223,13 @@ namespace RANGER
                     // Обновление существующей записи
                     db.Query(
                         "UPDATE Issue SET Client_ID = @clientId, Employee_ID = @employeeId, " +
-                        "FirearmSerialNumber = @firearmSn, Item_ID = @itemId, " +
+                        "Firearm_SerialNumber = @firearmSn, Item_ID = @itemId, " +
                         "DateTimeOfIssue = @issueDate, DateTimeOfReturn = @returnDate " +
                         "WHERE Issue_ID = @id",
                         new SQLiteParameter[] {
                             new SQLiteParameter("@clientId", issue.Client_ID),
                             new SQLiteParameter("@employeeId", issue.Employee_ID),
-                            new SQLiteParameter("@firearmSn", issue.FirearmSerialNumber),
+                            new SQLiteParameter("@firearmSn", issue.Firearm_SerialNumber),
                             new SQLiteParameter("@itemId", issue.Item_ID),
                             new SQLiteParameter("@issueDate", issue.DateTimeOfIssue),
                             new SQLiteParameter("@returnDate", issue.DateTimeOfReturn),
