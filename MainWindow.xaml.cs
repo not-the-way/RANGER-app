@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.SQLite;
+using System.Globalization;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
@@ -63,7 +64,7 @@ namespace RANGER
                     WarehouseRBtn.Visibility = Visibility.Visible;
                     EmployeesRBtn.Visibility = Visibility.Visible;
                     break;
-                    
+
 
                 case "Manager":
                     currentAccessLevel = "Менеджер тира";
@@ -244,7 +245,7 @@ namespace RANGER
 
                     case "Firearm":
                         var firearmWindow = new FirearmEditingWindow(null, _database);
-                        if(firearmWindow.ShowDialog() == true)
+                        if (firearmWindow.ShowDialog() == true)
                         {
                             LoadData();
                         }
@@ -252,12 +253,19 @@ namespace RANGER
 
                     case "Issue":
                         var issueWindow = new IssueEditingWindow(null, _database);
-                        if(issueWindow.ShowDialog() == true)
+                        if (issueWindow.ShowDialog() == true)
                         {
                             LoadData();
                         }
                         break;
-                        // На заметку: Добавить остальные case для других таблиц
+
+                    case "Warehouse":
+                        var warehouseWindow = new WarehouseEditingWindow(null, _database);
+                        if (warehouseWindow.ShowDialog() == true)
+                        {
+                            LoadData();
+                        }
+                        break;
                 }
             }
             catch (Exception ex)
@@ -292,10 +300,10 @@ namespace RANGER
                     case "Client":
                         var client = (Client)dataListView.SelectedItem;
                         var clientWindw = new ClientEditingWindow(client, _database);
-                        if(clientWindw.ShowDialog() == true) 
+                        if (clientWindw.ShowDialog() == true)
                         {
                             LoadData();
-                        } 
+                        }
                         break;
 
                     case "Firearm":
@@ -316,16 +324,14 @@ namespace RANGER
                         }
                         break;
 
-                    //case "Warehouse":
-                    //    var warehouse = (Warehouse)dataListView.SelectedItem;
-                    //    var warehouseWindow = new WarehouseEditingWindow(warehouse, _database);
-                    //    if (warehouseWindow.ShowDialog() == true)
-                    //    {
-                    //        LoadData();
-                    //    }
-                    //    break;
-
-                    // Здесь также для остальных таблиц надо
+                    case "Warehouse":
+                        var warehouse = (Warehouse)dataListView.SelectedItem;
+                        var warehouseWindow = new WarehouseEditingWindow(warehouse, _database);
+                        if (warehouseWindow.ShowDialog() == true)
+                        {
+                            LoadData();
+                        }
+                        break;
                 }
             }
             catch (Exception ex)
@@ -466,6 +472,7 @@ namespace RANGER
                 gridView.Columns.Add(CreateTextColumn("Состояние", "Condition", 180));
                 gridView.Columns.Add(CreateDateColumn("Посл. техобслуживание", "LastMaitenanceDate", 165));
 
+                dataListView.ItemContainerStyle = CreateFirearmItemStyle();
                 dataListView.ItemsSource = firearm;
             }
             catch (Exception ex)
@@ -513,15 +520,16 @@ namespace RANGER
 
                 gridView.Columns.Add(CreateTextColumn("ФИО клиента", "FullName", 200));
                 gridView.Columns.Add(CreateTextColumn("Номер телефона", "PhoneNumber", 200));
-                
+
                 if (currentAccessLevel == "Сис. Админ" || currentAccessLevel == "Менеджер")
                 {
                     gridView.Columns.Add(CreateTextColumn("Серия и номер паспорта", "Passport", 70));
                 }
 
-                gridView.Columns.Add(CreateTextColumn("Совершеннолетний", "IsMature", 70));
-                gridView.Columns.Add(CreateTextColumn("Отказ от ответственности", "ReleaseOfLiability"));
+                gridView.Columns.Add(CreateBoolColumn("Совершеннолетний", "IsMature", 70));
+                gridView.Columns.Add(CreateBoolColumn("Отказ от ответственности", "ReleaseOfLiability"));
 
+                dataListView.ItemContainerStyle = CreateClientLiabilityStyle();
                 dataListView.ItemsSource = clients;
             }
             catch (Exception ex)
@@ -536,22 +544,22 @@ namespace RANGER
             try
             {
                 var issues = _database.ExecuteQuery<Issue>
-                ("SELECT i.Issue_ID, e.FullName as Employee_FullName, c.Fullname as Client_Fullname, " +
-                 "f.Name as Firearm_Name, w.ItemName, i.DateTimeOfIssue, i.DateTimeOfReturn " +
+                ("SELECT i.Issue_ID, e.FullName as Employee_FullName, c.FullName as Client_FullName, " +
+                 "f.Name as Firearm_Name, w.ItemName as Warehouse_ItemName, i.DateTimeOfIssue, i.DateTimeOfReturn " +
                  "FROM Issue i " +
                  "LEFT JOIN Client c ON i.Client_ID = c.Client_ID " +
                  "LEFT JOIN Employee e ON i.Employee_ID = e.Employee_ID " +
                  "LEFT JOIN Firearm f ON i.Firearm_SerialNumber = f.FirearmSerialNumber " +
                  "LEFT JOIN Warehouse w ON i.Item_ID = w.Item_ID "
                 );
-                
+
                 var gridView = (GridView)dataListView.View;
 
-                gridView.Columns.Add(CreateTextColumn("ФИО сотрудника","Employee.FullName", 150));
+                gridView.Columns.Add(CreateTextColumn("ФИО сотрудника", "Employee.FullName", 150));
                 gridView.Columns.Add(CreateTextColumn("ФИО клиента", "Client.FullName", 150));
                 gridView.Columns.Add(CreateTextColumn("Название оружия", "Firearm.Name", 150));
-                gridView.Columns.Add(CreateTextColumn("Название предмета","Warehouse.ItemName", 150));
-                gridView.Columns.Add(CreateDateTimeColumn("Дата выдачи","DateTimeOfIssue"));
+                gridView.Columns.Add(CreateTextColumn("Название предмета", "Warehouse.ItemName", 150));
+                gridView.Columns.Add(CreateDateTimeColumn("Дата выдачи", "DateTimeOfIssue"));
                 gridView.Columns.Add(CreateDateTimeColumn("Дата возврата", "DateTimeOfReturn"));
 
                 dataListView.ItemsSource = issues;
@@ -568,17 +576,16 @@ namespace RANGER
             try
             {
                 var warehouse = _database.ExecuteQuery<Warehouse>
-                ("SELECT w.*, wt.Type " +
-                "FROM Warehouse w " +
-                "LEFT JOIN WarehouseType wt ON w.Warehouse_Type = wt.Type " +
-                "ORDER BY w.Item_ID");
+                ("SELECT w.*, wt.Type as WarehouseType " +
+                 "FROM Warehouse w " +
+                 "LEFT JOIN TypesForWarehouse wt ON w.Warehouse_Type = wt.Type " +
+                 "ORDER BY w.Item_ID");
 
                 var gridView = (GridView)dataListView.View;
 
-                gridView.Columns.Add(CreateTextColumn("Номер предмета", "Item_ID"));
                 gridView.Columns.Add(CreateTextColumn("Наименование", "ItemName"));
                 gridView.Columns.Add(CreateDateTimeColumn("Дата поставки", "DeliveryDate"));
-                gridView.Columns.Add(CreateTextColumn("Тип предмета", "WarehouseType.Type"));
+                gridView.Columns.Add(CreateTextColumn("Тип предмета", "Warehouse_Type"));
                 gridView.Columns.Add(CreateTextColumn("Количество", "Quantity"));
 
                 dataListView.ItemsSource = warehouse;
@@ -625,6 +632,110 @@ namespace RANGER
                 DisplayMemberBinding = new Binding(bindingPath),
                 Width = width
             };
+        }
+
+        private GridViewColumn CreateBoolColumn(string header, string bindingPath, int width = 100)
+        {
+            var dataTemplate = new DataTemplate();
+            var factory = new FrameworkElementFactory(typeof(TextBlock));
+
+            // Создаем привязку с конвертером
+            var binding = new Binding(bindingPath)
+            {
+                Converter = new BooleanToTextConverter()
+            };
+
+            factory.SetBinding(TextBlock.TextProperty, binding);
+            dataTemplate.VisualTree = factory;
+
+            return new GridViewColumn
+            {
+                Header = header,
+                Width = width,
+                CellTemplate = dataTemplate
+            };
+        }
+
+        public class BooleanToTextConverter : IValueConverter
+        {
+            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                if (value is bool boolValue)
+                {
+                    return boolValue ? "Да" : "Нет";
+                }
+                return "Нет";
+            }
+
+            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                if (value is string stringValue)
+                {
+                    return stringValue == "Да";
+                }
+                return false;
+            }
+        }
+
+        // Не поверите: ЭТО СТИЛИ!!
+
+        private Style CreateFirearmItemStyle()
+        {
+            var style = new Style(typeof(ListViewItem));
+
+            // Триггер для состояния "Требуется техобслуживание"
+            var trigger = new DataTrigger
+            {
+                Binding = new Binding("Condition"),
+                Value = "Требуется техобслуживание"
+            };
+
+            trigger.Setters.Add(new Setter(BackgroundProperty, Brushes.LightYellow));
+            trigger.Setters.Add(new Setter(BorderBrushProperty, Brushes.Orange));
+            trigger.Setters.Add(new Setter(ToolTipProperty, "Требуется техническое обслуживание"));
+            trigger.Setters.Add(new Setter(BorderThicknessProperty, new Thickness(1)));
+
+            style.Triggers.Add(trigger);
+
+            return style;
+        }
+
+        private Style CreateClientLiabilityStyle()
+        {
+            var style = new Style(typeof(ListViewItem));
+
+            // Триггер для проверки значения отказа от ответственности
+            var trigger = new DataTrigger
+            {
+                Binding = new Binding("ReleaseOfLiability"),
+                Value = false
+            };
+
+            trigger.Setters.Add(new Setter(BackgroundProperty, Brushes.LightYellow));
+            trigger.Setters.Add(new Setter(BorderBrushProperty, Brushes.Orange));
+            trigger.Setters.Add(new Setter(BorderThicknessProperty, new Thickness(1)));
+            trigger.Setters.Add(new Setter(ToolTipProperty, "Необходимо подписать отказ от ответственности"));
+
+            style.Triggers.Add(trigger);
+
+            return style;
+        }
+
+        private protected bool EasterEgg(bool value)
+        {
+            if (!value)
+            {
+                value = true;
+                
+            }
+            if (true == true)
+            {
+                return false;
+            }
+            else
+            {
+                Application.Current.Shutdown();
+            }
         }
     }
 }
