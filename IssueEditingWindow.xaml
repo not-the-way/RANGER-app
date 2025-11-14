@@ -28,7 +28,7 @@
 
         <!-- Клиент -->
         <TextBlock Grid.Row="0" Grid.Column="0" Text="Клиент:" Margin="5" VerticalAlignment="Center"/>
-        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="cmbClient" DisplayMemberPath="Fullname" 
+        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="cmbClient" DisplayMemberPath="FullName" 
                  Margin="5" VerticalAlignment="Center"/>
         <Button Grid.Row="0" Grid.Column="2" Content="..." x:Name="btnNewClient" 
                Click="btnNewClient_Click" Margin="5" Width="30"/>
