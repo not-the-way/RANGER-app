@@ -112,7 +112,7 @@ namespace RANGER.Database
             public int Item_ID { get; set; }
             public string ItemName { get; set; }
             public DateTime DeliveryDate { get; set; }
-            public string WarehouseType { get; set; }
+            public string Warehouse_Type { get; set; }
             public int Quantity { get; set; }
 
             public virtual ICollection<Issue> Items_ID { get; set; }

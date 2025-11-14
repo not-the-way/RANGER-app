@@ -568,9 +568,9 @@ namespace RANGER
             try
             {
                 var warehouse = _database.ExecuteQuery<Warehouse>
-                ("SELECT w.*, wt.Type as WarehouseType " +
+                ("SELECT w.*, wt.Type " +
                 "FROM Warehouse w " +
-                "LEFT JOIN WarehouseType wt ON w.WarehouseType = wt.Type " +
+                "LEFT JOIN WarehouseType wt ON w.Warehouse_Type = wt.Type " +
                 "ORDER BY w.Item_ID");
 
                 var gridView = (GridView)dataListView.View;
