@@ -4,15 +4,9 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using static RANGER.Database.DataBaseModel;
 
 namespace RANGER
@@ -52,22 +46,22 @@ namespace RANGER
 
             LoadComboBoxData();
             LoadIssueData();
-            UpdateSelectionInfo();
+            //UpdateSelectionInfo();
         }
 
-        private void cmbClient_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void cmbClient_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            UpdateSelectionInfo();
+            //UpdateSelectionInfo();
         }
 
-        private void cmbFirearm_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void cmbFirearm_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            UpdateSelectionInfo();
+            //UpdateSelectionInfo();
         }
 
-        private void cmbWarehouse_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void cmbWarehouse_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            UpdateSelectionInfo();
+            //UpdateSelectionInfo();
         }
 
         private void LoadComboBoxData()
@@ -75,7 +69,7 @@ namespace RANGER
             try
             {
                 // Загрузка клиентов
-                clients = db.ExecuteQuery<Client>("SELECT * FROM Client ORDER BY Fullname");
+                clients = db.ExecuteQuery<Client>("SELECT * FROM Client ORDER BY FullName");
                 cmbClient.ItemsSource = clients;
 
                 // Загрузка сотрудников
@@ -148,37 +142,37 @@ namespace RANGER
             }
         }
 
-        private void UpdateSelectionInfo()
-        {
-            var info = new System.Text.StringBuilder();
+        //private void UpdateSelectionInfo()
+        //{
+        //    var info = new StringBuilder();
 
-            if (cmbClient.SelectedItem is Client selectedClient)
-            {
-                info.AppendLine($"Клиент: {selectedClient.FullName}");
-                info.AppendLine($"Паспорт: {selectedClient.Passport}");
-                info.AppendLine($"Совершеннолетний: {(selectedClient.IsMature ? "Да" : "Нет")}");
-                info.AppendLine($"Отказ от ответственности: {(selectedClient.ReleaseOfLiability ? "Да" : "Нет")}");
-                info.AppendLine();
-            }
+        //    if (cmbClient.SelectedItem is Client selectedClient)
+        //    {
+        //        info.AppendLine($"Клиент: {selectedClient.FullName}");
+        //        info.AppendLine($"Паспорт: {selectedClient.Passport}");
+        //        info.AppendLine($"Совершеннолетний: {(selectedClient.IsMature ? "Да" : "Нет")}");
+        //        info.AppendLine($"Отказ от ответственности: {(selectedClient.ReleaseOfLiability ? "Да" : "Нет")}");
+        //        info.AppendLine();
+        //    }
 
-            if (cmbFirearm.SelectedItem is Firearm selectedFirearm)
-            {
-                info.AppendLine($"Оружие: {selectedFirearm.Name}");
-                info.AppendLine($"Серийный номер: {selectedFirearm.FirearmSerialNumber}");
-                info.AppendLine($"Категория: {selectedFirearm.Category}");
-                info.AppendLine($"Состояние: {selectedFirearm.Condition}");
-                info.AppendLine();
-            }
+        //    if (cmbFirearm.SelectedItem is Firearm selectedFirearm)
+        //    {
+        //        info.AppendLine($"Оружие: {selectedFirearm.Name}");
+        //        info.AppendLine($"Серийный номер: {selectedFirearm.FirearmSerialNumber}");
+        //        info.AppendLine($"Категория: {selectedFirearm.Category}");
+        //        info.AppendLine($"Состояние: {selectedFirearm.Condition}");
+        //        info.AppendLine();
+        //    }
 
-            if (cmbWarehouse.SelectedItem is Warehouse selectedWarehouse)
-            {
-                info.AppendLine($"Предмет: {selectedWarehouse.ItemName}");
-                info.AppendLine($"Тип: {selectedWarehouse.WarehouseType}");
-                info.AppendLine($"Количество в наличии: {selectedWarehouse.Quantity}");
-            }
+        //    if (cmbWarehouse.SelectedItem is Warehouse selectedWarehouse)
+        //    {
+        //        info.AppendLine($"Предмет: {selectedWarehouse.ItemName}");
+        //        info.AppendLine($"Тип: {selectedWarehouse.WarehouseType}");
+        //        info.AppendLine($"Количество в наличии: {selectedWarehouse.Quantity}");
+        //    }
 
-            tbSelectionInfo.Text = info.ToString();
-        }
+        //    tbSelectionInfo.Text = info.ToString();
+        //}
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
