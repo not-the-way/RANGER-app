@@ -74,7 +74,8 @@
 
             <ListView Background="Transparent" x:Name="dataListView"
                       Foreground="{StaticResource MainColor}"
-                      SelectionChanged="dataListView_SelectionChanged">
+                      SelectionChanged="dataListView_SelectionChanged"
+                      GridViewColumnHeader.Click="dataListView_GridViewColumnHeaderClick">
 
                 <ListView.View>
                     <GridView>
@@ -109,11 +110,6 @@
                  Grid.ColumnSpan="2"
                  Style="{StaticResource InfoTextBoxStyle}"
                  HorizontalContentAlignment="Right"/>
-
-
-        <Button x:Name="ExitButton" Click="ExitButton_Click"
-                Style="{StaticResource MainButtonStyle}"
-                Grid.Row="4" Grid.Column="4" Content="Выход" Margin="20"/>
 
         <Button x:Name="btnAdd" Content="Добавить" 
                 Click="btnAdd_Click" Margin="15"

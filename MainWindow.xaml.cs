@@ -116,14 +116,6 @@ namespace RANGER
             }
         }
 
-        // Кнопка выхода (WIP)
-        private void ExitButton_Click(object sender, RoutedEventArgs e)
-        {
-            LoginWindow loginWindow = new LoginWindow();
-            this.Close();
-            loginWindow.Show();
-        }
-
         // РАБОТА С БД:
 
         private void EmployeesRBtn_Checked(object sender, RoutedEventArgs e)
@@ -480,6 +472,8 @@ namespace RANGER
                 MessageBox.Show($"Ошибка загрузки данных: {ex.Message}", "Ошибка",
                                 MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+            SortByCondition();
         }
 
         private void LoadDataForEmployees()
@@ -597,6 +591,122 @@ namespace RANGER
             }
         }
 
+        // Реализация сортировки
+
+        private void lvData_GridViewColumnHeaderClick(object sender, RoutedEventArgs e)
+        {
+            if (e.OriginalSource is GridViewColumnHeader header && header.Column != null)
+            {
+                string columnName = header.Content.ToString();
+
+                if (currentTable == "Firearm" && columnName == "Состояние")
+                {
+                    SortByCondition();
+                }
+                else
+                {
+                    // Для других колонок - стандартная сортировка
+                    SortByProperty(GetPropertyNameFromColumn(header.Column));
+                }
+            }
+        }
+
+        private string GetPropertyNameFromColumn(GridViewColumn column)
+        {
+            // Простое сопоставление заголовков с именами свойств
+            switch (column.Header.ToString())
+            {
+                case "Серийный номер":
+                    return "FirearmSerialNumber";
+                case "Название":
+                    return "Name";
+                case "Категория":
+                    return "Category";
+                case "Последнее обслуж.":
+                    return "LastMaitenanceDate";
+                default:
+                    return null;
+            }
+        }
+
+        private void SortByProperty(string propertyName)
+        {
+            if (string.IsNullOrEmpty(propertyName)) return;
+
+            var listColView = CollectionViewSource.GetDefaultView(dataListView.ItemsSource) as ListCollectionView;
+            listColView.SortDescriptions.Clear();
+            listColView.CustomSort = null;
+
+            if (listColView != null)
+            {
+                listColView.CustomSort = new SimpleConditionComparer();
+            }
+
+            // Стандартная сортировка
+            listColView.SortDescriptions.Add(
+                new System.ComponentModel.SortDescription(propertyName,
+                System.ComponentModel.ListSortDirection.Ascending));
+        }
+
+        private void SortByCondition()
+        {
+            var listColView = CollectionViewSource.GetDefaultView(dataListView.ItemsSource) as ListCollectionView;
+            listColView.SortDescriptions.Clear();
+            listColView.CustomSort = null;
+
+            if (listColView != null)
+            {
+                // Теперь можно установить кастомный компаратор
+                listColView.CustomSort = new SimpleConditionComparer();
+            }
+            listColView.SortDescriptions.Clear();
+
+            // Создаем простой компаратор
+            listColView.CustomSort = new SimpleConditionComparer();
+        }
+
+        public class SimpleConditionComparer : System.Collections.IComparer
+        {
+            public int Compare(object x, object y)
+            {
+                var firearm1 = x as Firearm;
+                var firearm2 = y as Firearm;
+
+                if (firearm1 == null || firearm2 == null) return 0;
+
+                int GetPriority(Firearm firearm)
+                {
+                    switch (firearm.Condition)
+                    {
+                        case "Неисправен": return 1;
+                        case "Требуется техобслуживание": return 2;
+                        case "Исправен": return 3;
+                        default: return 4;
+                    }
+                }
+
+                return GetPriority(firearm1).CompareTo(GetPriority(firearm2));
+            }
+        }
+
+        private void dataListView_GridViewColumnHeaderClick(object sender, RoutedEventArgs e)
+        {
+            if (e.OriginalSource is GridViewColumnHeader header && header.Column != null)
+            {
+                string columnName = header.Content.ToString();
+
+                if (currentTable == "Firearm" && columnName == "Состояние")
+                {
+                    SortByCondition();
+                }
+                else
+                {
+                    // Для других колонок - стандартная сортировка
+                    SortByProperty(GetPropertyNameFromColumn(header.Column));
+                }
+            }
+        }
+
         // Форматы колонок
         private GridViewColumn CreateDateColumn(string header, string bindingPath, int width = 100)
         {
@@ -656,6 +766,7 @@ namespace RANGER
             };
         }
 
+        // Конвертер для булевых значений из БД
         public class BooleanToTextConverter : IValueConverter
         {
             public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
