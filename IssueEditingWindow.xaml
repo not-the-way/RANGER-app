@@ -30,29 +30,21 @@
         <TextBlock Grid.Row="0" Grid.Column="0" Text="Клиент:" Margin="5" VerticalAlignment="Center"/>
         <ComboBox Grid.Row="0" Grid.Column="1" x:Name="cmbClient" DisplayMemberPath="FullName" 
                  Margin="5" VerticalAlignment="Center"/>
-        <Button Grid.Row="0" Grid.Column="2" Content="..." x:Name="btnNewClient" 
-               Click="btnNewClient_Click" Margin="5" Width="30"/>
 
         <!-- Сотрудник -->
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Кем выдано:" Margin="5" VerticalAlignment="Center"/>
         <ComboBox Grid.Row="1" Grid.Column="1" x:Name="cmbEmployee" DisplayMemberPath="FullName" 
                  Margin="5" VerticalAlignment="Center"/>
-        <Button Grid.Row="1" Grid.Column="2" Content="..." x:Name="btnNewEmployee" 
-               Click="btnNewEmployee_Click" Margin="5" Width="30"/>
 
         <!-- Оружие -->
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Оружие:" Margin="5" VerticalAlignment="Center"/>
         <ComboBox Grid.Row="2" Grid.Column="1" x:Name="cmbFirearm" DisplayMemberPath="Name" 
                  Margin="5" VerticalAlignment="Center"/>
-        <Button Grid.Row="2" Grid.Column="2" Content="..." x:Name="btnNewFirearm" 
-               Click="btnNewFirearm_Click" Margin="5" Width="30"/>
 
         <!-- Предмет со склада -->
         <TextBlock Grid.Row="3" Grid.Column="0" Text="Предмет:" Margin="5" VerticalAlignment="Center"/>
         <ComboBox Grid.Row="3" Grid.Column="1" x:Name="cmbWarehouse" DisplayMemberPath="ItemName" 
                  Margin="5" VerticalAlignment="Center"/>
-        <Button Grid.Row="3" Grid.Column="2" Content="..." x:Name="btnNewWarehouse" 
-               Click="btnNewWarehouse_Click" Margin="5" Width="30"/>
 
         <!-- Дата выдачи -->
         <TextBlock Grid.Row="4" Grid.Column="0" Text="Дата выдачи:" Margin="5" VerticalAlignment="Center"/>
@@ -63,11 +55,6 @@
         <TextBlock Grid.Row="5" Grid.Column="0" Text="Дата возврата:" Margin="5" VerticalAlignment="Center"/>
         <DatePicker Grid.Row="5" Grid.Column="1" x:Name="dpDateTimeOfReturn" 
                    Margin="5" VerticalAlignment="Center"/>
-
-        <!-- Информация о выборе -->
-        <GroupBox Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Header="Информация" Margin="5">
-            <TextBlock x:Name="tbSelectionInfo" TextWrapping="Wrap" Margin="5"/>
-        </GroupBox>
 
         <!-- Кнопки -->
         <StackPanel Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" 

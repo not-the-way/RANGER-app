@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Messaging;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -89,6 +90,11 @@ namespace RANGER
                     IssueRBtn.Visibility = Visibility.Visible;
                     ClientsRBtn.Visibility = Visibility.Visible;
                     FirearmsRBtn.Visibility = Visibility.Visible;
+                    break;
+
+                case "Instructor":
+                    currentAccessLevel = "Инструктор";
+                    IssueRBtn.Visibility = Visibility.Visible;
                     break;
             }
 
@@ -473,7 +479,6 @@ namespace RANGER
                                 MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            SortByCondition();
         }
 
         private void LoadDataForEmployees()
@@ -521,7 +526,7 @@ namespace RANGER
                 }
 
                 gridView.Columns.Add(CreateBoolColumn("Совершеннолетний", "IsMature", 70));
-                gridView.Columns.Add(CreateBoolColumn("Отказ от ответственности", "ReleaseOfLiability"));
+                gridView.Columns.Add(CreateBoolColumn("Отказ от ответст.", "ReleaseOfLiability"));
 
                 dataListView.ItemContainerStyle = CreateClientLiabilityStyle();
                 dataListView.ItemsSource = clients;
@@ -592,118 +597,264 @@ namespace RANGER
         }
 
         // Реализация сортировки
-
-        private void lvData_GridViewColumnHeaderClick(object sender, RoutedEventArgs e)
-        {
-            if (e.OriginalSource is GridViewColumnHeader header && header.Column != null)
-            {
-                string columnName = header.Content.ToString();
-
-                if (currentTable == "Firearm" && columnName == "Состояние")
-                {
-                    SortByCondition();
-                }
-                else
-                {
-                    // Для других колонок - стандартная сортировка
-                    SortByProperty(GetPropertyNameFromColumn(header.Column));
-                }
-            }
-        }
-
-        private string GetPropertyNameFromColumn(GridViewColumn column)
-        {
-            // Простое сопоставление заголовков с именами свойств
-            switch (column.Header.ToString())
-            {
-                case "Серийный номер":
-                    return "FirearmSerialNumber";
-                case "Название":
-                    return "Name";
-                case "Категория":
-                    return "Category";
-                case "Последнее обслуж.":
-                    return "LastMaitenanceDate";
-                default:
-                    return null;
-            }
-        }
-
-        private void SortByProperty(string propertyName)
-        {
-            if (string.IsNullOrEmpty(propertyName)) return;
-
-            var listColView = CollectionViewSource.GetDefaultView(dataListView.ItemsSource) as ListCollectionView;
-            listColView.SortDescriptions.Clear();
-            listColView.CustomSort = null;
-
-            if (listColView != null)
-            {
-                listColView.CustomSort = new SimpleConditionComparer();
-            }
-
-            // Стандартная сортировка
-            listColView.SortDescriptions.Add(
-                new System.ComponentModel.SortDescription(propertyName,
-                System.ComponentModel.ListSortDirection.Ascending));
-        }
-
-        private void SortByCondition()
-        {
-            var listColView = CollectionViewSource.GetDefaultView(dataListView.ItemsSource) as ListCollectionView;
-            listColView.SortDescriptions.Clear();
-            listColView.CustomSort = null;
-
-            if (listColView != null)
-            {
-                // Теперь можно установить кастомный компаратор
-                listColView.CustomSort = new SimpleConditionComparer();
-            }
-            listColView.SortDescriptions.Clear();
-
-            // Создаем простой компаратор
-            listColView.CustomSort = new SimpleConditionComparer();
-        }
-
-        public class SimpleConditionComparer : System.Collections.IComparer
-        {
-            public int Compare(object x, object y)
-            {
-                var firearm1 = x as Firearm;
-                var firearm2 = y as Firearm;
-
-                if (firearm1 == null || firearm2 == null) return 0;
-
-                int GetPriority(Firearm firearm)
-                {
-                    switch (firearm.Condition)
-                    {
-                        case "Неисправен": return 1;
-                        case "Требуется техобслуживание": return 2;
-                        case "Исправен": return 3;
-                        default: return 4;
-                    }
-                }
-
-                return GetPriority(firearm1).CompareTo(GetPriority(firearm2));
-            }
-        }
-
         private void dataListView_GridViewColumnHeaderClick(object sender, RoutedEventArgs e)
         {
             if (e.OriginalSource is GridViewColumnHeader header && header.Column != null)
             {
                 string columnName = header.Content.ToString();
 
-                if (currentTable == "Firearm" && columnName == "Состояние")
+                // Получаем компаратор для текущей таблицы
+                var customComparer = CustomComparerFactory.GetComparer(currentTable);
+
+                if (customComparer != null && IsCustomSortColumn(currentTable, columnName))
                 {
-                    SortByCondition();
+                    ApplyCustomSort(customComparer);
                 }
                 else
                 {
-                    // Для других колонок - стандартная сортировка
-                    SortByProperty(GetPropertyNameFromColumn(header.Column));
+                    // Стандартная сортировка по свойству
+                    ApplyStandardSort(GetPropertyNameFromColumn(columnName));
                 }
+            }
+        }
+
+        private bool IsCustomSortColumn(string tableName, string columnName)
+        {
+            // Определяем, для каких колонок применяем кастомную сортировку
+            if (tableName == "Firearm" && columnName == "Состояние")
+                return true;
+            else if (tableName == "Client" && columnName == "Совершеннолетний")
+                return true;
+            else if (tableName == "Employee" && columnName == "Уровень доступа")
+                return true;
+            else if (tableName == "Issue" && columnName == "Дата возврата")
+                return true;
+            else if (tableName == "Warehouse" && columnName == "Количество")
+                return true;
+            else
+                return false;
+        }
+
+        private void ApplyCustomSort(ICustomComparer comparer)
+        {
+            var listCollectionView = CollectionViewSource.GetDefaultView(dataListView.ItemsSource) as ListCollectionView;
+
+            if (listCollectionView != null && listCollectionView.CanSort)
+            {
+                listCollectionView.CustomSort = comparer;
+            }
+        }
+
+        private void ApplyStandardSort(string propertyName)
+        {
+            if (string.IsNullOrEmpty(propertyName)) return;
+
+            var listCollectionView = CollectionViewSource.GetDefaultView(dataListView.ItemsSource) as ListCollectionView;
+
+            if (listCollectionView != null && listCollectionView.CanSort)
+            {
+                listCollectionView.CustomSort = null;
+                listCollectionView.SortDescriptions.Clear();
+                listCollectionView.SortDescriptions.Add(
+                    new System.ComponentModel.SortDescription(propertyName,
+                    System.ComponentModel.ListSortDirection.Ascending));
+            }
+        }
+
+        private string GetPropertyNameFromColumn(string columnName)
+        {
+            switch (columnName)
+            {
+                case "ФИО клиента":
+                    return "Client.FullName";
+                case "ФИО сотрудника":
+                    return "Employee.FullName";
+                case "Название":
+                    return "Name";
+                case "Название оружия":
+                    return "Firearm.Name";
+                case "Категория":
+                    return "Category";
+                case "Серийный номер":
+                    return "FirearmSerialNumber";
+                case "Посл. техобслуживание":
+                    return "LastMaitenanceDate";
+                case "Дата выдачи":
+                    return "DateTimeOfIssue";
+                case "Дата возврата":
+                    return "DateTimeOfReturn";
+                case "Тип предмета":
+                    return "Warehouse_Type";
+                case "Паспорт":
+                    return "Passport";
+                case "Дата найма":
+                    return "EmploymentDate";
+                case "Уровень доступа":
+                    return "AccessLevel";
+                case "Отказ от ответст.":
+                    return "ReleaseOfLiability";
+                default:
+                    return null;
+            }
+        }
+
+        public interface ICustomComparer : System.Collections.IComparer
+        {
+            bool CanSort(Type itemType);
+        }
+
+        public static class CustomComparerFactory
+        {
+            public static ICustomComparer GetComparer(string tableName)
+            {
+                switch (tableName)
+                {
+                    case "Firearm":
+                        return new FirearmConditionComparer();
+                    case "Client":
+                        return new ClientComparer();
+                    case "Employee":
+                        return new EmployeeComparer();
+                    case "Issue":
+                        return new IssueComparer();
+                    case "Warehouse":
+                        return new WarehouseComparer();
+                    default:
+                        return null;
+                }
+            }
+        }
+
+        // Для Firearm (сортировка по состоянию)
+        public class FirearmConditionComparer : ICustomComparer
+        {
+            public bool CanSort(Type itemType) => itemType == typeof(Firearm);
+
+            public int Compare(object x, object y)
+            {
+                var item1 = x as Firearm;
+                var item2 = y as Firearm;
+
+                if (item1 == null || item2 == null) return 0;
+
+                int GetPriority(string condition)
+                {
+                    switch (condition)
+                    {
+                        case "Требуется техобслуживание":
+                            return 1;
+                        case "Пригодно для использования":
+                            return 2;
+                        default:
+                            return 3;
+                    }
+                }
+
+                return GetPriority(item1.Condition).CompareTo(GetPriority(item2.Condition));
+            }
+        }
+
+        // Для Client (сортировка по совершеннолетию и ФИО)
+        public class ClientComparer : ICustomComparer
+        {
+            public bool CanSort(Type itemType) => itemType == typeof(Client);
+
+            public int Compare(object x, object y)
+            {
+                var item1 = x as Client;
+                var item2 = y as Client;
+
+                if (item1 == null || item2 == null) return 0;
+
+                // Сначала совершеннолетние, потом несовершеннолетние
+                int adultComparison = item2.IsMature.CompareTo(item1.IsMature);
+                if (adultComparison != 0) return adultComparison;
+
+                // Затем по ФИО
+                return string.Compare(item1.FullName, item2.FullName, StringComparison.OrdinalIgnoreCase);
+            }
+        }
+
+        // Для Employee (сортировка по уровню доступа)
+        public class EmployeeComparer : ICustomComparer
+        {
+            public bool CanSort(Type itemType) => itemType == typeof(Employee);
+
+            public int Compare(object x, object y)
+            {
+                var item1 = x as Employee;
+                var item2 = y as Employee;
+
+                if (item1 == null || item2 == null) return 0;
+
+                int GetAccessLevelPriority(string level)
+                {
+                    if (level == null) return 4;
+
+                    switch (level.ToLower())
+                    {
+                        case "admin":
+                            return 1;
+                        case "operator":
+                            return 2;
+                        case "user":
+                            return 3;
+                        default:
+                            return 4;
+                    }
+                }
+
+                int levelComparison = GetAccessLevelPriority(item1.AccessLevel)
+                    .CompareTo(GetAccessLevelPriority(item2.AccessLevel));
+
+                if (levelComparison != 0) return levelComparison;
+
+                return string.Compare(item1.FullName, item2.FullName, StringComparison.OrdinalIgnoreCase);
+            }
+        }
+
+        // Для Issue (сортировка по дате выдачи и статусу)
+        public class IssueComparer : ICustomComparer
+        {
+            public bool CanSort(Type itemType) => itemType == typeof(Issue);
+
+            public int Compare(object x, object y)
+            {
+                var item1 = x as Issue;
+                var item2 = y as Issue;
+
+                if (item1 == null || item2 == null) return 0;
+
+                // Сначала просроченные выдачи
+                bool isOverdue1 = item1.DateTimeOfReturn < DateTime.Now;
+                bool isOverdue2 = item2.DateTimeOfReturn < DateTime.Now;
+
+                int overdueComparison = isOverdue2.CompareTo(isOverdue1);
+                if (overdueComparison != 0) return overdueComparison;
+
+                // Затем по дате выдачи (сначала новые)
+                return item2.DateTimeOfIssue.CompareTo(item1.DateTimeOfIssue);
+            }
+        }
+
+        // Для Warehouse (сортировка по количеству и типу)
+        public class WarehouseComparer : ICustomComparer
+        {
+            public bool CanSort(Type itemType) => itemType == typeof(Warehouse);
+
+            public int Compare(object x, object y)
+            {
+                var item1 = x as Warehouse;
+                var item2 = y as Warehouse;
+
+                if (item1 == null || item2 == null) return 0;
+
+                // Сначала товары с малым количеством
+                int quantityComparison = item1.Quantity.CompareTo(item2.Quantity);
+                if (quantityComparison != 0) return quantityComparison;
+
+                // Затем по названию
+                return string.Compare(item1.ItemName, item2.ItemName, StringComparison.OrdinalIgnoreCase);
             }
         }
 

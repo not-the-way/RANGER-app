@@ -65,7 +65,7 @@ namespace RANGER
                 txtItemName.Text = warehouse.ItemName;
                 dpDeliveryDate.SelectedDate = warehouse.DeliveryDate;
                 txtQuantity.Text = warehouse.Quantity.ToString();
-
+                
                 // Установка типа склада
                 if (!string.IsNullOrEmpty(warehouse.Warehouse_Type))
                 {

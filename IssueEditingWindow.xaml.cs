@@ -24,6 +24,7 @@ namespace RANGER
         private List<Employee> employees;
         private List<Firearm> firearms;
         private List<Warehouse> warehouseItems;
+        private List<Issue> activeIssues;
 
 
         public IssueEditingWindow(Issue issue, DataBaseConnection db)
@@ -49,25 +50,14 @@ namespace RANGER
             //UpdateSelectionInfo();
         }
 
-        private void cmbClient_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //UpdateSelectionInfo();
-        }
-
-        private void cmbFirearm_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //UpdateSelectionInfo();
-        }
-
-        private void cmbWarehouse_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //UpdateSelectionInfo();
-        }
-
         private void LoadComboBoxData()
         {
             try
             {
+                activeIssues = db.ExecuteQuery<Issue>(
+                    "SELECT * FROM Issue WHERE DateTimeOfReturn > @currentDate",
+                    new SQLiteParameter[] { new SQLiteParameter("@currentDate", DateTime.Now) });
+
                 // Загрузка клиентов
                 clients = db.ExecuteQuery<Client>("SELECT * FROM Client ORDER BY FullName");
                 cmbClient.ItemsSource = clients;
@@ -94,12 +84,34 @@ namespace RANGER
                     "WHERE w.Quantity > 0 " + // Только предметы в наличии
                     "ORDER BY w.ItemName");
                 cmbWarehouse.ItemsSource = warehouseItems;
+
+                var availableClients = FilterAvailableClients(clients, activeIssues);
+                var availableEmployees = FilterAvailableEmployees(employees, activeIssues);
+                var availableFireaerms = FilterAvailableFirearms(firearms, activeIssues);
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка загрузки данных: {ex.Message}", "Ошибка",
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private List<Client> FilterAvailableClients(List<Client> clients, List<Issue> activeIssues)
+        {
+            var clientsWithActiveIssues = activeIssues.Select(i => i.Client_ID).Distinct().ToList();
+            return clients.Where(c => !clientsWithActiveIssues.Contains(c.Client_ID)).ToList();
+        }
+
+        private List<Employee> FilterAvailableEmployees(List<Employee> employees, List<Issue> activeIssues)
+        {
+            var employeesWithActiveIssues = activeIssues.Select(i => i.Employee_ID).Distinct().ToList();
+            return employees.Where(e => !employeesWithActiveIssues.Contains(e.Employee_ID)).ToList();
+        }
+
+        private List<Firearm> FilterAvailableFirearms(List<Firearm> firearms, List<Issue> activeIssues)
+        {
+            var firearmsWithActiveIssues = activeIssues.Select(i => i.Firearm_SerialNumber).Distinct().ToList();
+            return firearms.Where(e => !firearmsWithActiveIssues.Contains(e.FirearmSerialNumber)).ToList();
         }
 
         private void LoadIssueData()
