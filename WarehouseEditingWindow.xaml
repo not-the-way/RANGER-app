@@ -35,7 +35,7 @@
         <!-- Тип склада -->
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Тип предмета:" Margin="5" VerticalAlignment="Center"/>
         <ComboBox Grid.Row="2" Grid.Column="1" x:Name="cmbWarehouseType" 
-                 Margin="5" VerticalAlignment="Center"/>
+                 Margin="5" VerticalAlignment="Center" DisplayMemberPath="Type"/>
         <!--<Button Grid.Row="2" Grid.Column="2" Content="..." x:Name="btnNewType" 
                Click="btnNewType_Click" Margin="5" Width="30"/>-->
 

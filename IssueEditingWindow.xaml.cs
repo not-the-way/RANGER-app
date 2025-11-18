@@ -299,12 +299,6 @@ namespace RANGER
                 return false;
             }
 
-            if (dpDateTimeOfReturn.SelectedDate == null)
-            {
-                MessageBox.Show("Выберите дату возврата", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-
             if (dpDateTimeOfReturn.SelectedDate <= dpDateTimeOfIssue.SelectedDate)
             {
                 MessageBox.Show("Дата возврата должна быть позже даты выдачи", "Ошибка",
@@ -329,43 +323,6 @@ namespace RANGER
         {
             DialogResult = false;
             Close();
-        }
-
-        // Обработчики кнопок создания новых записей
-        private void btnNewClient_Click(object sender, RoutedEventArgs e)
-        {
-            var clientWindow = new ClientEditingWindow(null, db);
-            if (clientWindow.ShowDialog() == true)
-            {
-                LoadComboBoxData(); // Перезагружаем данные
-            }
-        }
-
-        private void btnNewEmployee_Click(object sender, RoutedEventArgs e)
-        {
-            var employeeWindow = new EmployeeEditingWindow(null, db);
-            if (employeeWindow.ShowDialog() == true)
-            {
-                LoadComboBoxData(); // Перезагружаем данные
-            }
-        }
-
-        private void btnNewFirearm_Click(object sender, RoutedEventArgs e)
-        {
-            var firearmWindow = new FirearmEditingWindow(null, db);
-            if (firearmWindow.ShowDialog() == true)
-            {
-                LoadComboBoxData(); // Перезагружаем данные
-            }
-        }
-
-        private void btnNewWarehouse_Click(object sender, RoutedEventArgs e)
-        {
-            //var warehouseWindow = new WarehouseEditingWindow(null, db);
-            //if (warehouseWindow.ShowDialog() == true)
-            //{
-            //    LoadComboBoxData(); // Перезагружаем данные
-            //}
         }
     }
 }

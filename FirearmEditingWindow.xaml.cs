@@ -91,8 +91,6 @@ namespace RANGER
                 else
                 {
                     // Обновление существующей записи
-                    // Есть такая темка, что если оружие уже внесено в базу, можно сменить только состояние или удалить
-                    // Мб так реализовать...
                     db.Query(
                         "UPDATE Firearm SET Condition = @condition, LastMaitenanceDate = @lastMaitenance " +
                         "WHERE FirearmSerialNumber = @serialNumber",

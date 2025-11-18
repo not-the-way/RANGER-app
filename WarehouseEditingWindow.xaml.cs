@@ -48,7 +48,7 @@ namespace RANGER
             try
             {
                 // Загрузка типов склада
-                warehouseTypes = db.ExecuteQuery<TypesForWarehouse>("SELECT * FROM TypesForWarehouse ORDER BY Type");
+                warehouseTypes = db.ExecuteQuery<TypesForWarehouse>("SELECT Type FROM TypesForWarehouse");
                 cmbWarehouseType.ItemsSource = warehouseTypes;
             }
             catch (Exception ex)
@@ -162,6 +162,15 @@ namespace RANGER
                 return false;
             }
 
+            // Проверка на поставку в будущем (почему бы и нет?)
+            if (dpDeliveryDate.SelectedDate > DateTime.Now)
+            {
+                var result = MessageBox.Show("Дата поставки в будущем. Продолжить сохранение?",
+                    "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.No)
+                    return false;
+            }
+
             // Проверка типа склада
             if (cmbWarehouseType.SelectedItem == null)
             {
@@ -187,15 +196,6 @@ namespace RANGER
                 txtQuantity.Focus();
                 txtQuantity.SelectAll();
                 return false;
-            }
-
-            // Проверка на будущую дату поставки
-            if (dpDeliveryDate.SelectedDate > DateTime.Now)
-            {
-                var result = MessageBox.Show("Дата поставки в будущем. Продолжить сохранение?",
-                    "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                if (result == MessageBoxResult.No)
-                    return false;
             }
 
             return true;
