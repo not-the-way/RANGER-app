@@ -95,6 +95,7 @@ namespace RANGER
                         "UPDATE Firearm SET Condition = @condition, LastMaitenanceDate = @lastMaitenance " +
                         "WHERE FirearmSerialNumber = @serialNumber",
                         new SQLiteParameter[] {
+                            new SQLiteParameter("@serialNumber", firearm.FirearmSerialNumber),
                             new SQLiteParameter("@condition", firearm.Condition),
                             new SQLiteParameter("@lastMaitenance", firearm.LastMaitenanceDate)
                         });
