@@ -70,11 +70,8 @@ namespace RANGER
                     IssueRBtn.Visibility = Visibility.Visible;
                     ClientsRBtn.Visibility = Visibility.Visible;
                     FirearmsRBtn.Visibility = Visibility.Visible;
+                    WarehouseRBtn.Visibility = Visibility.Visible;
                     break;
-                //case "Instructor":
-                //    currentAccessLevel = "Инструктор";
-                //    IssueRBtn.Visibility = Visibility.Visible;
-                //    break;
             }
             AccessLevelTextBox.Text = $"Вход как: {currentAccessLevel}";
         }
