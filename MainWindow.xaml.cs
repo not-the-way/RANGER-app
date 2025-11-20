@@ -104,10 +104,16 @@ namespace RANGER
                     btnAdd.Visibility = Visibility.Visible;
                     btnEdit.Visibility = Visibility.Visible;
                     btnDelete.Visibility = Visibility.Visible;
+                    btnExportToExcel.Visibility = Visibility.Visible;
+                    break;
+                case "Менеджер тира":
+                    btnAdd.Visibility = Visibility.Collapsed;
+                    btnEdit.Visibility = Visibility.Collapsed;
+                    btnDelete.Visibility = Visibility.Collapsed;
                     break;
             }
-            btnExportToWord.Visibility = Visibility.Collapsed;
             btnExportToExcel.Visibility = Visibility.Visible;
+            btnExportToWord.Visibility = Visibility.Collapsed;
         }
         private void ClientsRBtn_Checked(object sender, RoutedEventArgs e)
         {
@@ -586,6 +592,7 @@ namespace RANGER
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        // экспорт в Excel
         private void btnExportToExcel_Click(object sender, RoutedEventArgs e)
         {
             if (dataListView.Items.Count == 0)

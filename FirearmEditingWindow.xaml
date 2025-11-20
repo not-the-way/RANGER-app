@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:RANGER"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="FirearmEditingWindow" Height="350" Width="600">
-    <Grid Margin="10" Background="{StaticResource BackgroundTheme}">
+        Title="FirearmEditingWindow" Height="350" Width="600"
+        Background="{StaticResource BackgroundTheme}">
+    <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>

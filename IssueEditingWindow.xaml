@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RANGER"
         mc:Ignorable="d"
-        Title="IssueEditingWindow" Height="350" Width="600">
-    <Grid Margin="10" Background="{StaticResource BackgroundTheme}">
+        Title="IssueEditingWindow" Height="350" Width="600"
+        Background="{StaticResource BackgroundTheme}">
+    <Grid Margin="10">
         
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

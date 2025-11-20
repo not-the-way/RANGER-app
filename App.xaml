@@ -86,7 +86,7 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="{StaticResource OffsetShadeColor2}"/>
+                                <Setter Property="Background" Value="{StaticResource MainOffsetColor}"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter Property="Background" Value="{StaticResource OffsetShadeColor1}"/>
