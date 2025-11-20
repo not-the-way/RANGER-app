@@ -128,6 +128,11 @@ namespace RANGER
                     btnAdd.Visibility = Visibility.Visible;
                     btnEdit.Visibility = Visibility.Visible;
                     break;
+                case "Сотрудник склада":
+                    btnAdd.Visibility = Visibility.Collapsed;
+                    btnEdit.Visibility = Visibility.Collapsed;
+                    btnDelete.Visibility = Visibility.Collapsed;
+                    break;
             }
             btnExportToWord.Visibility = Visibility.Collapsed;
             btnExportToExcel.Visibility = Visibility.Visible;
@@ -154,7 +159,14 @@ namespace RANGER
                 case "Менеджер тира":
                     btnAdd.Visibility = Visibility.Visible;
                     btnEdit.Visibility= Visibility.Visible;
+                    btnDelete.Visibility = Visibility.Collapsed;
                     btnExportToExcel.Visibility = Visibility.Visible;
+                    break;
+
+                case "Сотрудник выдачи":
+                    btnAdd.Visibility = Visibility.Collapsed;
+                    btnEdit.Visibility = Visibility.Collapsed;
+                    btnDelete.Visibility= Visibility.Collapsed;
                     break;
             }
             btnExportToWord.Visibility = Visibility.Collapsed;
@@ -176,6 +188,7 @@ namespace RANGER
                 case "Сотрудник выдачи":
                     btnAdd.Visibility = Visibility.Visible;
                     btnEdit.Visibility = Visibility.Visible;
+                    btnDelete.Visibility = Visibility.Collapsed;
                     btnExportToWord.Visibility = Visibility.Visible;
                     btnExportToExcel.Visibility = Visibility.Visible;
                     break;
@@ -184,6 +197,11 @@ namespace RANGER
                     btnExportToExcel.Visibility = Visibility.Visible;
                     btnAdd.Visibility = Visibility.Visible;
                     btnEdit.Visibility = Visibility.Visible;
+                    break;
+                case "Сотрудник склада":
+                    btnAdd.Visibility = Visibility.Collapsed;
+                    btnEdit.Visibility = Visibility.Collapsed;
+                    btnDelete.Visibility = Visibility.Collapsed;
                     break;
             }
         }
@@ -203,6 +221,7 @@ namespace RANGER
                 case "Сотрудник склада":
                     btnAdd.Visibility = Visibility.Visible;
                     btnEdit.Visibility = Visibility.Visible;
+                    btnDelete.Visibility = Visibility.Collapsed;
                     btnExportToExcel.Visibility = Visibility.Visible;
                     break;
 
@@ -210,6 +229,12 @@ namespace RANGER
                     btnEdit.Visibility = Visibility.Visible;
                     btnAdd.Visibility = Visibility.Visible;
                     btnExportToExcel.Visibility = Visibility.Visible;
+                    break;
+
+                case "Сотрудник выдачи":
+                    btnAdd.Visibility = Visibility.Collapsed;
+                    btnEdit.Visibility = Visibility.Collapsed;
+                    btnDelete.Visibility = Visibility.Collapsed;
                     break;
             }
             btnExportToWord.Visibility = Visibility.Collapsed;
