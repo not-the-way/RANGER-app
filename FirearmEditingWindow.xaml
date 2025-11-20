@@ -5,31 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RANGER"
         mc:Ignorable="d"
-        Title="FirearmEditingWindow" Height="450" Width="800">
-    <Grid Margin="10">
+        ResizeMode="NoResize"
+        Title="FirearmEditingWindow" Height="350" Width="600">
+    <Grid Margin="10" Background="{StaticResource BackgroundTheme}">
         <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="Серийный номер:" Margin="5"/>
-        <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtSerialNumber" Margin="5"/>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Серийный номер:" Margin="5"
+                   Style="{StaticResource InfoTextBoxStyle}"/>
+        <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtSerialNumber" Margin="5"
+                 Style="{StaticResource MainTextBoxStyle}"/>
 
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="Название:" Margin="5"/>
-        <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtName" Margin="5"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Название:" Margin="5"
+                   Style="{StaticResource InfoTextBoxStyle}"/>
+        <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtName" Margin="5"
+                 Style="{StaticResource MainTextBoxStyle}"/>
 
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="Категория:" Margin="5"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Категория:" Margin="5"
+                   Style="{StaticResource InfoTextBoxStyle}"/>
         <ComboBox Grid.Row="2" Grid.Column="1" x:Name="cmbCategory" Margin="5">
 
             <ComboBoxItem Content="Гладкоствольное огнестрельное оружие"/>
@@ -40,7 +46,8 @@
 
         </ComboBox>
 
-        <TextBlock Grid.Row="3" Grid.Column="0" Text="Состояние:" Margin="5"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Состояние:" Margin="5"
+                   Style="{StaticResource InfoTextBoxStyle}"/>
         <ComboBox Grid.Row="3" Grid.Column="1" x:Name="cmbCondition" Margin="5">
 
             <ComboBoxItem Content="Требуется техобслуживание"/>
@@ -48,12 +55,15 @@
             
         </ComboBox>
 
-        <TextBlock Grid.Row="4" Grid.Column="0" Text="Последнее техобслуживание:" Margin="5"/>
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Последнее техобслуживание:" Margin="5"
+                   Style="{StaticResource InfoTextBoxStyle}"/>
         <DatePicker Grid.Row="4" Grid.Column="1" x:Name="dpMaitenanceDate" Margin="5"/>
 
         <StackPanel Grid.Row="7" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="btnSave" Content="Сохранить" Click="btnSave_Click" Margin="5" Width="80"/>
-            <Button Content="Отмена" Click="btnCancel_Click" Margin="5" Width="80"/>
+            <Button x:Name="btnSave" Content="Сохранить" Click="btnSave_Click" Margin="5" Width="80"
+                    Style="{StaticResource MainButtonStyle}"/>
+            <Button Content="Отмена" Click="btnCancel_Click" Margin="5" Width="80"
+                    Style="{StaticResource MainButtonStyle}"/>
         </StackPanel>
         </Grid>
 </Window>

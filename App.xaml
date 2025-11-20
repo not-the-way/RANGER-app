@@ -3,39 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:RANGER"
              StartupUri="LoginWindow.xaml">
-    
-    <!--
-    Главный стиль окон: #3c3c3c, #ABABAB
-    Основной акцент делается на оранжевом цвете, все элементы, кнопки и т.п. должны иметь
-    или его оттенки, или заданный SolidColorBrush
-    -->
-    
     <Application.Resources>
-        
         <!--
         Все стили, кисти и т.д. находятся здесь.
         Как напоминание: ЖЕЛАТЕЛЬНО перенести их в отдельный словарь ресурсов
         -->
-        
-        <SolidColorBrush x:Key="DarkBackgroundTheme" Color="#3c3c3c"/>
-        <SolidColorBrush x:Key="LightBackgroundTheme" Color="#ABABAB"/>
+        <SolidColorBrush x:Key="BackgroundTheme" Color="#FDF6F0"/>
 
-        <SolidColorBrush x:Key="MainColor" Color="#FF7700"/>
+        <SolidColorBrush x:Key="MainColor" Color="#640B09"/>
         <SolidColorBrush x:Key="MainOffsetColor" Color="#F5A35B"/>
-        <SolidColorBrush x:Key="OffsetShadeColor1" Color="#B85600"/>
-        <SolidColorBrush x:Key="OffsetShadeColor2" Color="#FFBF6C"/>
+        <SolidColorBrush x:Key="OffsetShadeColor1" Color="#E56A2E"/>
+        <SolidColorBrush x:Key="OffsetShadeColor2" Color="#FF9A6B"/>
 
         <Style x:Key="MainTitleStyle" TargetType="Label">
-
             <Setter Property="Foreground" Value="{StaticResource MainColor}"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="FontFamily" Value="Rockwell"/>
             <Setter Property="FontSize" Value="24"/>
-
             <Setter Property="Label.Effect">
                 <Setter.Value>
-                    <DropShadowEffect Color="Black" Opacity="0.6" Direction="250" BlurRadius="8"/>
+                    <DropShadowEffect Color="Black" Opacity="0.6" Direction="250" BlurRadius="10"/>
                 </Setter.Value>
             </Setter>
         </Style>
@@ -43,7 +31,6 @@
         <Style x:Key="MenuToggleRadioButton"
                BasedOn="{StaticResource {x:Type ToggleButton}}"
                TargetType="RadioButton">
-
             <Style.Setters>
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
                 <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -65,64 +52,56 @@
                                            Foreground="{TemplateBinding Foreground}"
                                            FontSize="{TemplateBinding FontSize}"
                                            FontFamily="{TemplateBinding FontFamily}"/>
-
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
+                <Setter Property="RadioButton.Effect">
+                    <Setter.Value>
+                        <DropShadowEffect Color="Black" Opacity="0.6"
+                          Direction="250" BlurRadius="10"/>
+                    </Setter.Value>
+                </Setter>
             </Style.Setters>
-
             <Style.Triggers>
                 <Trigger Property="IsChecked" Value="True">
-                    <Setter Property="Background" Value="#4D4D4D"/>
+                    <Setter Property="Background" Value="#EDE6E0"/>
                 </Trigger>
             </Style.Triggers>
-            
         </Style>
-        
         <Style x:Key="MainButtonStyle" TargetType="Button">
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="FontFamily" Value="Corbel"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Background" Value="{StaticResource MainColor}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="{StaticResource OffsetShadeColor2}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-
                         <Border CornerRadius="4" BorderThickness="2"
                                 BorderBrush="{StaticResource OffsetShadeColor1}"
                                 Background="{TemplateBinding Background}">
-
                             <ContentPresenter Content="{TemplateBinding Content}"
                                               HorizontalAlignment="Center"
                                               VerticalAlignment="Center"/>
-
                         </Border>
-
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" Value="{StaticResource OffsetShadeColor2}"/>
                             </Trigger>
-
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter Property="Background" Value="{StaticResource OffsetShadeColor1}"/>
                             </Trigger>
-
                         </ControlTemplate.Triggers>
-
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-
             <Setter Property="Button.Effect">
                 <Setter.Value>
                     <DropShadowEffect Color="Black" Opacity="0.6"
                                       Direction="250" BlurRadius="8"/>
                 </Setter.Value>
             </Setter>
-
         </Style>
-
         <Style x:Key="LoginTextBoxStyle" TargetType="TextBox">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0 0 0 2"/>
@@ -131,74 +110,63 @@
             <Setter Property="Foreground" Value="{StaticResource MainColor}"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    
                     <ControlTemplate TargetType="TextBox">
                         <Grid>
-                            
                             <Border x:Name="border" 
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}"/>
-
                             <ScrollViewer x:Name="PART_ContentHost"
                                           Foreground="{TemplateBinding Foreground}"/>
-
                             <TextBlock x:Name="watermarkText"
-                                       Text="Введите ваш логин..."
+                                       Text="Введите логин..."
                                        Background="{TemplateBinding Background}"
                                        TextAlignment="Center"
                                        Foreground="{StaticResource MainColor}"
                                        VerticalAlignment="Center"
                                        Visibility="Visible"/>
-                            
                         </Grid>
-
                         <ControlTemplate.Triggers>
-                            
                             <Trigger Property="IsFocused" Value="True">
-                                
                                 <Setter TargetName="border"
                                         Property="BorderBrush"
                                         Value="{StaticResource MainOffsetColor}"/>
-                                
                             </Trigger>
-                            
                         </ControlTemplate.Triggers>
-                        
                     </ControlTemplate>
-                    
+                </Setter.Value>
+            </Setter>
+            <Setter Property="TextBox.Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" Opacity="0.6"
+                          Direction="250" BlurRadius="10"/>
                 </Setter.Value>
             </Setter>
         </Style>
-
         <Style x:Key="LoginPasswordBoxStyle" TargetType="PasswordBox">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0 0 0 2"/>
-            <Setter Property="BorderBrush" Value="#B95600"/>
-            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="BorderBrush" Value="{StaticResource OffsetShadeColor1}"/>
+            <Setter Property="FontSize" Value="18"/>
             <Setter Property="Foreground" Value="{StaticResource MainColor}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="PasswordBox">
                         <Grid>
-
                             <Border x:Name="border" 
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}"/>
-
                             <ScrollViewer x:Name="PART_ContentHost"
                                           Foreground="{TemplateBinding Foreground}"/>
-
                             <TextBlock x:Name="watermarkText"
-                                       Text="Введите ваш пароль..."
+                                       Text="Введите пароль..."
                                        Background="{TemplateBinding Background}"
                                        TextAlignment="Center"
                                        Foreground="{StaticResource MainColor}"
                                        VerticalAlignment="Center"
                                        Visibility="Visible"/>
                         </Grid>
-
                         <ControlTemplate.Triggers>
 
                             <Trigger Property="IsFocused" Value="True">
@@ -206,34 +174,52 @@
                                         Property="BorderBrush"
                                         Value="{StaticResource MainOffsetColor}"/>
                             </Trigger>
-                            
                         </ControlTemplate.Triggers>
-                        
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="PasswordBox.Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" Opacity="0.6"
+                          Direction="250" BlurRadius="10"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="MainTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0 0 0 2"/>
+            <Setter Property="BorderBrush" Value="{StaticResource OffsetShadeColor1}"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Foreground" Value="{StaticResource MainColor}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <Border x:Name="border" 
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"/>
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Foreground="{TemplateBinding Foreground}"/>
+                        </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
-        <Style x:Key="InfoTextBoxStyle" TargetType="TextBox">
+        <Style x:Key="InfoTextBoxStyle" TargetType="TextBlock">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="Foreground" Value="{StaticResource MainColor}"/>
-            <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="IsReadOnly" Value="True"/>
-            <Setter Property="IsEnabled" Value="False"/>
-
-            <Setter Property="TextBox.Effect">
+            <Setter Property="Foreground" Value="{StaticResource MainColor}"/>
+            <Setter Property="TextBlock.Effect">
                 <Setter.Value>
                     <DropShadowEffect Color="Black" Opacity="0.6"
-                                      Direction="250" BlurRadius="8"/>
+                                      Direction="250" BlurRadius="10"/>
                 </Setter.Value>
             </Setter>
         </Style>
-
     </Application.Resources>
-    
 </Application>
 
 <!--

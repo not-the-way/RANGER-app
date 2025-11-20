@@ -5,17 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RANGER"
         mc:Ignorable="d"
-        Title="IssueEditingWindow" Height="450" Width="800">
-    <Grid Margin="10">
+        Title="IssueEditingWindow" Height="350" Width="600">
+    <Grid Margin="10" Background="{StaticResource BackgroundTheme}">
         
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -27,32 +26,38 @@
         </Grid.ColumnDefinitions>
 
         <!-- Клиент -->
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="Клиент:" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Клиент:" Margin="5" VerticalAlignment="Center"
+                   Style="{StaticResource InfoTextBoxStyle}"/>
         <ComboBox Grid.Row="0" Grid.Column="1" x:Name="cmbClient" DisplayMemberPath="FullName" 
                  Margin="5" VerticalAlignment="Center"/>
 
         <!-- Сотрудник -->
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="Кем выдано:" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Кем выдано:" Margin="5" VerticalAlignment="Center"
+                   Style="{StaticResource InfoTextBoxStyle}"/>
         <ComboBox Grid.Row="1" Grid.Column="1" x:Name="cmbEmployee" DisplayMemberPath="FullName" 
                  Margin="5" VerticalAlignment="Center"/>
 
         <!-- Оружие -->
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="Оружие:" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Оружие:" Margin="5" VerticalAlignment="Center"
+                   Style="{StaticResource InfoTextBoxStyle}"/>
         <ComboBox Grid.Row="2" Grid.Column="1" x:Name="cmbFirearm" DisplayMemberPath="Name" 
                  Margin="5" VerticalAlignment="Center"/>
 
         <!-- Предмет со склада -->
-        <TextBlock Grid.Row="3" Grid.Column="0" Text="Предмет:" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Предмет:" Margin="5" VerticalAlignment="Center"
+                   Style="{StaticResource InfoTextBoxStyle}"/>
         <ComboBox Grid.Row="3" Grid.Column="1" x:Name="cmbWarehouse" DisplayMemberPath="ItemName" 
                  Margin="5" VerticalAlignment="Center"/>
 
         <!-- Дата выдачи -->
-        <TextBlock Grid.Row="4" Grid.Column="0" Text="Дата выдачи:" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Дата выдачи:" Margin="5" VerticalAlignment="Center"
+                   Style="{StaticResource InfoTextBoxStyle}"/>
         <DatePicker Grid.Row="4" Grid.Column="1" x:Name="dpDateTimeOfIssue" 
                    Margin="5" VerticalAlignment="Center"/>
 
         <!-- Дата возврата -->
-        <TextBlock Grid.Row="5" Grid.Column="0" Text="Дата возврата:" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Дата возврата:" Margin="5" VerticalAlignment="Center"
+                   Style="{StaticResource InfoTextBoxStyle}"/>
         <DatePicker Grid.Row="5" Grid.Column="1" x:Name="dpDateTimeOfReturn" 
                    Margin="5" VerticalAlignment="Center"/>
 
@@ -60,9 +65,11 @@
         <StackPanel Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" 
                    Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="btnSave" Content="Сохранить" Click="btnSave_Click" 
-                   Margin="5" Width="80" IsDefault="True"/>
+                   Margin="5" Width="80" IsDefault="True"
+                   Style="{StaticResource MainButtonStyle}"/>
             <Button Content="Отмена" Click="btnCancel_Click" 
-                   Margin="5" Width="80" IsCancel="True"/>
+                   Margin="5" Width="80" IsCancel="True"
+                    Style="{StaticResource MainButtonStyle}"/>
         </StackPanel>
     </Grid>
 </Window>

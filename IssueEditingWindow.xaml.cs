@@ -8,6 +8,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using static RANGER.Database.DataBaseModel;
+using Excel = Microsoft.Office.Interop.Excel;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace RANGER
 {
@@ -63,7 +65,9 @@ namespace RANGER
                 cmbClient.ItemsSource = clients;
 
                 // Загрузка сотрудников
-                employees = db.ExecuteQuery<Employee>("SELECT * FROM Employee ORDER BY FullName");
+                employees = db.ExecuteQuery<Employee>("SELECT * FROM Employee " +
+                                                      "WHERE Employee.AccessLevel = 'Issue' " +
+                                                      "ORDER BY FullName");
                 cmbEmployee.ItemsSource = employees;
 
                 // Загрузка оружия

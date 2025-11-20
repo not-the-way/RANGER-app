@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RANGER"
         mc:Ignorable="d"
-        Title="ДОБАВЛЕНИЕ СОТРУДНИКА В СИСТЕМУ" Height="450" Width="800">
-    <Grid Margin="10">
+        ResizeMode="NoResize"
+        Title="EmployeeEditingWindow" Height="350" Width="600">
+    <Grid Margin="10" Background="{StaticResource BackgroundTheme}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -23,22 +24,40 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="ФИО:" Margin="5"/>
-        <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtFullName" Margin="5"/>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="ФИО:" Margin="5"
+                   Style="{StaticResource InfoTextBoxStyle}"/>
+        <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtFullName" Margin="5"
+                 Style="{StaticResource MainTextBoxStyle}"/>
 
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="Номер телефона:" Margin="5"/>
-        <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtPhoneNumber" Margin="5"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Номер телефона:" Margin="5"
+                   Style="{StaticResource InfoTextBoxStyle}"/>
+        <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtPhoneNumber" Margin="5"
+                 Style="{StaticResource MainTextBoxStyle}"/>
 
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="Дата найма:" Margin="5"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Дата найма:" Margin="5"
+                   Style="{StaticResource InfoTextBoxStyle}"/>
         <DatePicker Grid.Row="2" Grid.Column="1" x:Name="dpEmploymentDate" Margin="5"/>
 
-        <TextBlock Grid.Row="3" Grid.Column="0" Text="Логин:" Margin="5"/>
-        <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtLogin" Margin="5"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Логин:" Margin="5"
+                   Style="{StaticResource InfoTextBoxStyle}"/>
+        <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtLogin" Margin="5"
+                 Style="{StaticResource MainTextBoxStyle}"/>
 
-        <TextBlock Grid.Row="4" Grid.Column="0" Text="Пароль:" Margin="5"/>
-        <PasswordBox Grid.Row="4" Grid.Column="1" x:Name="txtPassword" Margin="5"/>
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Пароль:" Margin="5"
+                   Style="{StaticResource InfoTextBoxStyle}"/>
+        <PasswordBox Grid.Row="4" Grid.Column="1" x:Name="txtPassword" Margin="5">
+            <PasswordBox.Style>
+                <Style TargetType="PasswordBox">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="0 0 0 2"/>
+                    <Setter Property="BorderBrush" Value="{StaticResource OffsetShadeColor1}"/>
+                    <Setter Property="Foreground" Value="{StaticResource MainColor}"/>
+                </Style>
+            </PasswordBox.Style>
+        </PasswordBox>
 
-        <TextBlock Grid.Row="5" Grid.Column="0" Text="Уровень доступа:" Margin="5"/>
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Уровень доступа:" Margin="5"
+                   Style="{StaticResource InfoTextBoxStyle}"/>
         <ComboBox Grid.Row="5" Grid.Column="1" x:Name="cmbAccessLevel" Margin="5">
             <ComboBoxItem Content="Admin"/>
             <ComboBoxItem Content="Manager"/>
@@ -47,8 +66,10 @@
         </ComboBox>
 
         <StackPanel Grid.Row="7" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="btnSave" Content="Сохранить" Click="btnSave_Click" Margin="5" Width="80"/>
-            <Button Content="Отмена" Click="btnCancel_Click" Margin="5" Width="80"/>
+            <Button x:Name="btnSave" Content="Сохранить" Click="btnSave_Click" Margin="5" Width="80"
+                    Style="{StaticResource MainButtonStyle}"/>
+            <Button Content="Отмена" Click="btnCancel_Click" Margin="5" Width="80"
+                    Style="{StaticResource MainButtonStyle}"/>
         </StackPanel>
     </Grid>
 </Window>

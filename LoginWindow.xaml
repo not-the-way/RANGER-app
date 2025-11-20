@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RANGER"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="550" Width="600"
+        Title="Вход в систему" Height="550" Width="600"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
 
-    <Grid Background="#3c3c3c">
+    <Grid Background="{StaticResource BackgroundTheme}">
         
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
@@ -77,16 +77,18 @@
 
         <!-- Информационные TextBox -->
         
-        <TextBox Text="ДОСТУП ТОЛЬКО ДЛЯ СОТРУДНИКОВ ИЛИ УПОЛНОМОЧЕННЫХ ЛИЦ"
+        <TextBlock Text="ДОСТУП ТОЛЬКО ДЛЯ СОТРУДНИКОВ ИЛИ УПОЛНОМОЧЕННЫХ ЛИЦ"
                  Style="{StaticResource InfoTextBoxStyle}"
                  Grid.Row="5" Grid.ColumnSpan="2"
-                 Width="200" Height="50"/>
+                 Width="200" Height="50"
+                 TextAlignment="Center"/>
 
-        <TextBox Text="*Если вы забыли логин и пароль, обратитесь к системному администратору"
+        <TextBlock Text="*Если вы забыли логин и пароль, обратитесь к системному администратору"
                  Style="{StaticResource InfoTextBoxStyle}"
                  Grid.Row="6" Grid.ColumnSpan="2"
                  Width="200" Height="50"
-                 VerticalAlignment="Top"/>
+                 VerticalAlignment="Top"
+                 TextAlignment="Center"/>
         
     </Grid>
 </Window>

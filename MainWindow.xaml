@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RANGER"
         mc:Ignorable="d"
-        Title="RANGER" Height="650" Width="900"
+        Title="RANGER" Height="650" Width="1000"
         MinHeight="650" MinWidth="850"
         Background="Transparent"
         WindowStartupLocation="CenterScreen" Closing="Window_Closing">
@@ -16,7 +16,7 @@
         </DataTemplate>
     </Window.Resources>
 
-    <Grid Background="#3c3c3c">
+    <Grid Background="{StaticResource BackgroundTheme}">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.7*"/>
@@ -31,7 +31,7 @@
             <RowDefinition Height="0.5*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="0.7*"/>
             <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
 
@@ -62,9 +62,30 @@
         </StackPanel>
 
         <!-- StackPanel для кнопок изменения данных -->
-        
-        <StackPanel Grid.Row="1" Grid.ColumnSpan="5">
-            
+
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="5"
+                    Orientation="Horizontal"
+                    Margin="15 0 0 0">
+
+            <Button x:Name="btnAdd" Content="Добавить" 
+                    Click="btnAdd_Click" Margin="10"
+                    Grid.Row="4" Grid.Column="0"
+                    Style="{StaticResource MainButtonStyle}"/>
+
+            <Button x:Name="btnEdit" Content="Редактировать" 
+                    Click="btnEdit_Click" Margin="10"
+                    Grid.Row="4" Grid.Column="1"
+                    Style="{StaticResource MainButtonStyle}"/>
+
+            <Button x:Name="btnDelete" Content="Удалить"
+                    Click="btnDelete_Click" Margin="10"
+                    Grid.Row="4" Grid.Column="2"
+                    Style="{StaticResource MainButtonStyle}"/>
+
+            <Button x:Name="btnRefresh" Content="Обновить"
+                    Click="btnRefresh_Click" Margin="10"
+                    Grid.Row="4" Grid.Column="3"
+                    Style="{StaticResource MainButtonStyle}"/>
         </StackPanel>
 
         <!-- ListView для отображения данных (Вместо DataGrid) -->
@@ -85,12 +106,12 @@
 
                 <ListView.Resources>
                     <Style TargetType="GridViewColumnHeader">
-                        <Setter Property="Background" Value="#4D4D4D"/>
+                        <Setter Property="Background" Value="#EDE6E0"/>
                         <Setter Property="BorderBrush" Value="Transparent"/>
-                        <Setter Property="Foreground" Value="{StaticResource MainOffsetColor}"/>
+                        <Setter Property="Foreground" Value="{StaticResource MainColor}"/>
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#6F6F6F"/>
+                                <Setter Property="Background" Value="#EDE6E0"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -99,37 +120,33 @@
 
         </Border>
 
-        <TextBox x:Name="LoggedUserTextBox"
+        <Button Margin="15" Content="Вывести в Word"
+                x:Name="btnExportToWord" Click="btnExportToWord_Click"
+                Style="{StaticResource MainButtonStyle}"
+                Grid.Row="4" Grid.Column="1"/>
+
+        <Button x:Name="btnExportToExcel" Content="Экспорт в Excel"
+                Click="btnExportToExcel_Click" Margin="15"
+                Style="{StaticResource MainButtonStyle}"
+                Grid.Row="4" Grid.Column="3"/>
+
+        <TextBlock x:Name="LoggedUserTextBox"
                  Grid.Row="5"
                  Grid.ColumnSpan="2"
                  Style="{StaticResource InfoTextBoxStyle}"
-                 HorizontalContentAlignment="Left"/>
+                 TextAlignment="Left"
+                 VerticalAlignment="Center"
+                 Margin="15 0 0 0"/>
 
-        <TextBox x:Name="AccessLevelTextBox"
+        <TextBlock x:Name="AccessLevelTextBox"
                  Grid.Row="5" Grid.Column="3"
                  Grid.ColumnSpan="2"
                  Style="{StaticResource InfoTextBoxStyle}"
-                 HorizontalContentAlignment="Right"/>
+                 TextAlignment="Right"
+                 VerticalAlignment="Center"
+                 Margin="0 0 15 0"/>
 
-        <Button x:Name="btnAdd" Content="Добавить" 
-                Click="btnAdd_Click" Margin="15"
-                Grid.Row="4"
-                Style="{StaticResource MainButtonStyle}"/>
         
-        <Button x:Name="btnEdit" Content="Редактировать" 
-                Click="btnEdit_Click" Margin="15"
-                Grid.Row="4" Grid.Column="1"
-                Style="{StaticResource MainButtonStyle}"/>
-        
-        <Button x:Name="btnDelete" Content="Удалить"
-                Click="btnDelete_Click" Margin="15"
-                Grid.Row="4" Grid.Column="2"
-                Style="{StaticResource MainButtonStyle}"/>
-
-        <Button x:Name="btnRefresh" Content="Обновить"
-        Click="btnRefresh_Click" Margin="15"
-        Grid.Row="4" Grid.Column="3"
-        Style="{StaticResource MainButtonStyle}"/>
 
     </Grid>
 </Window>
