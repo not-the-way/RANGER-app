@@ -49,7 +49,6 @@ namespace RANGER
 
             LoadComboBoxData();
             LoadIssueData();
-            //UpdateSelectionInfo();
         }
 
         private void LoadComboBoxData()
@@ -157,38 +156,6 @@ namespace RANGER
                 dpDateTimeOfReturn.SelectedDate = DateTime.Now.AddDays(1);
             }
         }
-
-        //private void UpdateSelectionInfo()
-        //{
-        //    var info = new StringBuilder();
-
-        //    if (cmbClient.SelectedItem is Client selectedClient)
-        //    {
-        //        info.AppendLine($"Клиент: {selectedClient.FullName}");
-        //        info.AppendLine($"Паспорт: {selectedClient.Passport}");
-        //        info.AppendLine($"Совершеннолетний: {(selectedClient.IsMature ? "Да" : "Нет")}");
-        //        info.AppendLine($"Отказ от ответственности: {(selectedClient.ReleaseOfLiability ? "Да" : "Нет")}");
-        //        info.AppendLine();
-        //    }
-
-        //    if (cmbFirearm.SelectedItem is Firearm selectedFirearm)
-        //    {
-        //        info.AppendLine($"Оружие: {selectedFirearm.Name}");
-        //        info.AppendLine($"Серийный номер: {selectedFirearm.FirearmSerialNumber}");
-        //        info.AppendLine($"Категория: {selectedFirearm.Category}");
-        //        info.AppendLine($"Состояние: {selectedFirearm.Condition}");
-        //        info.AppendLine();
-        //    }
-
-        //    if (cmbWarehouse.SelectedItem is Warehouse selectedWarehouse)
-        //    {
-        //        info.AppendLine($"Предмет: {selectedWarehouse.ItemName}");
-        //        info.AppendLine($"Тип: {selectedWarehouse.WarehouseType}");
-        //        info.AppendLine($"Количество в наличии: {selectedWarehouse.Quantity}");
-        //    }
-
-        //    tbSelectionInfo.Text = info.ToString();
-        //}
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {

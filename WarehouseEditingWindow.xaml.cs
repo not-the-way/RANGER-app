@@ -224,16 +224,5 @@ namespace RANGER
                 e.Handled = true;
             }
         }
-
-        // Думу че-то думаю, а надо ли добавлять отдельные типы....
-
-        //private void btnNewType_Click(object sender, RoutedEventArgs e)
-        //{
-        //    var typeWindow = new EditWarehouseTypeWindow(null, db);
-        //    if (typeWindow.ShowDialog() == true)
-        //    {
-        //        LoadComboBoxData(); // Перезагружаем данные
-        //    }
-        //}
     }
 }
